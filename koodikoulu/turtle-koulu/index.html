@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turtle-koulu – Piirrä Pythonilla!</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+<style>
+:root {
+    --bg: #0a0e15;
+    --surface: #12181f;
+    --surface2: #1a2230;
+    --text: #e0e6f0;
+    --text-dim: #7a8490;
+    --primary: #e2b714;
+    --blue: #4fc3f7;
+    --green: #00d26a;
+    --red: #ff6b6b;
+    --purple: #b388ff;
+    --radius: 10px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow: hidden;
+}
+/* ── Loading ── */
+#loading-screen {
+    position: fixed; inset: 0;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; z-index: 999;
+}
+.loading-content { text-align: center; }
+.loading-content h1 { font-family: 'Fredoka One', cursive; font-size: 1.8rem; margin-bottom: 0.5rem; }
+.loading-bar {
+    width: 250px; height: 6px; background: var(--surface2);
+    border-radius: 3px; overflow: hidden; margin-top: 1rem;
+}
+.loading-bar-fill {
+    width: 0%; height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--blue));
+    animation: load 3s ease-in-out forwards;
+}
+@keyframes load { to { width: 100%; } }
+
+/* ── Header ── */
+#top-bar {
+    background: var(--surface);
+    padding: 10px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid #ffffff10;
+    height: 50px;
+}
+#top-bar h1 { font-family: 'Fredoka One', cursive; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
+#top-bar .step-indicator { font-size: 0.9rem; color: var(--text-dim); }
+
+/* ── Main Layout ── */
+#main-container {
+    display: flex;
+    height: calc(100vh - 100px);
+}
+#instructions-pane {
+    width: 40%; min-width: 300px;
+    background: var(--surface);
+    padding: 24px;
+    overflow-y: auto;
+    border-right: 1px solid #ffffff10;
+}
+#instructions-pane h3 { font-size: 1.3rem; color: var(--primary); margin-bottom: 0.5rem; }
+#instructions-pane .step-title { font-family: 'Fredoka One', cursive; font-size: 1.5rem; margin-bottom: 1rem; }
+#instructions-pane .theory { margin-bottom: 1.2rem; line-height: 1.6; }
+#instructions-pane .theory code {
+    background: var(--surface2); color: var(--blue);
+    padding: 2px 6px; border-radius: 4px; font-size: 0.9rem;
+}
+#instructions-pane .example-box {
+    background: var(--bg); border: 1px solid #ffffff10;
+    border-radius: var(--radius); padding: 14px; margin-bottom: 1.2rem;
+    overflow-x: auto;
+}
+#instructions-pane .example-box pre {
+    font-family: 'Courier New', monospace; font-size: 0.85rem;
+    color: var(--green); white-space: pre-wrap; word-break: break-word;
+}
+#instructions-pane .task-box {
+    background: var(--surface2); border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 12px 16px; margin-bottom: 1rem;
+}
+#instructions-pane .task-box h4 { color: var(--primary); margin-bottom: 6px; }
+#instructions-pane .hint-box {
+    color: var(--text-dim); font-size: 0.85rem;
+    padding: 8px 12px; border-radius: var(--radius);
+    background: var(--bg); margin-top: 0.5rem;
+}
+
+#editor-pane {
+    flex: 1; padding: 20px;
+    display: flex; flex-direction: column;
+    overflow-y: auto;
+}
+#code-editor {
+    width: 100%; min-height: 180px;
+    background: var(--bg); color: var(--blue);
+    border: 1px solid #ffffff10; border-radius: var(--radius);
+    padding: 16px; font-family: 'Courier New', monospace;
+    font-size: 0.9rem; resize: vertical;
+    outline: none;
+}
+#code-editor:focus { border-color: var(--primary); }
+.editor-toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface2); padding: 8px 14px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    margin-bottom: -1px;
+}
+.editor-toolbar span { font-weight: 700; font-size: 0.9rem; color: var(--text-dim); }
+.btn-clear, .btn-run {
+    padding: 6px 14px; border: none; border-radius: 6px;
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.85rem;
+    cursor: pointer; transition: background 0.2s;
+}
+.btn-clear { background: var(--surface2); color: var(--text-dim); }
+.btn-clear:hover { background: #2a3545; }
+.btn-run {
+    background: var(--primary); color: var(--bg);
+    margin-left: 8px;
+}
+.btn-run:hover { background: #ffd633; }
+
+#feedback-box {
+    margin-top: 10px; padding: 10px 14px; border-radius: var(--radius);
+    font-weight: 600; font-size: 0.9rem; display: none;
+}
+#feedback-box.success { background: #0d3b1a; color: var(--green); display: block; }
+#feedback-box.hint { background: #3b2f0d; color: var(--primary); display: block; }
+
+#turtle-canvas-wrap {
+    margin-top: 15px;
+    background: var(--surface); border: 1px solid #ffffff10;
+    border-radius: var(--radius); overflow: hidden;
+}
+#turtle-canvas-wrap .editor-toolbar {
+    border-radius: 0; border-bottom: 1px solid #ffffff10;
+}
+#turtle-canvas {
+    display: block; width: 100%; max-width: 600px;
+    height: auto; background: #0d1117; margin: 0 auto;
+}
+
+/* ── Footer Nav ── */
+#bottom-bar {
+    background: var(--surface);
+    border-top: 1px solid #ffffff10;
+    padding: 12px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 50px;
+}
+.btn-nav {
+    padding: 8px 18px; border: none; border-radius: var(--radius);
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.9rem;
+    cursor: pointer; transition: background 0.2s;
+    background: var(--surface2); color: var(--text);
+}
+.btn-nav:hover { background: #2a3545; }
+.btn-nav:disabled { opacity: 0.3; cursor: default; }
+
+.step-dots { display: flex; gap: 6px; align-items: center; }
+.step-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--surface2); cursor: pointer; transition: background 0.2s;
+}
+.step-dot.active { background: var(--primary); }
+.step-dot.done { background: var(--blue); }
+.step-dot.passed { background: var(--green); }
+.step-dot.passed::after { content: '✅'; font-size: 8px; position: absolute; top: -4px; left: -4px; }
+
+#confetti-canvas {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 9999;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    #main-container { flex-direction: column; height: auto; overflow: auto; }
+    #instructions-pane { width: 100%; min-width: 0; border-right: none; border-bottom: 1px solid #ffffff10; }
+    #editor-pane { flex: none; }
+    body { overflow: auto; }
+}
+</style>
+</head>
+<body>
+
+<div id="loading-screen">
+    <div class="loading-content">
+        <h1>🐢 Turtle-koulu</h1>
+        <p>Ladataan Python-moottoria...</p>
+        <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+    </div>
+</div>
+
+<div id="app" style="display:none;">
+    <header id="top-bar">
+        <h1>🐢 Turtle-koulu</h1>
+        <span class="step-indicator" id="step-label">Vaihe 1 / 30</span>
+    </header>
+
+    <div id="main-container">
+        <section id="instructions-pane">
+            <div class="step-title" id="step-title"></div>
+            <div class="theory" id="step-theory"></div>
+            <div class="example-box" id="step-example"></div>
+            <div class="task-box">
+                <h4>🎯 Tehtäväsi</h4>
+                <p id="step-task"></p>
+                <div class="hint-box" id="step-hint"></div>
+            </div>
+        </section>
+
+        <section id="editor-pane">
+            <div class="editor-toolbar">
+                <span>🖊️ Koodieditori</span>
+                <div>
+                    <button class="btn-clear" onclick="clearWorkspace()">🔄 Tyhjennä</button>
+                    <button class="btn-run" onclick="runCode()">▶️ Suorita</button>
+                </div>
+            </div>
+            <textarea id="code-editor" spellcheck="false"></textarea>
+            <div id="feedback-box"></div>
+
+            <div id="turtle-canvas-wrap">
+                <div class="editor-toolbar">
+                    <span style="color:var(--green);">🐢 Piirros</span>
+                    <button class="btn-clear" onclick="clearCanvas()" style="font-size:0.8rem;">🔄 Tyhjennä</button>
+                </div>
+                <canvas id="turtle-canvas" width="600" height="400"></canvas>
+            </div>
+        </section>
+    </div>
+
+    <footer id="bottom-bar">
+        <button class="btn-nav" onclick="prevStep()" id="btn-prev">◀ Edellinen</button>
+        <div class="step-dots" id="step-dots"></div>
+        <button class="btn-nav" onclick="nextStep()" id="btn-next">Seuraava ▶</button>
+    </footer>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+//  TURTLE-KOULU — 10 Steps
+// ═══════════════════════════════════════
+const STEPS = [
+    {
+        title: "1. Konna liikkeelle 🐢",
+        theory: `<p>Turtle-konna on piirrosrobotti. Se osaa liikkua eteenpäin ja jättää viivan peräänsä — aivan kuten kynä paperilla!</p>
+<p>Komento <code>forward(100)</code> piirtää 100 pikseliä pitkän viivan suoraan eteenpäin. Konna aloittaa <strong>canvasin keskeltä</strong> ja katsoo oikealle.</p>`,
+        example: `<pre># Piirrä yksi viiva:
+forward(100)</pre>`,
+        task: "Kirjoita <code>forward(100)</code> ja paina <strong>Suorita</strong>. Sitten kokeile eri lukuja (30, 150, 200).",
+        hint: "💡 Kokeile eri lukuja: forward(30), forward(150), forward(200). Mitä tapahtuu?",
+        starterCode: "# Piirrä viiva:\n",
+        validate(log, lines) {
+            if (lines.length < 1) return { ok: false, msg: "💡 Et ole vielä piirtänyt viivaa. Kirjoita <code>forward(100)</code> ja paina Suorita!" };
+            return { ok: true, msg: "✅ Piirsit viivan! Hyvä alku! Kokeile eri lukuja ja siirry sitten eteenpäin." };
+        }
+    },
+    {
+        title: "2. Kääntyminen ↔️",
+        theory: `<p>Konna osaa myös kääntyä! <code>left(90)</code> kääntää 90 astetta vastapäivään. <code>right(90)</code> kääntää myötäpäivään.</p>
+<p>Täysi ympyrä on 360°. 90° on neljännesympyrä — eli <strong>suorakulma</strong>.</p>
+<p>Jos piirrät viivan, käännät 90° ja piirrät toisen viivan — saat L-kirjaimen!</p>`,
+        example: `<pre># Piirrä kaksi viivaa 90° kulmassa:
+forward(100)
+left(90)
+forward(50)</pre>`,
+        task: "Piirrä <strong>kaksi viivaa eri suuntiin</strong> käyttäen <code>left(90)</code> tai <code>right(90)</code>. L-kirjain riittää!",
+        hint: "💡 forward(100), left(90), forward(50) tekee L-kirjaimen.",
+        starterCode: "# Piirrä kaksi viivaa eri suuntiin:\n",
+        validate(log, lines) {
+            if (lines.length < 2) return { ok: false, msg: "💡 Tarvitset kaksi viivaa! Kirjoita forward, sitten left(90), sitten toinen forward." };
+            const angles = lines.map(l => Math.round(l.angle % 360 / 10) * 10);
+            const unique = new Set(angles);
+            if (unique.size < 2) return { ok: false, msg: "💡 Viivojen pitää olla eri suuntiin! Lisää <code>left(90)</code> ennen toista viivaa." };
+            return { ok: true, msg: "✅ Piirsit kaksi viivaa eri suuntiin! Tästä se lähtee." };
+        }
+    },
+    {
+        title: "3. Silmukka 🔁",
+        theory: `<p>Entä jos haluat piirtää <strong>monta viivaa</strong> yhdellä kertaa? Tähän tarvitaan <strong>silmukkaa</strong>!</p>
+<p>Silmukka <code>for i in range(8):</code> toistaa sisällä olevat komennot 8 kertaa. Jokaisella kierroksella piirrät viivan ja käännät:</p>`,
+        example: `<pre># Piirrä 8 viivaa — näyttää melkein ympyrältä!
+for i in range(8):
+    forward(50)
+    left(45)   # 360 / 8 = 45 astetta</pre>`,
+        task: "Käytä <strong>silmukkaa</strong> piirtääksesi vähintään 6 viivaa. Kokeile eri lukuja <code>range(6)</code>, <code>range(8)</code>, <code>range(12)</code> ja muuta kulmaa!",
+        hint: "💡 for i in range(8): forward(50); left(45). Kokeile left(60) ja range(6)!",
+        starterCode: "# Piirrä monta viivaa silmukalla:\n",
+        validate(log, lines) {
+            if (lines.length < 6) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Tarvitaan vähintään 6! Kokeile range(8) ja left(45).` };
+            return { ok: true, msg: `✅ Piirsit ${lines.length} viivaa silmukalla! Hienoa logiikkaa!` };
+        }
+    },
+    {
+        title: "4. Neliö 🔲",
+        theory: `<p>Neliössä on <strong>4 samanpituista sivua</strong> ja jokainen kulma on <strong>90°</strong>. Täydellinen silmukkatehtävä!</p>
+<p>Silmukka toistaa samaa 4 kertaa: piirrä viiva, käännä 90°. Tuloksena on neliö.</p>`,
+        example: `<pre># Neliö: 4 kertaa forward + left(90)
+for i in range(4):
+    forward(80)
+    left(90)</pre>`,
+        task: "Piirrä <strong>neliö</strong> käyttäen silmukkaa. Kokeile eri kokoja: 50, 100, 150!",
+        hint: "💡 for i in range(4): forward(80); left(90). Kokeile eri kokoja!",
+        starterCode: "# Piirrä neliö:\n",
+        validate(log, lines) {
+            if (lines.length < 4) return { ok: false, msg: `💡 Neliössä on 4 sivua. Piirsit ${lines.length}. Tarvitset range(4)!` };
+            const has90 = lines.some(l => {
+                const a = Math.round(l.angle % 360 / 10) * 10;
+                return a === 90 || a === 270 || a === -90;
+            });
+            if (!has90) return { ok: false, msg: "💡 Neliön kulmat ovat 90°. Käytä <code>left(90)</code> tai <code>right(90)</code>!" };
+            return { ok: true, msg: "✅ Piirsit neliön! Täydellinen!" };
+        }
+    },
+    {
+        title: "5. Oma funktio 🧩",
+        theory: `<p>Funktio on kuin <strong>resepti</strong> — kirjoitat ohjeen kerran ja voit käyttää sitä uudelleen ja uudelleen!</p>
+<p><code>def nelio():</code> luo uuden funktion. Sen sisällä voit kirjoittaa mitä tahansa koodia. Kun kirjoitat <code>nelio()</code>, kaikki funktion sisällä oleva koodi suoritetaan.</p>
+<p>Jos kutsut <code>nelio()</code>-funktiota kaksi kertaa peräkkäin, <strong>toinen neliö piirtyy samalle paikalle</strong> ensimmäisen päälle. Saadaksesi kaksi erillistä neliötä, <strong>siirrä konnaa niiden välissä</strong> käyttäen <code>penup()</code> (nosta kynä) ja <code>goto(x, y)</code> (siirry uuteen paikkaan).</p>`,
+        example: `<pre># Luo funktio — "neliön resepti"
+def nelio():
+    for i in range(4):
+        forward(80)
+        left(90)
+
+# Piirrä eka neliö
+nelio()
+
+# Siirry sivuun ennen toista neliötä
+penup()
+goto(150, 150)
+pendown()
+
+# Piirrä toinen neliö — eri paikassa!
+nelio()</pre>`,
+        task: "Luo funktio nimeltä <code>nelio()</code>. Kutsu sitä <strong>kaksi kertaa</strong>, mutta <strong>siirrä konnaa välissä</strong> — muuten neliöt piirtyvät päällekkäin!",
+        hint: "💡 def nelio(): ... sitten nelio(), penup(), goto(150, 150), pendown(), nelio(). goto() siirtää konnan uuteen paikkaan!",
+        starterCode: `# Kääri tämä neliö funktion sisään:\nfor i in range(4):\n    forward(80)\n    left(90)\n\n# 1. Lisää def nelio(): ympärille\n# 2. Kutsu nelio() kahdesti\n# 3. Siirrä konnaa penup()/goto()/pendown() välissä\n`,
+        validate(log, lines) {
+            if (lines.length < 8) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Kutsu nelio()-funktiota kahdesti, jotta saat 8 viivaa!` };
+            const has90 = lines.some(l => {
+                const a = Math.round(l.angle % 360 / 10) * 10;
+                return a === 90 || a === 270 || a === -90;
+            });
+            if (!has90) return { ok: false, msg: "💡 Neliön sisällä täytyy olla 90° kulmat. Varmista left(90) funktion sisällä." };
+            return { ok: true, msg: "✅ Funktio toimii! Olet juuri luonut oman Python-komennon!" };
+        }
+    },
+    {
+        title: "6. Parametri: koko 📏",
+        theory: `<p>Entä jos haluat eri kokoisia neliöitä? <strong>Parametri</strong> on syöte funktioon — voit kertoa funktiolle, minkä kokoisen neliön haluat!</p>
+<p><code>def nelio(koko):</code> — <code>koko</code> on parametri. Kun kutsut <code>nelio(50)</code>, funktio käyttää arvoa 50. Kun kutsut <code>nelio(100)</code>, funktio käyttää arvoa 100.</p>`,
+        example: `<pre># Funktio parametrilla
+def nelio(koko):
+    for i in range(4):
+        forward(koko)
+        left(90)
+
+nelio(50)   # pieni neliö
+
+penup()
+goto(140, 150)
+pendown()
+
+nelio(100)  # iso neliö eri paikassa
+
+penup()
+goto(280, 150)
+pendown()
+
+nelio(150)  # vielä isompi!</pre>`,
+        task: "Luo funktio <code>nelio(koko)</code> ja kutsu sitä kolmella eri koolla. <strong>Siirrä konnaa välissä</strong>, jotta saat kolme erillistä neliötä!",
+        hint: "💡 def nelio(koko): for i in range(4): forward(koko); left(90). Sitten nelio(50), penup(), goto(140, 150), pendown(), nelio(100) jne.",
+        starterCode: `# Lisää (koko)-parametri tähän funktioon:\ndef nelio():\n    for i in range(4):\n        forward(80)\n        left(90)\n\n# 1. Lisää (koko) def nelio(koko):\n# 2. Korvaa forward(80) → forward(koko)\n# 3. Kutsu eri ko'oilla ja siirrä välissä\n`,
+        validate(log, lines) {
+            if (lines.length < 8) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Kutsu nelio()-funktiota vähintään 2 kertaa!` };
+            const dists = lines.map(l => Math.round(l.dist / 10) * 10);
+            const unique = new Set(dists);
+            if (unique.size < 2) return { ok: false, msg: "💡 Eri kokoisia neliöitä! Kutsu nelio(50), nelio(100) jne. Nyt kaikki ovat saman kokoisia." };
+            return { ok: true, msg: "✅ Eri kokoisia neliöitä! Parametrit hallussa!" };
+        }
+    },
+    {
+        title: "7. Parametri: kulma 🔄",
+        theory: `<p>Nyt lisätään toinen parametri: <strong>kulma</strong>! Mitä tapahtuu jos neliön kulma ei ole 90°? Kokeillaan!</p>
+<p><code>def nelio(koko, kulma):</code> — nyt funktiolla on kaksi sisääntuloa.</p>
+<p>Jos kulma on 90° → neliö. Jos kulma on 72° → viisisakara. Jos kulma on 60° → kuusikulmio!</p>`,
+        example: `<pre># Funktio kahdella parametrilla
+def nelio(koko, kulma):
+    for i in range(4):
+        forward(koko)
+        left(kulma)
+
+home()  # aloita keskeltä
+nelio(80, 90)  # neliö
+
+penup(); goto(250, 150); pendown()
+nelio(80, 72)  # ? kokeile!</pre>`,
+        task: "Luo funktio <code>nelio(koko, kulma)</code>. Kokeile eri kulmia: 90, 80, 70, 60, 120. Mitä eri muotoja saat?",
+        hint: "💡 def nelio(koko, kulma): ... left(kulma). Kokeile nelio(80, 70) — mikä muoto se on?",
+        starterCode: `# Lisää (kulma)-parametri:\ndef nelio(koko):\n    for i in range(4):\n        forward(koko)\n        left(90)\n\n# 1. Lisää (kulma) → def nelio(koko, kulma):\n# 2. Korvaa left(90) → left(kulma)\n# 3. Kokeile nelio(80, 90) ja nelio(80, 72)\n`,
+        validate(log, lines) {
+            const turns = log.filter(e => e.type === 'turn');
+            const angles = turns.map(t => Math.round((Math.abs(t.angle) % 360) / 5) * 5);
+            const hasNon90 = angles.some(a => a !== 90 && a !== 180 && a !== 0);
+            if (!hasNon90 && lines.length < 4) return { ok: false, msg: "💡 Materiaaleja puuttuu. Kopio funktio ja koita uudestaan." };
+            if (!hasNon90 && lines.length >= 4) return { ok: false, msg: "💡 Kokeile eri kulmaa! 90° tekee neliön, mutta mitä tekee 80°, 70° tai 120°?" };
+            return { ok: true, msg: "✅ Kokeilit eri kulmia! Löysitkö uusia muotoja?" };
+        }
+    },
+    {
+        title: "8. Funktio silmukassa 🔥",
+        theory: `<p>Nyt yhdistetään kaikki! Kutsu funktiota <strong>silmukan sisällä</strong> ja käännä konnaa jokaisella kierroksella.</p>
+<p>Tällä tekniikalla voit tehdä <strong>kukkakuvioita</strong>, <strong>mandeja</strong> ja hienoja <strong>symmetrisiä kuvioita</strong>!</p>`,
+        example: `<pre>def nelio(koko, kulma):
+    for i in range(4):
+        forward(koko)
+        left(kulma)
+
+# 5 neliötä, jokaisen välissä käännös
+for i in range(5):
+    nelio(80, 72)
+    left(72)   # 360/5 = 72 astetta</pre>`,
+        task: "Kutsu neliö-funktiota <strong>silmukan sisällä</strong>. Piirrä vähintään 5 kertaa ja kokeile eri kulmia!",
+        hint: "💡 for i in range(5): nelio(80, 72); left(72). Kokeile range(6) ja left(60)!",
+        starterCode: `# Tässä on funktio aiemmasta:\ndef nelio(koko, kulma):\n    for i in range(4):\n        forward(koko)\n        left(kulma)\n\n# 1. Kutsu nelio()-funktiota for-silmukassa:\n# 2. Käännä jokaisen neliön välissä left(72)\n`,
+        validate(log, lines) {
+            if (lines.length < 10) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Tarvitaan vähintään 10 (5 neliötä à 4 viivaa). Kutsu nelioa 5+ kertaa!` };
+            const cx = lines.map(l => (l.x1 + l.x2) / 2);
+            const countLeft = cx.filter(x => x < 300).length;
+            const countRight = cx.filter(x => x > 300).length;
+            if (Math.abs(countLeft - countRight) > lines.length * 0.5) {
+                return { ok: false, msg: "💡 Neliöt ovat vain yhdellä puolella. Kokeile kääntää left(72) jokaisen neliön välissä!" };
+            }
+            return { ok: true, msg: "✅ Funktio + silmukka = taidetta! Huikea yhdistelmä!" };
+        }
+    },
+    {
+        title: "9. Värit ja ympyrät 🎨",
+        theory: `<p>Turtle osaa muutakin kuin viivoja! <code>circle(40)</code> piirtää ympyrän (säde 40). <code>pencolor("red")</code> vaihtaa viivan värin. <code>pensize(3)</code> muuttaa viivan paksuutta.</p>
+<p>Värejä: <code>"red"</code>, <code>"blue"</code>, <code>"green"</code>, <code>"yellow"</code>, <code>"purple"</code>, <code>"orange"</code></p>`,
+        example: `<pre># Värikäs kukka ympyröillä
+def teralehti():
+    pencolor("purple")
+    circle(20)
+    forward(30)
+
+for i in range(6):
+    teralehti()
+    left(60)
+
+pencolor("yellow")
+circle(15)  # keskus</pre>`,
+        task: "Käytä <strong>värejä ja ympyröitä</strong>. Tee oma versio kukasta tai keksi uusi värikäs kuvio!",
+        hint: "💡 Kokeile pencolor(\\\"red\\\"), circle(30), ja silmukkaa. Yhdistele vapaasti!",
+        starterCode: "# Värit ja ympyrät:\n",
+        validate(log, lines) {
+            const circles = log.filter(e => e.type === 'circle');
+            const colors = log.filter(e => e.type === 'color');
+            if (circles.length < 1) return { ok: false, msg: "💡 Et ole vielä piirtänyt ympyrää. Kokeile <code>circle(30)</code>!" };
+            if (colors.length < 1) return { ok: false, msg: "💡 Kokeile vaihtaa väriä: <code>pencolor(\"red\")</code>. Tee värikkäämpi!" };
+            return { ok: true, msg: `✅ ${circles.length} ympyrää, ${colors.length} väriä! Värikästä!` };
+        }
+    },
+    {
+        title: "10. Vapaa taideteos ✨",
+        theory: `<p>Olet oppinut valtavasti! Nyt on aika yhdistää kaikki oppimasi: <strong>funktiot, parametrit, silmukat, ympyrät ja värit</strong>.</p>
+<p>Inspiraatiota:</p>
+<ul style="margin-left:1.2em;line-height:1.8;">
+<li>🌀 <strong>Spiraali:</strong> <code>for i in range(30): nelio(i*5, 91)</code></li>
+<li>❄️ <strong>Lumihiutale:</strong> 6 sakaraa, jokaisessa pieniä haaroja</li>
+<li>⭐ <strong>Tähtitaivas:</strong> monta pientä tähteä eri paikoissa</li>
+<li>🏠 <strong>Talo ja puutarha:</strong> neliö + kolmio + kukkia</li>
+</ul>`,
+        example: `<pre># Spiraali — yksi rivi!
+def nelio(koko):
+    for i in range(4):
+        forward(koko)
+        left(91)
+
+for i in range(30):
+    nelio(i * 5)</pre>`,
+        task: "Luo <strong>oma taideteos</strong> käyttäen kaikkia oppimiasi taitoja. Ei sääntöjä — ole luova!",
+        hint: "💡 Kokeile spiraalia: def nelio(koko): for i in range(4): forward(koko); left(91). Sitten for i in range(30): nelio(i*5).",
+        starterCode: "# Oma taideteos — kaikki taidot käyttöön:\n",
+        validate(log, lines) {
+            return { ok: true, msg: "✅ Upea taideteos! Olet oppinut piirtämään Pythonilla — funktiot, silmukat, parametrit ja värit. Olet nyt Turtle-mestari! 🐢🏆" };
+        }
+    },
+    {
+        title: "11. Muuttujat 📦",
+        theory: `<p><strong>Muuttuja</strong> on kuin laatikko, johon voit tallentaa arvon ja käyttää sitä myöhemmin!</p>
+<p><code>koko = 80</code> tallentaa luvun 80 muuttujaan <code>koko</code>. Kun kirjoitat <code>forward(koko)</code>, se on sama kuin <code>forward(80)</code>.</p>
+<p>Muuttujan <strong>suurin etu</strong>: voit muuttaa arvoa yhdessä paikassa ja koko piirros muuttuu! <code>koko = 50</code> → kaikki <code>forward(koko)</code> muuttuvat 50:ksi.</p>
+<p>Värikin voi olla muuttuja: <code>vari = "red"</code> → <code>pencolor(vari)</code>.</p>`,
+        example: `<pre># Muuttuja tallentaa arvon:
+koko = 80
+vari = "red"
+
+pencolor(vari)
+for i in range(4):
+    forward(koko)
+    left(90)
+
+# Kokeile muuttaa:
+# koko = 50  → pienempi neliö
+# vai = "blue" → sininen!</pre>`,
+        task: "Käytä <strong>muuttujia</strong> koon ja värin hallintaan. Luo muuttujat <code>koko</code> ja <code>vari</code>, ja piirrä neliö käyttämällä niitä!",
+        hint: "💡 koko = 80; vari = \"blue\"; pencolor(vari); for i in range(4): forward(koko); left(90). Muuta koko=50 ja vari=\"red\" — koko piirros muuttuu!",
+        starterCode: `# 1. Luo muuttuja: koko = 80\n# 2. Luo muuttuja: vari = "red"\n# 3. Käytä niitä: pencolor(vari)\n# 4. Piirrä neliö käyttäen forward(koko)\n`,
+        validate(log, lines) {
+            if (lines.length < 4) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Piirrä neliö käyttäen muuttujaa: <code>forward(koko)</code>!` };
+            const colors = log.filter(e => e.type === 'color');
+            if (colors.length < 1) return { ok: false, msg: "💡 Kokeile käyttää värimuuttujaa: <code>vari = \"red\"</code> ja <code>pencolor(vari)</code>!" };
+            return { ok: true, msg: "✅ Muuttujat hallussa! Kokeile muuttaa <code>koko</code> ja <code>vari</code> arvoja — yksi muutos muuttaa koko piirroksen!" };
+        }
+    },
+    {
+        title: "12. Monta funktiota 🏗️",
+        theory: `<p>Voit luoda <strong>useita funktioita</strong> ja käyttää niitä yhdessä rakentaaksesi monimutkaisempia asioita!</p>
+<p>Nyt opit <code>def kolmio(koko):</code> — kolmio on kuin neliö, mutta siinä on 3 sivua ja kulma on 120° (ei 90°).</p>
+<p>Kun yhdistät <code>nelio()</code>- ja <code>kolmio()</code>-funktiot, voit piirtää <strong>talon</strong>: seinä (neliö) + katto (kolmio)!</p>`,
+        example: `<pre># Kaksi funktiota — talo!
+def nelio(koko):
+    for i in range(4):
+        forward(koko)
+        left(90)
+
+def kolmio(koko):
+    for i in range(3):
+        forward(koko)
+        left(120)
+
+# Seinä
+nelio(80)
+
+# Siirry kattoa varten
+penup()
+goto(300, 200)  # seinän yläreunaan
+pendown()
+
+# Katto
+kolmio(80)</pre>`,
+        task: "Luo <strong>kaksi funktiota</strong>: <code>nelio(koko)</code> ja <code>kolmio(koko)</code>. Piirrä talo: neliö seinäksi ja kolmio katoksi sen päälle!",
+        hint: "💡 def nelio(koko): for i in range(4): forward(koko); left(90). def kolmio(koko): for i in range(3): forward(koko); left(120). Piirrä neliö, siirry ylös, piirrä kolmio.",
+        starterCode: `# Luo nelio()- ja kolmio()-funktiot:\ndef nelio(koko):\n    for i in range(4):\n        forward(koko)\n        left(90)\n\n# 1. Luo kolmio()-funktio (3 sivua, 120° kulma)\n# 2. Piirrä neliö (seinä)\n# 3. Siirry penup()/goto() ylös\n# 4. Piirrä kolmio (katto)\n`,
+        validate(log, lines) {
+            if (lines.length < 7) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Taloon tarvitaan 7 viivaa (4 seinää + 3 kattoa)!` };
+            const angles = log.filter(e => e.type === 'turn').map(t => Math.round((Math.abs(t.angle) % 360) / 10) * 10);
+            const has120 = angles.some(a => a === 120 || a === 240);
+            const has90 = angles.some(a => a === 90 || a === 270);
+            if (!has90) return { ok: false, msg: "💡 Seinän (neliön) kulmat ovat 90°. Varmista left(90) nelio()-funktiossa!" };
+            if (!has120) return { ok: false, msg: "💡 Katon (kolmion) kulmat ovat 120°. Varmista left(120) kolmio()-funktiossa!" };
+            return { ok: true, msg: "✅ Talo valmis! 🏠 Seinä + katto = kaksi funktiota yhdessä!" };
+        }
+    },
+    {
+        title: "13. Satunnaisuus 🎲",
+        theory: `<p>Tietokone osaa <strong>keksiä satunnaisia lukuja</strong>! Tämä on Pythonin <code>random</code>-moduuli.</p>
+<p><code>import random</code> tuo satunnaisuus-moduulin käyttöön.</p>
+<p><code>random.randint(10, 100)</code> keksii satunnaisen kokonaisluvun 10:n ja 100:n väliltä. Joka kerta kun ajat koodin, luku on eri!</p>
+<p>Yhdistä satunnaisuus <code>goto()</code>:n kanssa ja saat neliöitä satunnaisiin paikkoihin!</p>`,
+        example: `<pre>import random
+
+# Satunnainen koko ja paikka
+koko = random.randint(20, 100)
+x = random.randint(50, 500)
+y = random.randint(50, 350)
+
+penup()
+goto(x, y)
+pendown()
+nelio(koko)</pre>`,
+        task: "Käytä <code>random.randint()</code> piirtääksesi <strong>5 neliötä satunnaisilla ko'oilla ja satunnaisissa paikoissa</strong>! Joka kerta erilainen!",
+        hint: "💡 import random; for i in range(5): koko = random.randint(10,80); x = random.randint(50,500); goto(x, y); nelio(koko).",
+        starterCode: `# Satunnaiset neliöt:\nimport random\n\ndef nelio(koko):\n    for i in range(4):\n        forward(koko)\n        left(90)\n\n# 1. Piirrä 5 kertaa silmukassa\n# 2. Jokaisella kierroksella: satunnainen koko ja paikka\n# 3. Käytä random.randint() ja goto()\n`,
+        validate(log, lines) {
+            if (lines.length < 15) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Piirrä vähintään 5 neliötä (15+ viivaa)!` };
+            const dists = lines.map(l => Math.round(l.dist / 10) * 10);
+            const unique = new Set(dists);
+            if (unique.size < 2) return { ok: false, msg: "💡 Neliöiden pitäisi olla eri kokoisia! Käytä <code>random.randint(10, 80)</code> koko-muuttujassa." };
+            return { ok: true, msg: "✅ Satunnaiset neliöt! Joka kerta erilainen! 🎲" };
+        }
+    },
+    {
+        title: "14. Ehtolauseet 🔀",
+        theory: `<p><strong>Ehtolause</strong> (<code>if/else</code>) antaa koodin tehdä päätöksiä: "jos tämä on totta, tee tämä... muuten tee tuo".</p>
+<p><code>if i % 2 == 0:</code> tarkoittaa "jos i on jaollinen 2:lla" (eli parillinen). <code>%</code> on jakojäännösoperaattori.</p>
+<p>Näin voit piirtää esimerkiksi <strong>joka toisen neliön eri värillä</strong>!</p>`,
+        example: `<pre># Joka toinen neliö eri värillä
+for i in range(6):
+    if i % 2 == 0:
+        pencolor("red")   # parillinen → punainen
+    else:
+        pencolor("blue")  # pariton → sininen
+    nelio(50)
+    forward(60)</pre>`,
+        task: "Piirrä <strong>6 neliön rivi</strong> jossa joka toinen neliö on eri värinen. Käytä <code>if i % 2 == 0</code>!",
+        hint: "💡 for i in range(6): if i % 2 == 0: pencolor(\"red\") else: pencolor(\"blue\"). Sitten nelio(50) ja forward(60).",
+        starterCode: `# Ehtolause: joka toinen eri värillä:\ndef nelio(koko):\n    for i in range(4):\n        forward(koko)\n        left(90)\n\n# 1. Silmukka 6 kertaa\n# 2. if i % 2 == 0: pencolor(...) else: pencolor(...)\n# 3. Piirrä neliö ja siirry eteenpäin\n`,
+        validate(log, lines) {
+            if (lines.length < 20) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Piirrä 6 neliötä (24 viivaa)!` };
+            const colors = log.filter(e => e.type === 'color').map(c => c.color);
+            const uniqueColors = new Set(colors);
+            if (uniqueColors.size < 2) return { ok: false, msg: "💡 Tarvitaan kaksi eri väriä! Kokeile <code>if i % 2 == 0: pencolor(\"red\") else: pencolor(\"blue\")</code>." };
+            return { ok: true, msg: "✅ Ehtolause hallussa! Joka toinen neliö eri värillä! 🔀" };
+        }
+    },
+    {
+        title: "15. Sisäkkäiset silmukat 🎯",
+        theory: `<p>Silmukan sisällä voi olla <strong>toinen silmukka</strong>! Tätä kutsutaan <strong>sisäkkäisiksi silmukoiksi</strong>.</p>
+<p>Ulompi silmukka liikkuu <strong>riveittäin</strong> (ylhäältä alas), sisempi silmukka piirtää <strong>sarakkeittain</strong> (vasemmalta oikealle). Tuloksena on <strong>ruudukko</strong>!</p>
+<p>Ajatus: "jokaiselle riville piirrä 3 neliötä vierekkäin".</p>`,
+        example: `<pre># 3×3 ruudukko neliöitä
+for rivi in range(3):
+    for sarake in range(3):
+        nelio(30)
+        forward(40)  # siirry oikealle
+    # rivin lopussa: siirry alas ja takaisin vasemmalle
+    backward(120)
+    penup()
+    goto(300, 200 + (rivi+1) * 40)
+    pendown()</pre>`,
+        task: "Piirrä <strong>3×3 ruudukko</strong> pieniä neliöitä käyttäen sisäkkäisiä silmukoita!",
+        hint: "💡 for rivi in range(3): for sarake in range(3): nelio(30); forward(40). Rivin lopussa siirry takaisin ja alas goto():lla.",
+        starterCode: `# Ruudukko sisäkkäisillä silmukoilla:\ndef nelio(koko):\n    for i in range(4):\n        forward(koko)\n        left(90)\n\n# 1. Ulompi silmukka: 3 riviä\n# 2. Sisempi silmukka: 3 neliötä per rivi\n# 3. Siirrä konnaa goto():lla rivien välillä\n`,
+        validate(log, lines) {
+            if (lines.length < 30) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. 3×3 ruudukko tarvitsee 36 viivaa (9 neliötä)!` };
+            return { ok: true, msg: "✅ Ruudukko piirretty! Sisäkkäiset silmukat hallussa! 🎯" };
+        }
+    },
+    {
+        title: "16. Listat 📋",
+        theory: `<p><strong>Lista</strong> on tapa tallentaa monta arvoa yhteen muuttujaan. Se on kuin laatikko täynnä asioita!</p>
+<p><code>varit = ["red", "blue", "green", "yellow"]</code> on lista värejä.</p>
+<p>Voit käydä listan läpi silmukalla: <code>for vari in varit:</code> — jokaisella kierroksella <code>vari</code> saa seuraavan arvon listasta!</p>`,
+        example: `<pre># Väri-lista
+varit = ["red", "blue", "green", "yellow"]
+
+for vari in varit:
+    pencolor(vari)
+    nelio(50)
+    forward(60)</pre>`,
+        task: "Luo <strong>väri-lista</strong> ja käy se läpi silmukalla. Piirrä jokaisella värillä oma neliö!",
+        hint: "💡 varit = [\"red\", \"blue\", \"green\", \"yellow\"]; for vari in varit: pencolor(vari); nelio(50); forward(60).",
+        starterCode: `# Väri-lista:\ndef nelio(koko):\n    for i in range(4):\n        forward(koko)\n        left(90)\n\n# 1. Luo lista: varit = ["red", "blue", "green", "yellow"]\n# 2. Käy lista läpi: for vari in varit:\n# 3. pencolor(vari) ja piirrä neliö\n`,
+        validate(log, lines) {
+            if (lines.length < 12) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Piirrä vähintään 3 neliötä eri väreillä!` };
+            const colors = log.filter(e => e.type === 'color').map(c => c.color);
+            const uniqueColors = new Set(colors);
+            if (uniqueColors.size < 3) return { ok: false, msg: "💡 Tarvitaan vähintään 3 eri väriä! Kokeile listaa: <code>varit = [\"red\", \"blue\", \"green\", \"yellow\"]</code>." };
+            return { ok: true, msg: "✅ Listat toimivat! Monta väriä yhdessä muuttujassa! 📋" };
+        }
+    },
+    {
+        title: "17. Värikäs spiraali 🌈",
+        theory: `<p>Nyt yhdistetään <strong>muuttujat, silmukat ja värit</strong> yhdeksi vaikuttavaksi kuvioksi!</p>
+<p>Idea: piirrä neliöitä silmukassa, mutta <strong>kasvata kokoa</strong> jokaisella kierroksella ja <strong>vaihda väriä</strong> listan avulla. <code>i % len(varit)</code> valitsee värin vuorotellen.</p>
+<p>Lisää vielä <strong>pieni ylimääräinen käännös</strong> (91° eikä 90°) niin saat spiraalin!</p>`,
+        example: `<pre># Värikäs spiraali!
+varit = ["red", "orange", "yellow", "green", "blue", "purple"]
+
+for i in range(30):
+    vari = varit[i % len(varit)]
+    pencolor(vari)
+    for s in range(4):
+        forward(i * 5)
+        left(91)  # 91° → spiraali!</pre>`,
+        task: "Piirrä <strong>värikäs spiraali</strong>! Käytä väri-listaa, kasvavaa kokoa ja 91° käännöstä!",
+        hint: "💡 varit = [\"red\",\"orange\",\"yellow\",\"green\",\"blue\",\"purple\"]; for i in range(30): pencolor(varit[i % 6]); for s in range(4): forward(i*5); left(91).",
+        starterCode: `# Värikäs spiraali:\nvarit = ["red", "orange", "yellow", "green", "blue", "purple"]\n\n# 1. Silmukka 30 kertaa\n# 2. Vaihda väri: pencolor(varit[i % len(varit)])\n# 3. Piirrä neliö kasvavalla koolla: forward(i * 5)\n# 4. Käytä left(91) — spiraaliefekti!\n`,
+        validate(log, lines) {
+            if (lines.length < 60) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Spiraali tarvitsee enemmän! Kokeile range(30).` };
+            const colors = log.filter(e => e.type === 'color').map(c => c.color);
+            const uniqueColors = new Set(colors);
+            if (uniqueColors.size < 3) return { ok: false, msg: "💡 Käytä väri-listaa! <code>varit = [\"red\", \"orange\", ...]</code> ja <code>pencolor(varit[i % 6])</code>." };
+            return { ok: true, msg: "✅ Upea spiraali! 🌈 Värit ja muuttujat yhdessä!" };
+        }
+    },
+    {
+        title: "18. Kukkatarha 🌸",
+        theory: `<p>Nyt rakennetaan <strong>kompositio</strong> — monta funktiota jotka yhdessä muodostavat isomman kokonaisuuden!</p>
+<p>Luo <code>def kukka(vari, x, y):</code> — funktio joka piirtää yhden kukan tiettyyn paikkaan tietyllä värillä.</p>
+<p>Sitten piirrä monta kukkaa eri paikkoihin ja eri väreillä — puutarha!</p>`,
+        example: `<pre># Kukka-funktio
+def kukka(vari, x, y):
+    penup()
+    goto(x, y)
+    pendown()
+    pencolor(vari)
+    # 5 terälehteä
+    for i in range(5):
+        circle(15)
+        left(72)
+    pencolor("yellow")
+    circle(8)  # keskus
+
+# Piirrä puutarha
+kukka("red", 100, 200)
+kukka("blue", 250, 200)
+kukka("purple", 400, 200)</pre>`,
+        task: "Luo <code>kukka(vari, x, y)</code>-funktio ja piirrä <strong>puutarha 3-5 eri värisellä kukalla</strong> eri paikoissa!",
+        hint: "💡 def kukka(vari, x, y): penup(); goto(x,y); pendown(); pencolor(vari); for i in range(5): circle(15); left(72); pencolor(\"yellow\"); circle(8).",
+        starterCode: `# Kukkatarha:\n# 1. Luo kukka(vari, x, y) -funktio\n# 2. Siirry goto(x,y) ja piirrä terälehdet circle()-silmukalla\n# 3. Lisää keltainen keskus circle(8)\n# 4. Kutsu kukkaa eri väreillä ja paikoissa\n`,
+        validate(log, lines) {
+            const circles = log.filter(e => e.type === 'circle');
+            if (circles.length < 6) return { ok: false, msg: `💡 Piirsit ${circles.length} ympyrää. Kukka tarvitsee terälehtiä (circle) ja keskuksen!` };
+            const colors = log.filter(e => e.type === 'color').map(c => c.color);
+            const uniqueColors = new Set(colors);
+            if (uniqueColors.length < 2) return { ok: false, msg: "💡 Käytä eri värejä puutarhassa! Kokeile kukka(\"red\", 100, 200) ja kukka(\"blue\", 250, 200)." };
+            return { ok: true, msg: "✅ Kaunis kukkatarha! 🌸 Kompositio hallussa!" };
+        }
+    },
+    {
+        title: "19. Tähtitaivas ⭐",
+        theory: `<p>Yhdistä <strong>satunnaisuus, funktio ja goto()</strong> luodaksesi tähtitaivaan!</p>
+<p>5-sakarainen tähti piirretään näin: <code>for i in range(5): forward(koko); right(144)</code>.</p>
+<p>Käytä <code>random.randint()</code> valitaksesi satunnaisen paikan ja koon jokaiselle tähdelle. Tulos on <strong>yötaivas täynnä tähtiä</strong>!</p>`,
+        example: `<pre>import random
+
+def tahti(koko, x, y):
+    penup()
+    goto(x, y)
+    pendown()
+    for i in range(5):
+        forward(koko)
+        right(144)
+
+# Tähtitaivas
+for i in range(8):
+    koko = random.randint(10, 30)
+    x = random.randint(50, 550)
+    y = random.randint(30, 200)
+    tahti(koko, x, y)</pre>`,
+        task: "Luo <code>tahti(koko, x, y)</code>-funktio ja piirrä <strong>tähtitaivas</strong> — 8 tähteä satunnaisissa paikoissa!",
+        hint: "💡 def tahti(koko,x,y): penup(); goto(x,y); pendown(); for i in range(5): forward(koko); right(144). Sitten random.randint() paikoille.",
+        starterCode: `# Tähtitaivas:\nimport random\n\ndef tahti(koko, x, y):\n    # 1. Siirry paikkaan\n    # 2. Piirrä 5-sakarainen tähti (right(144))\n\n# 3. Silmukassa 8 kertaa: satunnainen koko ja paikka\n# 4. Kutsu tahti(koko, x, y)\n`,
+        validate(log, lines) {
+            if (lines.length < 20) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Piirrä vähintään 5 tähteä (25 viivaa)!` };
+            return { ok: true, msg: "✅ Tähtitaivas valmis! ⭐ Satunnaisuus + funktio = taidetta!" };
+        }
+    },
+    {
+        title: "20. Maisema 🏆",
+        theory: `<p><strong>Loppuhuipennus!</strong> Olet oppinut valtavasti ja nyt on aika yhdistää <strong>kaikki taidot</strong> yhdeksi isoksi projektiksi.</p>
+<p>Hyödynnä kaikkea oppimaasi:</p>
+<ul style="margin-left:1.2em;line-height:1.8;">
+<li>🧩 <strong>Funktiot</strong> — eri osat maisemassa</li>
+<li>📦 <strong>Muuttujat</strong> — koot, paikat, värit</li>
+<li>🔁 <strong>Silmukat</strong> — toistuvat elementit</li>
+<li>🎲 <strong>Satunnaisuus</strong> — tähdet, kukat</li>
+<li>🎨 <strong>Värit</strong> — taivas, ruoho, talo</li>
+<li>🔀 <strong>Ehtolauseet</strong> — vaihtele värejä</li>
+</ul>`,
+        example: `<pre># Maisema — kaikki taidot yhdessä!
+def nelio(koko):  # seinä
+    for i in range(4): forward(koko); left(90)
+
+def kolmio(koko):  # katto
+    for i in range(3): forward(koko); left(120)
+
+def aurinko(x, y):  # taivaalle
+    goto(x, y); pencolor("yellow"); circle(20)
+
+# Piirrä maisema...
+# 1. Talo (neliö + kolmio)
+# 2. Aurinko taivaalle
+# 3. Ruohoa (vihreitä viivoja)
+# 4. Tähtiä (satunnaisesti)
+# 5. Kukkia puutarhaan</pre>`,
+        task: "Luo <strong>oma maisema</strong> käyttäen kaikkia oppimiasi taitoja! Talo 🏠, aurinko ☀️, puu 🌲, kukkia 🌸, tähtiä ⭐ — valitse itse!",
+        hint: "💡 Yhdistele kaikki funktiot: nelio(), kolmio(), kukka(), tahti(). Käytä goto() siirtymiseen ja värejä!",
+        starterCode: `# 🏆 Oma maisema — kaikki taidot käyttöön!\n\n# 1. Luo tarvittavat funktiot (nelio, kolmio, kukka, tahti, aurinko...)\n# 2. Piirrä maisema: talo, aurinko, ruoho, tähtiä, kukkia\n# 3. Käytä värejä, muuttujia, silmukoita ja satunnaisuutta!\n# 4. Ei sääntöjä — ole luova! 🎨\n`,
+        validate(log, lines) {
+            if (lines.length < 15) return { ok: false, msg: "💡 Lisää elementtejä! Talo, aurinko, ruoho... käytä kaikkia oppimiasi taitoja!" };
+            return { ok: true, msg: "🏆 Hienoa! Olet suorittanut peruskurssin! Jatketaan nyt edistyneisiin taitoihin: rekursio, fraktaalit ja matemaattiset käyrät! 🐢✨" };
+        }
+    },
+    {
+        title: "21. Monikulmiot 🏛️",
+        theory: `<p>Neliö on 4 sivua, kolmio 3 sivua. Mutta mitä jos <strong>sivujen määrä</strong> olisi parametrina!</p>
+<p>Sääntö on yksinkertainen: <code>kulma = 360 / sivut</code>. Neliö: 360/4 = 90°. Kuusikulmio: 360/6 = 60°.</p>
+<p>Yhdellä funktiolla voit piirtää <strong>minkä tahansa</strong> monikulmion!</p>`,
+        example: `<pre>def polygooni(sivut, koko):
+    kulma = 360 / sivut
+    for i in range(sivut):
+        forward(koko)
+        left(kulma)
+
+polygooni(4, 50)   # neliö
+penup(); goto(450, 200); pendown()
+polygooni(6, 40)   # kuusikulmio</pre>`,
+        task: "Luo funktio <code>polygooni(sivut, koko)</code> ja piirrä vähintään 3 eri monikulmiota (esim. 4, 6, 8 sivua) eri paikoissa!",
+        hint: "💡 def polygooni(sivut, koko): kulma = 360 / sivut; for i in range(sivut): forward(koko); left(kulma). Sitten kutsu eri sivumäärillä.",
+        starterCode: `# Monikulmio: sivujen määrä parametrina\n# 1. Luo def polygooni(sivut, koko):\n# 2. kulma = 360 / sivut\n# 3. for i in range(sivut): forward(koko); left(kulma)\n# 4. Piirrä 3+ eri monikulmiota goto()-sijoitusten avulla\n`,
+        validate(log, lines) {
+            const turns = log.filter(e => e.type === 'turn');
+            const angles = new Set(turns.map(t => Math.round((Math.abs(t.angle) % 360))));
+            const polyAngles = [45, 60, 72, 90, 108, 120, 135, 144];
+            const hasMany = polyAngles.filter(a => angles.has(a)).length;
+            if (lines.length < 16) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Piirrä useampi monikulmio (3+)!` };
+            if (hasMany < 3) return { ok: false, msg: "💡 Tarvitaan vähintään 3 eri monikulmiota! Kokeile polygooni(4), polygooni(6) ja polygooni(8)." };
+            return { ok: true, msg: "✅ Monikulmiot hallussa! 360/sivut = käännöskulma! 🏛️" };
+        }
+    },
+    {
+        title: "22. Symmetria 🪞",
+        theory: `<p>Luo <strong>yksi muoto</strong> ja toista se silmukassa kääntämällä konnaa joka kerran.</p>
+<p>Jos käännät <code>360 / n</code> astetta n kertaa, saat <strong>symmetrisen mandalan</strong> joka on peilikuva itselleen!</p>
+<p>Idea: "piirrä yksi terälehti, pyöräytä, toista".</p>`,
+        example: `<pre>def teralehti():
+    circle(20)
+
+for i in range(12):
+    teralehti()
+    left(30)   # 360 / 12 = 30 astetta</pre>`,
+        task: "Luo funktio joka piirtää yhden muodon ja toista se silmukassa kääntämällä konnaa. Tee <strong>symmetrinen mandala</strong> (8+ toistoa)!",
+        hint: "💡 for i in range(12): circle(20); left(30). Tai luota teralehti()-funktio ja kutsu silmukassa.",
+        starterCode: `# Symmetria: toista muotoa kääntämällä\n# 1. Luo funktio joka piirtää yhden teralehden (circle)\n# 2. for i in range(12): teralehti(); left(30)\n# 3. Kokeile eri toistomääriä: 8, 10, 12\n`,
+        validate(log, lines) {
+            const circles = log.filter(e => e.type === 'circle');
+            if (circles.length < 8) return { ok: false, msg: `💡 Piirsit ${circles.length} ympyrää. Symmetrinen mandala tarvitsee 8+ toistoa!` };
+            return { ok: true, msg: "✅ Symmetrinen mandala! Käännös + toisto = kauneutta! 🪞" };
+        }
+    },
+    {
+        title: "23. Viivatyylit ✏️",
+        theory: `<p><code>pensize(s)</code> muuttaa viivan <strong>paksuuden</strong>. Suuri luku = paksu viiva.</p>
+<p><code>penup()</code> + <code>pendown()</code> luovat <strong>väliä</strong> viivojen välille — näin saat <strong>katkoviivan</strong>!</p>
+<p>Kombinaatio: paksu harmaa pohja + ohut keltainen keskilinja = <strong>tie</strong>!</p>`,
+        example: `<pre># Paksu tiepohja
+pensize(10)
+pencolor("gray")
+for i in range(8):
+    forward(50)
+
+# Katkoinen keskilinja
+pensize(2)
+pencolor("yellow")
+for i in range(8):
+    forward(25)
+    penup()
+    forward(25)
+    pendown()</pre>`,
+        task: "Piirrä <strong>tie</strong>! Paksu harmaa pohja (<code>pensize(10)</code>) ja ohut keltainen <strong>katkoviiva</strong> keskellä (penup/pendown).",
+        hint: "💡 pensize(10); pencolor(\"gray\"); piirrä pohja. Sitten pensize(2); pencolor(\"yellow\"); katkoviiva: forward(25); penup(); forward(25); pendown().",
+        starterCode: `# Viivatyylit: pensize + katkoviivat\n# 1. pensize(10) ja harmaa: piirrä tiepohja\n# 2. pensize(2) ja keltainen\n# 3. Katkoviiva: forward(25); penup(); forward(25); pendown()\n`,
+        validate(log, lines) {
+            const penups = log.filter(e => e.type === 'penup');
+            if (penups.length < 3) return { ok: false, msg: "💡 Katkoviiva tarvitsee penup()/pendown()-paria! Piirrä viiva, nosta kynä, jätä väli, laske kynä." };
+            if (lines.length < 8) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Piirrä pidempi tie!` };
+            return { ok: true, msg: "✅ Viivatyylit hallussa! pensize + katkoviivat = upea tie! ✏️" };
+        }
+    },
+    {
+        title: "24. Rekursio 🌿",
+        theory: `<p><strong>Rekursio</strong> = funktio joka kutsuu <strong>itseään</strong>!</p>
+<p>Tarvitset kaksi asiaa: <strong>perustapaus</strong> (milloin lopettaa: <code>if syvys == 0: return</code>) ja <strong>rekursiivinen askel</strong> (kutsu itseään pienemmällä arvolla).</p>
+<p>Tällä tekniikalla piirretään <strong>fraktaalit</strong> — luonnon muotoja kuten puut ja lumihiutaleet!</p>`,
+        example: `<pre>def haarautuva(syvys, pituus):
+    if syvys == 0:
+        return
+    forward(pituus)
+    left(30)
+    haarautuva(syvys - 1, pituus * 0.7)
+    right(60)
+    haarautuva(syvys - 1, pituus * 0.7)
+    left(30)
+    backward(pituus)
+
+haarautuva(4, 80)</pre>`,
+        task: "Luo <strong>rekursiivinen funktio</strong> joka kutsuu itseään! Lisää <code>syvys</code>-parametri ja perustapaus (<code>if syvys == 0: return</code>).",
+        hint: "💡 if syvys == 0: return. forward(pituus); left(30); haarautuva(syvys-1, pituus*0.7); right(60); haarautuva(syvys-1, pituus*0.7); ...",
+        starterCode: `# Rekursio: funktio kutsuu itseään\n# 1. def haarautuva(syvys, pituus):\n# 2. Perustapaus: if syvys == 0: return\n# 3. forward(pituus)\n# 4. left(30); haarautuva(syvys-1, pituus*0.7); right(60)\n# 5. haarautuva(syvys-1, pituus*0.7); left(30); backward(pituus)\n# 6. Kutsu: haarautuva(4, 80)\n`,
+        validate(log, lines) {
+            if (lines.length < 20) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Kasvata rekursion syvyyttä (kokeile syvys=5)!` };
+            return { ok: true, msg: "✅ Rekursio hallussa! Funktio kutsuu itseään = haarautuva taide! 🌿" };
+        }
+    },
+    {
+        title: "25. Fraktaalipuu 🌳",
+        theory: `<p>Rakennetaan <strong>fraktaalipuu</strong>: runko haarautuu kahteen oksaan, jokainen oksa haarautuu uudelleen — ja niin edelleen!</p>
+<p><code>pensize(syvys)</code> tekee rungosta paksun ja oksista ohuita.</p>
+<p>Jokainen haara piirtää itsensä uudelleen pienempana — <strong>luonnon imitaatio koodilla</strong>!</p>`,
+        example: `<pre>def puu(syvys, pituus):
+    if syvys == 0:
+        return
+    pensize(syvys)
+    forward(pituus)
+    left(25)
+    puu(syvys - 1, pituus * 0.75)
+    right(50)
+    puu(syvys - 1, pituus * 0.75)
+    left(25)
+    backward(pituus)
+
+puu(6, 80)</pre>`,
+        task: "Luo <strong>fraktaalipuu</strong>! Trunki haarautuu kahteen oksaan, jotka haarautuvat uudelleen. Käytä <code>pensize(syvys)</code> paksulle runkolle!",
+        hint: "💡 def puu(syvys, pituus): pensize(syvys); forward(pituus); left(25); puu(syvys-1, pituus*0.75); right(50); puu(syvys-1, pituus*0.75); ...",
+        starterCode: `# Fraktaalipuu\n# 1. def puu(syvys, pituus):\n# 2. if syvys == 0: return\n# 3. pensize(syvys); forward(pituus)\n# 4. left(25); puu(syvys-1, pituus*0.75); right(50)\n# 5. puu(syvys-1, pituus*0.75); left(25); backward(pituus)\n# 6. Kutsu: puu(6, 80)\n`,
+        validate(log, lines) {
+            if (lines.length < 30) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Puu tarvitsee useamman haarauksen (kokeile syvys=6)!` };
+            return { ok: true, msg: "✅ Fraktaalipuu valmis! 🌳 Rekursio imitoi luonnon!" };
+        }
+    },
+    {
+        title: "26. Koch-levy 📐",
+        theory: `<p><strong>Koch-levy</strong>: korvaa jokainen viivaseg먼트 neljällä pienemmällä segmentillä, muodostaen 60° huipun.</p>
+<p>Jokaisella rekursiotaasolla viivoja on 4 kertaa enemmän! Tasolla 3: 4³ = 64 viivaa.</p>
+<p>Kolme Koch-levyä = <strong>Koch-lumihiutale</strong>!</p>`,
+        example: `<pre>def koch(syvys, pituus):
+    if syvys == 0:
+        forward(pituus)
+        return
+    pituus = pituus / 3
+    koch(syvys - 1, pituus)
+    left(60)
+    koch(syvys - 1, pituus)
+    right(120)
+    koch(syvys - 1, pituus)
+    left(60)
+    koch(syvys - 1, pituus)
+
+koch(3, 300)</pre>`,
+        task: "Luo <strong>Koch-levyn</strong>! Korvaa jokainen viiva neljällä pienemmällä (60° huippu). Käytä rekursiota ja kokeile tasot 2, 3, 4!",
+        hint: "💡 def koch(syvys, pituus): if syvys==0: forward(pituus); return. pituus=pituus/3; koch(syvys-1,pituus); left(60); koch(syvys-1,pituus); right(120); ...",
+        starterCode: `# Koch-levy (rekursiivinen)\n# 1. def koch(syvys, pituus):\n# 2. if syvys == 0: forward(pituus); return\n# 3. pituus = pituus / 3\n# 4. koch(syvys-1, pituus); left(60); koch(syvys-1, pituus)\n# 5. right(120); koch(syvys-1, pituus); left(60); koch(syvys-1, pituus)\n# 6. Kutsu: koch(3, 300)\n`,
+        validate(log, lines) {
+            if (lines.length < 20) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Koch-levy haarautuu paljon (kokeile syvys=3 tai 4)!` };
+            return { ok: true, msg: "✅ Koch-levy! 📐 Jokainen viiva → 4 uutta. Fraktaalien voima!" };
+        }
+    },
+    {
+        title: "27. Sierpinski-kolmio 🔺",
+        theory: `<p><strong>Sierpinski-kolmio</strong>: jaa kolmio kolmeen puoleen, jätä <strong>keskinen</strong> pois, ja toista pienemmille.</p>
+<p>Jokaisella tasolla kolmioiden määrä kolminkertaistuu! Tasolla 4: 3⁴ = 81 kolmiota.</p>
+<p>Yksi <strong>ikuisesti toistuva</strong> fraktaali — matemaattinen klassikko!</p>`,
+        example: `<pre>def sierpinski(syvys, koko):
+    if syvys == 0:
+        for i in range(3):
+            forward(koko)
+            left(120)
+        return
+    puoli = koko / 2
+    sierpinski(syvys - 1, puoli)
+    forward(puoli)
+    sierpinski(syvys - 1, puoli)
+    left(120)
+    sierpinski(syvys - 1, puoli)
+    left(120)
+    sierpinski(syvys - 1, puoli)
+    left(120)
+
+sierpinski(4, 200)</pre>`,
+        task: "Luo <strong>Sierpinski-kolmion</strong>! Kolmio jaetaan kolmeen pienempään, keskinen jätetään pois. Toista rekursiivisesti!",
+        hint: "💡 def sierpinski(syvys, koko): perustapaus piirtää kolmion. puoli=koko/2; sierpinski(syvys-1,puoli); forward(puoli); sierpinski(syvys-1,puoli); left(120); ...",
+        starterCode: `# Sierpinski-kolmio (rekursiivinen)\n# 1. def sierpinski(syvys, koko):\n# 2. Perustapaus: piirrä kolmio (3 x forward(koko), left(120))\n# 3. puoli = koko / 2\n# 4. sierpinski(syvys-1, puoli); forward(puoli)\n# 5. sierpinski(syvys-1, puoli); left(120); sierpinski(syvys-1, puoli)\n# 6. left(120); sierpinski(syvys-1, puoli); left(120)\n# 7. Kutsu: sierpinski(4, 200)\n`,
+        validate(log, lines) {
+            if (lines.length < 30) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Sierpinski haarautuu paljon (kokeile syvys=4)!` };
+            return { ok: true, msg: "✅ Sierpinski-kolmio! 🔺 Kolme pientä, keskinen pois. Ikuinen fraktaali!" };
+        }
+    },
+    {
+        title: "28. Ruusunkäyrä 🌀",
+        theory: `<p><strong>Polaarikoordinaatit</strong>: sijoita pisteet ympyrän ympäri käyttäen <code>math.sin</code> ja <code>math.cos</code>.</p>
+<p><strong>Ruusunkäyrä</strong>: <code>r = a * sin(k * kulma)</code>. Kun k = 2 saat neljäteräisen ruusun, k = 3 kolmeteräisen.</p>
+<p><code>x = keskus + r * cos(kulma)</code> ja <code>y = keskus - r * sin(kulma)</code> muuntaa polaarikoordinaatit ruudun koordinaateiksi!</p>`,
+        example: `<pre>import math
+
+# Neljäteräinen ruusu (k = 2)
+for i in range(361):
+    kulma = math.radians(i)
+    r = 120 * math.sin(2 * kulma)
+    x = 300 + r * math.cos(kulma)
+    y = 200 - r * math.sin(kulma)
+    if i == 0:
+        penup()
+        goto(x, y)
+        pendown()
+    else:
+        goto(x, y)</pre>`,
+        task: "Käytä <code>math.sin</code>/<code>math.cos</code> piirtääksesi <strong>ruusunkäyrän</strong>! Kokeile eri <code>k</code>-arvoja (2, 3, 4) ja katso miten terät muuttuvat!",
+        hint: "💡 import math; for i in range(361): kulma=math.radians(i); r=120*math.sin(2*kulma); x=300+r*cos(kulma); y=200-r*sin(kulma); goto(x, y).",
+        starterCode: `# Ruusunkäyrä (polaarikoordinaatit)\nimport math\nkeskus_x = 300\nkeskus_y = 200\n\n# 1. for i in range(361):\n# 2. kulma = math.radians(i)\n# 3. r = 120 * math.sin(2 * kulma)\n# 4. x = keskus_x + r * math.cos(kulma)\n# 5. y = keskus_y - r * math.sin(kulma)\n# 6. goto(x, y)  (alkuun penup/pendown)\n`,
+        validate(log, lines) {
+            if (lines.length < 50) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Ruusunkäyrä tarvitsee paljon pisteitä (kokeile range(361))!` };
+            return { ok: true, msg: "✅ Ruusunkäyrä! 🌀 Math-sin/cos + polaarikoordinaatit = matemaattinen taide!" };
+        }
+    },
+    {
+        title: "29. Väri-graduaatti 🌅",
+        theory: `<p><strong>Graduaatti</strong>: väri ei vaihda äkillisesti vaan <strong>virtaa hitaasti</strong> toiseen väriin.</p>
+<p>Tee tämä listalla: jokaisella kierroksella <code>i % len(varit)</code> valitsee seuraavan värin listasta. Kun listassa on monta väriä, siirtymä näyttää <strong>sileältä</strong>.</p>
+<p>Kombinoi kaarevan liikkeen kanssa → <strong>auringonlasku</strong> tai <strong>rainbow-spiraali</strong>!</p>`,
+        example: `<pre>varit = ["red", "orange", "yellow", "green", "cyan", "blue", "purple"]
+
+for i in range(60):
+    pencolor(varit[i % len(varit)])
+    pensize(3)
+    forward(10)
+    left(9)</pre>`,
+        task: "Tee <strong>väri-graduaatti</strong>! Vaihtele väriä hitaasti väri-listalla (<code>i % len(varit)</code>) ja piirrä kaareva, värikäs kuvio!",
+        hint: "💡 varit = [\"red\",\"orange\",\"yellow\",\"green\",\"cyan\",\"blue\",\"purple\"]; for i in range(60): pencolor(varit[i % len(varit)]); forward(10); left(9).",
+        starterCode: `# Väri-graduaatti\n# 1. Luo väri-lista: ["red","orange","yellow","green","cyan","blue","purple"]\n# 2. for i in range(60):\n# 3. pencolor(varit[i % len(varit)])\n# 4. pensize(3); forward(10); left(9)\n# 5. Kokeile eri käännöskulmia!\n`,
+        validate(log, lines) {
+            const colors = log.filter(e => e.type === 'color').map(c => c.color);
+            const uniqueColors = new Set(colors);
+            if (lines.length < 20) return { ok: false, msg: `💡 Piirsit ${lines.length} viivaa. Graduaatti tarvitsee enemmän!` };
+            if (uniqueColors.size < 5) return { ok: false, msg: `💡 Vain ${uniqueColors.size} eri väriä. Graduaatissa väri vaihtuu hitaasti — käytä i % len(varit) pitkällä listalla!` };
+            return { ok: true, msg: "✅ Väri-graduaatti! 🌅 Värit virtaavat hitaasti kuin auringonlasku!" };
+        }
+    },
+    {
+        title: "30. Mestari-teos 👑",
+        theory: `<p><strong>Loppuhuipennus!</strong> Nyt yhdistät <strong>kaikki</strong> mitä olet oppinut — peruskurssista edistyneisiin taitoihin:</p>
+<ul style="margin-left:1.2em;line-height:1.8;">
+<li>🌿 <strong>Rekursio</strong> — puut, Koch, Sierpinski</li>
+<li>🏛️ <strong>Monikulmiot & symmetria</strong> — mandalat, polygoonit</li>
+<li>🌀 <strong>Polaarit</strong> — ruusunkäyrät (math sin/cos)</li>
+<li>🌈 <strong>Väri-graduaatit</strong> — hitaasti virtaavat värit</li>
+<li>✏️ <strong>Viivatyylit</strong> — pensize, katkoviivat</li>
+<li>🎲 <strong>Satunnaisuus</strong> — tähdet, kukat</li>
+</ul>
+<p>Valitse aihe ja rakenna mestari-teos!</p>`,
+        example: `<pre># Mestari-teos: yhdistele vapautta!
+# 🌳 Fraktaalipuu + 🌈 väri-graduaatti oksissa
+# 🌀 Ruusunkäyrä taustalle
+# 🎲 Satunnaiset tähdet yläpuolelle
+# 📐 Koch-reuna alareunaan
+#
+# Ei sääntöjä — ole luova ja yhdistele
+# kaikki oppimasi taidot yhteen!</pre>`,
+        task: "Luo <strong>mestari-teos</strong>! Yhdistä vähintään 3 eri edistynyttä taitoa (esim. fraktaali + graduaatti + symmetria). Piirrä runsas, vaikuttava kuvio!",
+        hint: "💡 Yhdistele: fraktaalipuu + Koch + ruusunkäyrä + mandala. Lisää värejä, pensizea ja satunnaisuutta!",
+        starterCode: `# 👑 MESTARI-TEOS — kaikki taidot käyttöön!\n\n# Voit yhdistää vapaasti:\n# 🌳 Fraktaalipuu + 📐 Koch + 🌀 Ruusunkäyrä\n# 🪞 Mandala + 🎲 Satunnaisuus + 🌈 Väri-graduaatti\n# 🏛️ Monikulmiot + ✏️ Viivatyylit\n\n# 1. Luo tarvittavat funktiot (myös rekursiiviset!)\n# 2. Yhdistele vähintään 3 eri taitoa\n# 3. Värejä, pensizea, satunnaisuutta\n# 4. Ei sääntöjä — ole mestari! 🎨\n`,
+        validate(log, lines) {
+            const circles = log.filter(e => e.type === 'circle');
+            const total = lines.length + circles.length;
+            if (total < 40) return { ok: false, msg: "💡 Mestari-teos vaatii runsaasti elementtejä! Yhdistele fraktaalit, rekursio, värit ja symmetria." };
+            const colors = log.filter(e => e.type === 'color').map(c => c.color);
+            const uniqueColors = new Set(colors);
+            if (uniqueColors.size < 2) return { ok: true, msg: "👑 MESTARI-TEOS valmis! Olet hallinnut rekursion, fraktaalit, polaarit, symmetrian ja värit. Lisää värejä teoksesta vielä vaikuttavampi! 🐢✨" };
+            return { ok: true, msg: "👑 TÄYLLÄYMMÄRRYS! Olet nyt Turtle-MESTARI! Olet hallinnut: funktiot, rekursion, fraktaalit, polaarit, symmetrian, väri-graduaatit ja satunnaisuuden. 🐢✨🏆" };
+        }
+    }
+];
+
+let pyodide = null;
+let currentStep = 0;
+let turtleReady = false;
+const passedSteps = new Set(JSON.parse(localStorage.getItem('turtleKouluPassed') || '[]'));
+function savePassedSteps() { localStorage.setItem('turtleKouluPassed', JSON.stringify([...passedSteps])); }
+
+// ── Pyodide Init ──
+async function initPyodide() {
+    try {
+        pyodide = await loadPyodide();
+        await initTurtleBridge();
+        await new Promise(r => setTimeout(r, 500));
+        document.getElementById('loading-screen').style.display = 'none';
+        document.getElementById('app').style.display = '';
+        buildStepDots();
+        const hashStep = parseInt(window.location.hash.replace('#',''));
+        goToStep(isNaN(hashStep) ? 0 : Math.max(0, Math.min(STEPS.length - 1, hashStep - 1)));
+    } catch(e) {
+        document.querySelector('.loading-content p').textContent = 'Virhe 😢 Päivitä sivu!';
+    }
+}
+
+async function initTurtleBridge() {
+    await pyodide.runPythonAsync(`
+from js import document
+_canvas = document.getElementById("turtle-canvas")
+_ctx = _canvas.getContext("2d")
+_w = _canvas.width
+_h = _canvas.height
+
+_turtle_x = _w / 2
+_turtle_y = _h / 2
+_turtle_angle = 0
+_turtle_pen = True
+_turtle_color = "#4fc3f7"
+_turtle_size = 2
+_turtle_log = []
+
+import math
+
+def forward(n):
+    global _turtle_x, _turtle_y
+    rad = math.radians(_turtle_angle)
+    nx = _turtle_x + n * math.cos(rad)
+    ny = _turtle_y - n * math.sin(rad)
+    if _turtle_pen:
+        _ctx.beginPath()
+        _ctx.moveTo(_turtle_x, _turtle_y)
+        _ctx.lineTo(nx, ny)
+        _ctx.strokeStyle = _turtle_color
+        _ctx.lineWidth = _turtle_size
+        _ctx.stroke()
+    _turtle_log.append({"type": "line", "dist": n, "angle": _turtle_angle})
+    _turtle_x, _turtle_y = nx, ny
+
+def backward(n):
+    forward(-n)
+
+def left(a):
+    global _turtle_angle
+    _turtle_angle = (_turtle_angle + a) % 360
+    _turtle_log.append({"type": "turn", "angle": a})
+
+def right(a):
+    global _turtle_angle
+    _turtle_angle = (_turtle_angle - a) % 360
+    _turtle_log.append({"type": "turn", "angle": -a})
+
+def penup():
+    global _turtle_pen
+    _turtle_pen = False
+    _turtle_log.append({"type": "penup"})
+
+def pendown():
+    global _turtle_pen
+    _turtle_pen = True
+    _turtle_log.append({"type": "pendown"})
+
+def pensize(s):
+    global _turtle_size
+    _turtle_size = s
+
+def pencolor(c):
+    global _turtle_color
+    _turtle_color = c
+    _turtle_log.append({"type": "color", "color": c})
+
+def goto(x, y):
+    global _turtle_x, _turtle_y
+    if _turtle_pen:
+        _ctx.beginPath()
+        _ctx.moveTo(_turtle_x, _turtle_y)
+        _ctx.lineTo(x, y)
+        _ctx.strokeStyle = _turtle_color
+        _ctx.lineWidth = _turtle_size
+        _ctx.stroke()
+    _turtle_x, _turtle_y = x, y
+
+def setpos(x, y):
+    goto(x, y)
+
+def home():
+    global _turtle_x, _turtle_y, _turtle_angle
+    _turtle_x = _w / 2
+    _turtle_y = _h / 2
+    _turtle_angle = 0
+
+def circle(r):
+    global _turtle_x, _turtle_y
+    _ctx.beginPath()
+    _ctx.arc(_turtle_x, _turtle_y, r, 0, 2*math.pi)
+    _ctx.strokeStyle = _turtle_color
+    _ctx.lineWidth = _turtle_size
+    _ctx.stroke()
+    _turtle_log.append({"type": "circle", "radius": r})
+
+def t_clear():
+    _ctx.clearRect(0, 0, _w, _h)
+    home()
+`);
+    turtleReady = true;
+}
+
+function getTurtleLog() {
+    try {
+        return JSON.parse(pyodide.runPython('import json; json.dumps(_turtle_log)'));
+    } catch(e) { return []; }
+}
+function getLogLines(log) {
+    return log.filter(e => e.type === 'line').map(l => ({
+        angle: l.angle, dist: l.dist,
+        x1: 0, x2: 0, y1: 0, y2: 0
+    }));
+}
+
+function clearCanvas() {
+    if (pyodide) pyodide.runPython('t_clear()');
+}
+
+function clearWorkspace() {
+    document.getElementById('code-editor').value = STEPS[currentStep].starterCode;
+    clearCanvas();
+    hideFeedback();
+}
+
+function hideFeedback() {
+    const fb = document.getElementById('feedback-box');
+    fb.className = ''; fb.style.display = 'none'; fb.innerHTML = '';
+}
+
+function showFeedback(ok, msg) {
+    const fb = document.getElementById('feedback-box');
+    fb.className = ok ? 'success' : 'hint';
+    fb.style.display = 'block';
+    fb.innerHTML = msg;
+}
+
+async function runCode() {
+    if (!pyodide) return;
+    const code = document.getElementById('code-editor').value;
+    clearCanvas();
+    pyodide.runPython('_turtle_log = []; home()');
+    try {
+        await pyodide.runPythonAsync(code);
+    } catch(e) {
+        showFeedback(false, '❌ Virhe koodissa: ' + (e.message || String(e)));
+        return;
+    }
+    const log = getTurtleLog();
+    const lines = log.filter(e => e.type === 'line');
+    const step = STEPS[currentStep];
+    const result = step.validate(log, lines);
+    showFeedback(result.ok, result.msg);
+    if (result.ok) {
+        passedSteps.add(currentStep);
+        savePassedSteps();
+        document.getElementById('btn-next').disabled = false;
+        updateStepDots();
+        playFanfare();
+        launchConfetti();
+    }
+}
+
+function goToStep(n) {
+    currentStep = n;
+    if (window.location.hash !== '#' + (n + 1)) {
+        history.replaceState(null, '', '#' + (n + 1));
+    }
+    const step = STEPS[n];
+    document.getElementById('step-title').textContent = step.title;
+    document.getElementById('step-theory').innerHTML = step.theory;
+    document.getElementById('step-example').innerHTML = step.example;
+    document.getElementById('step-task').innerHTML = step.task;
+    document.getElementById('step-hint').innerHTML = step.hint;
+    document.getElementById('code-editor').value = step.starterCode;
+    document.getElementById('step-label').textContent = `Vaihe ${n+1} / ${STEPS.length}`;
+    hideFeedback();
+    clearCanvas();
+    document.getElementById('btn-prev').disabled = (n === 0);
+    document.getElementById('btn-next').textContent = (n === STEPS.length - 1) ? '🏆 Valmis!' : 'Seuraava ▶';
+    document.getElementById('btn-next').disabled = !passedSteps.has(n);
+    updateStepDots();
+    document.getElementById('instructions-pane').scrollTop = 0;
+}
+
+function nextStep() {
+    if (currentStep < STEPS.length - 1) goToStep(currentStep + 1);
+}
+function prevStep() {
+    if (currentStep > 0) goToStep(currentStep - 1);
+}
+
+window.addEventListener('hashchange', () => {
+    const hashStep = parseInt(window.location.hash.replace('#',''));
+    if (!isNaN(hashStep)) {
+        const target = Math.max(0, Math.min(STEPS.length - 1, hashStep - 1));
+        if (target !== currentStep) goToStep(target);
+    }
+});
+
+function buildStepDots() {
+    const container = document.getElementById('step-dots');
+    container.innerHTML = '';
+    for (let i = 0; i < STEPS.length; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'step-dot';
+        dot.title = STEPS[i].title;
+        dot.onclick = () => goToStep(i);
+        container.appendChild(dot);
+    }
+}
+
+function updateStepDots() {
+    const dots = document.querySelectorAll('.step-dot');
+    dots.forEach((d, i) => {
+        d.className = 'step-dot';
+        if (passedSteps.has(i)) d.classList.add('passed');
+        if (i === currentStep) d.classList.add('active');
+        else if (i < currentStep) d.classList.add('done');
+    });
+}
+
+// ── Fanfare Sound Effect ──
+function playFanfare() {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const notes = [
+            { freq: 523.25, start: 0.0,  dur: 0.15 },
+            { freq: 659.25, start: 0.12, dur: 0.15 },
+            { freq: 783.99, start: 0.24, dur: 0.15 },
+            { freq: 1046.50, start: 0.36, dur: 0.4 },
+        ];
+        notes.forEach(n => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.value = n.freq;
+            gain.gain.setValueAtTime(0, ctx.currentTime + n.start);
+            gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + n.start + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + n.start + n.dur);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + n.start);
+            osc.stop(ctx.currentTime + n.start + n.dur + 0.05);
+        });
+        setTimeout(() => ctx.close(), 1500);
+    } catch(e) {}
+}
+
+// ── Confetti Effect ──
+function launchConfetti() {
+    const canvas = document.getElementById('confetti-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const particles = [];
+    const colors = ['#e2b714', '#00d26a', '#4fc3f7', '#b388ff', '#ff6b6b', '#ff9800'];
+    for (let i = 0; i < 120; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            w: Math.random() * 10 + 5,
+            h: Math.random() * 6 + 3,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            vx: (Math.random() - 0.5) * 4,
+            vy: Math.random() * 3 + 2,
+            rotation: Math.random() * 360,
+            rotSpeed: (Math.random() - 0.5) * 10
+        });
+    }
+    let frame = 0;
+    const maxFrames = 150;
+    function animate() {
+        if (frame >= maxFrames) { ctx.clearRect(0, 0, canvas.width, canvas.height); return; }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = 1 - (frame / maxFrames);
+            ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+            ctx.restore();
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.05;
+            p.rotation += p.rotSpeed;
+        });
+        frame++;
+        requestAnimationFrame(animate);
+    }
+    animate();
+}
+
+// ── Tab-to-Indent ──
+document.addEventListener('DOMContentLoaded', () => {
+    const editor = document.getElementById('code-editor');
+    if (!editor) return;
+    editor.addEventListener('paste', function(e) {
+        e.preventDefault();
+        showFeedback(false, '✋ Koodikoulussa koodi pitää kirjoittaa itse, jotta se tarttuu sormiin! Liittäminen on estetty.');
+    });
+    editor.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            const start = this.selectionStart;
+            const end = this.selectionEnd;
+            const indent = '    ';
+            this.value = this.value.substring(0, start) + indent + this.value.substring(end);
+            this.selectionStart = this.selectionEnd = start + indent.length;
+        }
+    });
+});
+
+initPyodide();
+</script>
+<canvas id="confetti-canvas"></canvas>
+</body>
+</html>

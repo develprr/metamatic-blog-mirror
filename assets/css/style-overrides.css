@@ -1,0 +1,726 @@
+.flag-icon {
+  width: 1.3em;
+  height: 0.9em;
+  vertical-align: middle;
+  margin-right: 0.15em;
+  margin-top: -0.15em;
+  border-radius: 2px;
+  box-shadow: 0 0 0 0.5px rgba(0,0,0,0.12);
+}
+
+.post-list-li {
+  display: flex;
+  flex-direction: row;
+}
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.post-meta img {
+  margin-bottom: 5px;
+}
+.post-meta .date {
+  flex-grow: 1;
+}
+.post-image {
+  max-width: 200px;
+  min-width: 200px;
+  aspect-ratio: 16 / 9;
+  padding-right: 20px;
+  overflow: hidden;
+}
+
+.post-image img, .post-image video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #eee;
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .post-list-li {
+    flex-direction: column-reverse;
+  }
+  .post-image {
+    max-width: initial;
+    min-width: initial;
+    aspect-ratio: 16 / 9;
+    padding-right: initial;
+    width: 100%;
+    padding-bottom: 20px;
+  }
+}
+
+.post-list-li-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-grow: 1;
+}
+
+.post-list-li-content h3 {
+  display: flex;
+  align-items: flex-end;
+}
+
+.post-list-li-content .list-listen-button {
+  max-width: 30px;
+  max-height: 30px;
+  margin-left: 10px;
+  margin-top: -2px;
+  cursor: pointer;
+  transition:
+    width 0.5s ease-in-out,
+    height 0.5s ease-in-out;
+}
+.post-list-li-content .audio-span {
+  cursor: pointer;
+}
+.post-list-li-content .instruction-span {
+  cursor: pointer;
+}
+
+.post-list-li-content a {
+  flex-grow: 1;
+}
+
+.yt-layout-body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  background-color: white !important;
+}
+
+body {
+  background-color: white !important;
+}
+
+.site-header {
+  background-color: white;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  height: 56px;
+  top: 0;
+  left: 0;
+}
+
+.yt-app {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 56px - 40px);
+  height: calc(100dvh - 56px - 40px);
+  margin-top: 56px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  max-width: 1400px;
+  width: 100%;
+  background: #fff;
+}
+
+.site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  height: 40px;
+  background: #fff;
+  border-top: 1px solid #eee;
+}
+
+/* Override wrapper max-width for YT layout */
+.yt-app .wrapper {
+  max-width: 100%;
+}
+
+/* Main content area - flex column: sticky header + scrollable body */
+.yt-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Sticky header bar - title + listen button, does NOT scroll */
+.yt-header-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  flex-shrink: 0;
+  gap: 20px;
+}
+
+.yt-header-right {
+  flex-shrink: 0;
+}
+
+/* Scrollable article body */
+.yt-article-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 20px 40px;
+}
+
+/* Welcome screen */
+.yt-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #555;
+  flex: 1;
+}
+.yt-welcome h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+.yt-subtitle {
+  color: #888;
+  font-size: 1.1rem;
+}
+
+/* Article display */
+.yt-article {
+  max-width: 100%;
+}
+.yt-title {
+  font-size: 1.5rem;
+  margin: 0;
+  line-height: 1.3;
+  font-weight: 700;
+  flex: 1;
+  min-width: 0;
+}
+.yt-date {
+  color: #888;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+.yt-hero-video {
+  margin-bottom: 25px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #eee;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+.yt-hero-video video, .yt-hero-video img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.yt-audio-controls {
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background: #f0f4ff;
+  border-radius: 8px;
+  display: inline-block;
+}
+.yt-listen-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #1a73e8;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 6px 16px;
+  background: #f0f4ff;
+  border-radius: 20px;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.yt-listen-btn:hover {
+  color: #0d47a1;
+  background: #dce6ff;
+}
+.yt-article-body {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  max-width: 900px;
+  color: #222;
+}
+.yt-article-body img {
+  max-width: 100%;
+  border-radius: 8px;
+  background: #eee;
+}
+.yt-article-body .video {
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #eee;
+}
+.yt-article-body h2 {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+.yt-article-body pre {
+  border-radius: 8px;
+}
+.yt-article-body blockquote {
+  border-left: 4px solid #1a73e8;
+  padding-left: 15px;
+  color: #555;
+}
+.yt-loading {
+  color: #888;
+  font-style: italic;
+  padding: 40px 0;
+}
+.yt-error {
+  color: #c44;
+  padding: 40px 0;
+}
+
+/* Sidebar - article list */
+.yt-sidebar {
+  width: 380px;
+  min-width: 380px;
+  max-width: 380px;
+  border-left: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+}
+.yt-sidebar-header {
+  padding: 15px 15px 5px;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.yt-sidebar-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Audio Player Animation */
+.rotating-img {
+  display: block;
+  animation: rotate360 4s linear infinite;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+@keyframes rotate360 {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.yt-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+.yt-item {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: background 0.15s ease;
+  gap: 12px;
+  align-items: flex-start;
+  background: #fff;
+}
+.yt-item:hover {
+  background: #eee;
+}
+.yt-item-active {
+  background: #e3f0ff;
+  border-left: 4px solid #1a73e8;
+  padding-left: 11px;
+}
+.yt-item-active:hover {
+  background: #d5e6fa;
+}
+.yt-item-active .yt-item-title {
+  color: #1a73e8;
+}
+.yt-item-thumb {
+  width: 120px;
+  min-width: 120px;
+  height: 68px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ddd;
+}
+.yt-item-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.yt-item-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ccc, #aaa);
+}
+.yt-item-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.yt-item-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0 0 4px;
+  line-height: 1.3;
+  color: #111;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.yt-item-date {
+  font-size: 0.75rem;
+  color: #888;
+}
+.yt-item-cats {
+  font-size: 0.7rem;
+  color: #1a73e8;
+  margin-top: 2px;
+}
+
+/* Sidebar toggle button (mobile) */
+.yt-sidebar-toggle {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  background: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+}
+
+/* Header toggle button (mobile) */
+.yt-header-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 5px 0 5px 10px;
+  margin: 0 0 0 10px;
+  color: #333;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.yt-layout-body .yt-header-toggle {
+  display: inline-block;
+}
+
+/* Fix margin when toggle button is the last child instead of link */
+.site-nav .page-link:last-of-type {
+  margin-right: 0 !important;
+}
+
+.yt-layout-body .yt-articles-link {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .yt-layout-body .yt-articles-link {
+    display: inline-block;
+  }
+}
+
+@media screen and (min-width: 601px) {
+  .yt-layout-body .header-main-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .yt-layout-body .site-nav {
+    position: static;
+  }
+}
+
+.yt-layout-body .site-footer {
+  height: 40px;
+  border-top: 1px solid #eee;
+  background: #fff;
+  padding: 0;
+}
+
+.yt-layout-body .footer-main-inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  height: 40px;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.yt-layout-body .footer-item {
+  white-space: nowrap;
+}
+
+@media screen and (min-width: 901px) {
+  .yt-layout-body .yt-header-toggle {
+    display: none;
+  }
+}
+
+/* Align site header with yt-app layout on larger screens */
+@media screen and (min-width: 901px) {
+  .yt-layout-body .site-header .wrapper,
+  .yt-layout-body .site-footer .wrapper {
+    max-width: calc(1400px - 80px);
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .yt-layout-body .header-main-inner {
+    flex: 1;
+    min-width: 0;
+  }
+  .yt-app {
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: border-box;
+  }
+  .yt-main {
+    padding-left: 40px;
+  }
+  .yt-sidebar {
+    padding-right: 40px;
+  }
+  .yt-header-bar {
+    padding-left: 0;
+    padding-right: 20px;
+  }
+  .yt-article-scroll {
+    padding-left: 0;
+    padding-right: 20px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .yt-layout-body .site-header .wrapper,
+  .yt-layout-body .site-footer .wrapper {
+    max-width: none;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .yt-app {
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: border-box;
+  }
+  .yt-main {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .yt-header-bar {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .yt-article-scroll {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .yt-sidebar {
+    position: fixed;
+    right: -400px;
+    top: 56px;
+    bottom: 0;
+    z-index: 50;
+    transition: right 0.3s ease;
+    box-shadow: -3px 0 15px rgba(0,0,0,0.1);
+    width: 340px;
+    min-width: 340px;
+    max-width: 340px;
+  }
+  .yt-sidebar-open {
+    right: 0;
+  }
+  .yt-sidebar-toggle {
+    display: block;
+  }
+  .yt-header-toggle {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .site-footer {
+    display: none !important;
+  }
+  .yt-app {
+    height: calc(100vh - 56px) !important;
+    height: calc(100dvh - 56px) !important;
+  }
+  .yt-article-scroll {
+    padding-bottom: 80px !important;
+  }
+  .yt-layout-body .yt-articles-link {
+    display: block;
+  }
+  .yt-layout-body .yt-header-toggle {
+    display: none !important;
+  }
+}
+
+/* When sidebar is open on mobile, add padding to the header to prevent overlap */
+@media screen and (max-width: 900px) {
+  .yt-app.sidebar-is-open .yt-header-bar {
+    padding-right: 360px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .yt-app.sidebar-is-open .yt-header-bar {
+    padding-right: 20px; /* On very small screens, maybe just hide the button or let it be covered? Let's just keep it minimal. */
+  }
+  .yt-sidebar {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    right: -100%;
+  }
+  .yt-item-thumb {
+    width: 90px;
+    min-width: 90px;
+    height: 50px;
+  }
+  .yt-app {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .yt-main {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .yt-layout-body .site-header .wrapper,
+  .yt-layout-body .site-footer .wrapper {
+    max-width: none;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .yt-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* =============================================
+   References Card Layout
+   ============================================= */
+
+.references-intro {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: #444;
+}
+
+.references-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.reference-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  border: 1px solid #eaeaea;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reference-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.reference-logo {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.reference-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.reference-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.reference-content h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.25rem;
+  color: #222;
+}
+
+.reference-content h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.reference-content h3 a:hover {
+  color: #1a73e8;
+}
+
+.reference-content p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #555;
+  flex: 1;
+}
+
+@media screen and (max-width: 600px) {
+  .references-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Fix for code animations to prevent chopping and maintain aspect ratio */
+.clip.code video {
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+  background: #fff !important;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}

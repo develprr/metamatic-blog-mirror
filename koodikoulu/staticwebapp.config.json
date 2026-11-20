@@ -1,0 +1,29 @@
+{
+  "routes": [
+    {
+      "route": "/api/*",
+      "allowedRoles": ["anonymous", "authenticated"]
+    },
+    {
+      "route": "/.auth/login/github",
+      "allowedRoles": ["anonymous"]
+    },
+    {
+      "route": "/.auth/logout",
+      "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "*",
+      "allowedRoles": ["anonymous", "authenticated"]
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "index.html"
+  },
+  "responseOverrides": {
+    "401": {
+      "redirect": "/.auth/login/github?post_login_redirect_uri={currentRoute}",
+      "statusCode": 302
+    }
+  }
+}

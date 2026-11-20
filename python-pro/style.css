@@ -1,0 +1,440 @@
+/* Python Pro - Olio-ohjelmointi & Edistynyt Python */
+/* Based on Metamatic Koodikoulu theme, with purple Pro accent */
+
+:root {
+    --bg: #0f0e17;
+    --surface: #1a1a2e;
+    --surface2: #16213e;
+    --primary: #b388ff;
+    --primary-glow: rgba(179, 136, 255, 0.25);
+    --green: #00d26a;
+    --green-glow: rgba(0, 210, 106, 0.2);
+    --red: #ff6b6b;
+    --blue: #4fc3f7;
+    --purple: #b388ff;
+    --gold: #e2b714;
+    --text: #fffffe;
+    --text-dim: #a7a9be;
+    --code-bg: #0d1117;
+    --radius: 12px;
+    --sidebar-w: 280px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 44px;
+}
+
+h1, h2, h3 { font-family: 'Fredoka One', cursive; }
+
+.hidden { display: none !important; }
+
+/* Loading Screen */
+#loading-screen {
+    position: fixed; inset: 0; z-index: 1000;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+}
+
+.loading-content { text-align: center; }
+
+.loading-snake {
+    font-size: 60px;
+    animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-15px); }
+}
+
+.loading-content h1 {
+    font-size: 2rem; margin: 16px 0 8px;
+    background: linear-gradient(135deg, var(--primary), var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.loading-content p { color: var(--text-dim); margin-bottom: 24px; }
+
+.loading-bar {
+    width: 300px; height: 6px; background: var(--surface);
+    border-radius: 3px; margin: 0 auto; overflow: hidden;
+}
+
+.loading-bar-fill {
+    width: 30%; height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--blue));
+    border-radius: 3px;
+    animation: load 1.5s ease-in-out infinite;
+}
+
+@keyframes load {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(400%); }
+}
+
+/* App Layout */
+#app { display: flex; min-height: 100vh; }
+
+/* Sidebar */
+#sidebar {
+    width: var(--sidebar-w); background: var(--surface);
+    padding: 20px 16px; position: sticky; top: 0; height: 100vh;
+    overflow-y: auto; display: flex; flex-direction: column;
+    border-right: 1px solid rgba(179, 136, 255, 0.1);
+}
+
+.sidebar-header { text-align: center; margin-bottom: 16px; }
+
+.sidebar-header h1 {
+    font-size: 1.3rem;
+    background: linear-gradient(135deg, var(--primary), var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.sidebar-header .subtitle {
+    font-size: 0.8rem; color: var(--text-dim); margin-top: 4px;
+}
+
+.logo-icon {
+    width: 24px; height: 24px; vertical-align: middle;
+    margin-right: 4px; border-radius: 4px;
+}
+
+.progress-section { margin-bottom: 12px; }
+
+.progress-bar {
+    height: 6px; background: var(--surface2); border-radius: 3px;
+    overflow: hidden; margin-bottom: 4px;
+}
+
+#progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--primary), var(--green));
+    border-radius: 3px; transition: width 0.5s ease;
+}
+
+#progress-text { font-size: 0.75rem; color: var(--text-dim); }
+
+#lesson-list {
+    list-style: none; flex: 1; overflow-y: auto;
+    margin-bottom: 12px;
+}
+
+#lesson-list li {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 12px; border-radius: 8px;
+    cursor: pointer; transition: background 0.2s;
+    margin-bottom: 2px;
+}
+
+#lesson-list li:hover { background: var(--surface2); }
+#lesson-list li.active { background: var(--primary-glow); border: 1px solid var(--primary); }
+#lesson-list li.completed .lesson-num { background: var(--green); }
+
+.lesson-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--surface2); display: flex;
+    align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+}
+
+.lesson-name {
+    flex: 1; font-size: 0.85rem; font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.lesson-stars { font-size: 0.7rem; color: var(--gold); }
+
+.section-divider {
+    padding: 12px 12px 6px; cursor: default;
+    border-bottom: 1px solid var(--primary-glow);
+    margin-top: 8px; margin-bottom: 4px;
+}
+
+.section-divider:hover { background: transparent; }
+
+.section-label {
+    font-size: 0.75rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--primary);
+}
+
+.sidebar-footer { text-align: center; padding-top: 8px; border-top: 1px solid var(--surface2); }
+
+.stars-earned {
+    font-size: 0.85rem; font-weight: 700; color: var(--gold);
+}
+
+/* Main Content */
+#main-content {
+    flex: 1; padding: 40px; max-width: 900px; margin: 0 auto;
+}
+
+/* Welcome Screen */
+.welcome-hero { text-align: center; padding: 60px 20px; }
+.welcome-emoji { font-size: 100px; margin-bottom: 20px; }
+
+.welcome-hero h1 {
+    font-size: 2.5rem; margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--primary), var(--green));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.welcome-hero > p { color: var(--text-dim); font-size: 1.1rem; max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
+
+.welcome-features {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; max-width: 400px; margin: 0 auto 32px;
+}
+
+.feature {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 16px; display: flex; align-items: center; gap: 10px;
+    font-weight: 600;
+}
+
+.feature-icon { font-size: 1.5rem; }
+
+.btn-start {
+    background: linear-gradient(135deg, var(--primary), #9c64ff);
+    color: white; border: none; padding: 16px 32px;
+    font-size: 1.1rem; font-weight: 800; border-radius: 50px;
+    cursor: pointer; font-family: 'Nunito', sans-serif;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--primary-glow);
+}
+
+.back-link { margin-top: 20px; }
+.back-link a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; }
+.back-link a:hover { color: var(--primary); }
+
+/* Lesson View */
+.lesson-header { margin-bottom: 24px; }
+
+#lesson-badge {
+    display: inline-block; background: var(--primary-glow);
+    color: var(--primary); padding: 4px 12px; border-radius: 20px;
+    font-size: 0.8rem; font-weight: 700; margin-bottom: 8px;
+}
+
+#lesson-title { font-size: 1.8rem; margin-bottom: 8px; }
+#lesson-description { color: var(--text-dim); font-size: 1rem; }
+
+/* Theory */
+#theory-section {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 24px; margin-bottom: 24px;
+    border-left: 4px solid var(--blue);
+    line-height: 1.7;
+}
+
+#theory-section h3 { color: var(--blue); margin-bottom: 12px; }
+#theory-section p { margin-bottom: 12px; }
+#theory-section ul, #theory-section ol { margin: 12px 0 12px 24px; }
+#theory-section li { margin-bottom: 6px; }
+
+#theory-section code {
+    background: var(--code-bg); color: var(--primary);
+    padding: 2px 6px; border-radius: 4px; font-size: 0.9rem;
+}
+
+#theory-section pre {
+    background: var(--code-bg); padding: 16px;
+    border-radius: 8px; overflow-x: auto; margin: 12px 0;
+}
+
+#theory-section pre code {
+    background: none; padding: 0; color: var(--green);
+}
+
+/* Challenge */
+.challenge-section h3 { color: var(--primary); margin-bottom: 12px; }
+#challenge-text { color: var(--text-dim); margin-bottom: 16px; line-height: 1.6; }
+#challenge-text code {
+    background: var(--code-bg); color: var(--primary);
+    padding: 2px 6px; border-radius: 4px;
+}
+
+/* Editor */
+.editor-container {
+    border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--surface2); margin-bottom: 16px;
+}
+
+.editor-toolbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 12px; background: var(--surface);
+}
+
+.editor-title { font-size: 0.85rem; color: var(--text-dim); }
+
+.editor-buttons { display: flex; gap: 6px; }
+
+.editor-buttons button {
+    background: var(--surface2); color: var(--text);
+    border: none; padding: 6px 12px; border-radius: 6px;
+    font-size: 0.8rem; cursor: pointer; font-family: 'Nunito', sans-serif;
+    font-weight: 600; transition: background 0.2s;
+}
+
+.editor-buttons button:hover { background: var(--primary-glow); }
+
+.btn-run {
+    background: var(--primary) !important; color: var(--bg) !important;
+}
+
+#code-editor {
+    width: 100%; min-height: 280px; padding: 16px;
+    background: var(--code-bg); color: var(--green);
+    border: none; outline: none; resize: vertical;
+    font-family: 'Courier New', monospace; font-size: 15px;
+    line-height: 1.5; tab-size: 4;
+}
+
+/* Hint */
+.hint-box, #hint-box {
+    background: var(--primary-glow); border: 1px solid var(--primary);
+    border-radius: var(--radius); padding: 16px; margin-bottom: 16px;
+    color: var(--text);
+}
+
+/* Output */
+.output-container {
+    border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--surface2); margin-bottom: 16px;
+}
+
+.output-toolbar {
+    padding: 8px 12px; background: var(--surface);
+    font-size: 0.85rem; color: var(--text-dim);
+}
+
+#output-area {
+    padding: 16px; background: var(--code-bg);
+    color: var(--green); font-family: 'Courier New', monospace;
+    font-size: 14px; min-height: 60px; white-space: pre-wrap;
+}
+
+/* Result */
+.result-box, #result-box {
+    border-radius: var(--radius); padding: 16px;
+    margin-bottom: 16px; font-weight: 700; text-align: center;
+}
+
+#result-box.success {
+    background: var(--green-glow); border: 1px solid var(--green);
+    color: var(--green);
+}
+
+#result-box.fail {
+    background: rgba(255, 107, 107, 0.15); border: 1px solid var(--red);
+    color: var(--red);
+}
+
+/* Navigation */
+.lesson-nav {
+    display: flex; justify-content: space-between; margin-top: 20px;
+}
+
+.lesson-nav button {
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--surface2); padding: 10px 20px;
+    border-radius: 8px; font-size: 0.9rem; cursor: pointer;
+    font-family: 'Nunito', sans-serif; font-weight: 700;
+    transition: background 0.2s;
+}
+
+.lesson-nav button:hover { background: var(--surface2); }
+
+#btn-next {
+    background: var(--primary); color: var(--bg);
+    border-color: var(--primary);
+}
+
+#btn-next:hover { opacity: 0.9; }
+
+/* Confetti */
+#confetti-canvas {
+    position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+}
+
+/* Footer */
+#site-footer {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--surface); padding: 10px 0;
+    text-align: center; z-index: 40;
+    border-top: 1px solid var(--surface2);
+}
+
+.footer-content {
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px; font-size: 0.8rem; color: var(--text-dim);
+}
+
+.footer-brand {
+    font-family: 'Fredoka One', cursive; color: var(--primary);
+    display: flex; align-items: center; gap: 6px;
+}
+
+.footer-separator { color: var(--surface2); }
+
+.footer-company a { color: var(--blue); text-decoration: none; }
+.footer-company a:hover { text-decoration: underline; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    #app { flex-direction: column; }
+
+    #sidebar {
+        width: 100%; height: auto; position: sticky;
+        top: 0; z-index: 50; padding: 12px;
+        flex-direction: column;
+    }
+
+    .sidebar-header h1 { font-size: 1rem; }
+    .sidebar-header .subtitle { display: none; }
+    .progress-section { margin-bottom: 8px; }
+
+    #lesson-list {
+        display: flex; overflow-x: auto; gap: 4px;
+        padding-bottom: 4px;
+    }
+
+    #lesson-list li {
+        flex-shrink: 0; padding: 6px 10px;
+    }
+
+    .lesson-name, .lesson-stars { display: none; }
+
+    .section-divider {
+        flex-shrink: 0; padding: 6px 8px;
+        border-bottom: none; border-right: 1px solid var(--primary-glow);
+        margin: 0;
+    }
+
+    .section-label { font-size: 0.65rem; white-space: nowrap; }
+
+    .sidebar-footer { display: none; }
+
+    #main-content { padding: 16px; padding-bottom: 80px; }
+
+    .welcome-hero { padding: 30px 10px; }
+    .welcome-hero h1 { font-size: 1.8rem; }
+    .welcome-emoji { font-size: 70px; }
+    .welcome-features { grid-template-columns: 1fr; }
+
+    #code-editor { font-size: 13px; min-height: 220px; }
+
+    #site-footer { position: static; margin-top: 20px; }
+    body { padding-bottom: 0; }
+}

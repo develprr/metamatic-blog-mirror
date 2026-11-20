@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metamatic Labs: Python Pro - Olio-ohjelmointi & Edistynyt Python</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-snake"><img src="favicon.ico" alt="M" width="48" height="48"></div>
+            <h1>Metamatic Labs: Python Pro</h1>
+            <p>Ladataan Python-ympäristöä...</p>
+            <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" class="hidden">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h1><img src="favicon.ico" alt="M" class="logo-icon"> Metamatic Labs: Python Pro</h1>
+                <p class="subtitle">Olio-ohjelmointi & Edistynyt Python</p>
+            </div>
+            <div class="progress-section">
+                <div class="progress-bar"><div id="progress-fill"></div></div>
+                <span id="progress-text">0/26 suoritettu</span>
+            </div>
+            <ul id="lesson-list"></ul>
+            <div class="sidebar-footer">
+                <div class="stars-earned">&#11088; <span id="total-stars">0</span> / 78 tähteä</div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main id="main-content">
+            <!-- Welcome Screen -->
+            <div id="welcome-screen">
+                <div class="welcome-hero">
+                    <div class="welcome-emoji">&#128640;</div>
+                    <h1>Tervetuloa Metamatic Labs: Python Pro -kurssille!</h1>
+                    <p>Olet suorittanut Metamatic Labsin perusteet - mahtavaa! Nyt on aika siirtyä seuraavalle tasolle. Opi olio-ohjelmointi, moduulit, virheenkäsittely ja paljon muuta!</p>
+                    <div class="welcome-features">
+                        <div class="feature"><span class="feature-icon">&#129504;</span><span>Olio-ohjelmointi</span></div>
+                        <div class="feature"><span class="feature-icon">&#128230;</span><span>Moduulit & Paketit</span></div>
+                        <div class="feature"><span class="feature-icon">&#128295;</span><span>Virheenkäsittely</span></div>
+                        <div class="feature"><span class="feature-icon">&#127942;</span><span>Iso lopputyö</span></div>
+                    </div>
+                    <button class="btn-start" onclick="startFirstLesson()">&#128640; Aloita Metamatic Labs: Python Pro!</button>
+                    <p class="back-link"><a href="https://metamatic-labs.metamatic.net/koodikoulu/">&#8592; Takaisin perusteisiin</a></p>
+                </div>
+            </div>
+
+            <!-- Lesson View -->
+            <div id="lesson-view" class="hidden">
+                <div class="lesson-header">
+                    <span id="lesson-badge"></span>
+                    <h2 id="lesson-title"></h2>
+                    <p id="lesson-description"></p>
+                </div>
+
+                <div id="theory-section"></div>
+
+                <div class="challenge-section">
+                    <h3>&#127919; Tehtävä</h3>
+                    <div id="challenge-text"></div>
+
+                    <div class="editor-container">
+                        <div class="editor-toolbar">
+                            <span class="editor-title">&#128187; Koodieditori</span>
+                            <div class="editor-buttons">
+                                <button class="btn-hint" onclick="showHint()">&#128161; Vihje</button>
+                                <button class="btn-reset" onclick="resetCode()">&#128260; Nollaa</button>
+                                <button class="btn-run" onclick="runCode()">&#9654;&#65039; Suorita</button>
+                            </div>
+                        </div>
+                        <textarea id="code-editor" spellcheck="false" autocomplete="off"></textarea>
+                    </div>
+
+                    <div id="hint-box" class="hidden"></div>
+
+                    <div class="output-container">
+                        <div class="output-toolbar">&#128424; Tuloste</div>
+                        <pre id="output-area"></pre>
+                    </div>
+
+                    <div id="result-box" class="hidden"></div>
+
+                    <div class="lesson-nav">
+                        <button id="btn-prev" onclick="prevLesson()">&#9664; Edellinen</button>
+                        <button id="btn-next" onclick="nextLesson()">Seuraava &#9654;</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer id="site-footer">
+        <div class="footer-content">
+            <div class="footer-brand"><img src="favicon.ico" alt="M" class="logo-icon"> Metamatic Labs: Python Pro</div>
+            <span class="footer-separator">|</span>
+            <div class="footer-company"><a href="https://www.metamatic.net">metamatic.net</a></div>
+        </div>
+    </footer>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="lessons.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1061 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2026-11-20T16:21:00+02:00</updated><id>/feed.xml</id><title type="html">Metamatic Systems</title><subtitle>Metamatic Systems Ltd.</subtitle><entry><title type="html">DeepSeek Harness: koodauskerhon temppuopas</title><link href="/koodauskerho/ai/deepseek/opas/2026/11/20/deepseek-harness-koodauskerhon-temppuopas.html" rel="alternate" type="text/html" title="DeepSeek Harness: koodauskerhon temppuopas" /><published>2026-11-20T00:00:00+02:00</published><updated>2026-11-20T00:00:00+02:00</updated><id>/koodauskerho/ai/deepseek/opas/2026/11/20/deepseek-harness-koodauskerhon-temppuopas</id><content type="html" xml:base="/koodauskerho/ai/deepseek/opas/2026/11/20/deepseek-harness-koodauskerhon-temppuopas.html"><![CDATA[<p>Koodauskerhossa on asennettu DeepSeek Harness, ja tämä opas kertoo mitä sillä voi tehdä. Mukana on kuvia ja pieni video, joten voit katsoa koko homman kotona myös yksin.</p>
+
+<p>Ensin yksi iso ajatus. Chat-ikkuna, johon olet tottunut, on aivo purkissa: se osaa puhua koodista mutta ei koskaan koske koneesi tiedostoihin. Harness on sama aivo, mutta purkissa on käsivarret: se voi kirjoittaa tiedostoja, ajaa komentoriviä ja lukea virheilmoitukset itse. Agentti = malli + valjaat.</p>
+
+<p><img src="/assets/dsh-landing.png" alt="Uusi istunto: workspace, Standard mode, Workspace Write ja mallivalitsin" /></p>
+
+<h2 id="ensin-kuntoon">Ensin kuntoon</h2>
+
+<p>Tarkista kolme asiaa ennen temppuja.</p>
+
+<p><strong>Malli on valittuna.</strong> Avaa mallivalitsin oikeasta alalaidasta ja valitse listasta OpenRouter-reitin DeepSeek V4 Flash 0423. Ilman avainta lista on tyhjä, joten opettajan antama API-avain pitää olla paikoillaan.</p>
+
+<p><img src="/assets/dsh-model.png" alt="Mallivalitsin: OpenRouter-reitit ja DeepSeek V4 Flash 0423" /></p>
+
+<p><strong>Työhakemisto on kertakäyttökansio.</strong> Vasemman reunan Workspaces kohdasta valitse kansio, joka on tehty vain tätä varten, esimerkiksi <code class="language-plaintext highlighter-rouge">koodauskerho</code> työpöydälle. Älä koskaan valitse kotikansiota, sinne robotti voi kirjoittaa rikki oikeita tavaroita.</p>
+
+<p><strong>Hiekkalaatikko on Workspace Write.</strong> Se näkyy kirjoituslaatikon vasemmassa reunassa. Pidetään se siinä.</p>
+
+<p>Kun avaat sovelluksen ensimmäisen kerran, vastaan tulee Preview Notice eli esikatseluvaroitus. Ohita se Continue-painikkeella, mutta lue se silti: tämä ohjelma on vielä keskeneräinen, joten sen kanssa leikitään turvallisesti.</p>
+
+<p><img src="/assets/dsh-preview.png" alt="Preview Notice: Harness 0.2 on vielä esikatseluvaiheessa" /></p>
+
+<h2 id="temppu-1-robotti-joka-korjaa-itsensä">Temppu 1: robotti joka korjaa itsensä</h2>
+
+<p>Tämä on koko illan show. Anna robotille tehtävä:</p>
+
+<p>text
+Create a lightweight command-line tool with automated unit tests.
+The tool counts words in a text file and works with unicode text.</p>
+
+<p>Robotti tekee suunnitelman, kirjoittaa tiedostot, ajaa testit, saa virheen, lukee virheen ja korjaa itseään. Me kokeiltiin tätä tehtävää oikeasti ja tässä kävi juuri niin.</p>
+
+<p>Eka moka: robotti kirjoitti testin, joka ajoi työkalun väärin, ja testit kaatuivat exit code 1 virheeseen. Robotti ajoi komennon uudestaan toisella tavalla, tajusi että Pythonin suhteelliset importit vaativat toisenlaisen ajutavan, ja korjasi testin itse.</p>
+
+<p>Toka moka: robotti keksi testiin väärän väitteen, se luuli että espanjan kielen sanat häviävät tokenisoinnissa. Sitten se ajoi testin, näki että väite oli totuus, ja muutti väitteen sellaiseksi mitä koodi oikeasti tekee.</p>
+
+<p>Lopputulos: 22 testiä vihreänä ja toimiva komentorivityökalu. Katsokaa hetkiä joissa se epäonnistuu, ja sanokaa ääneen mitä robotti nyt lukee ja miksi. Se on parempi oppitunti kuin yksikään onnistuminen.</p>
+
+<p><img src="/assets/dsh-chat.png" alt="Kysymys ja vastaus: HARNESS-OK yhdessä sekunnissa, 9.7K tokenia" /></p>
+
+<h2 id="temppu-2-trajectory-detiivi">Temppu 2: trajectory-detiivi</h2>
+
+<p>Jokainen istunto tallentuu Trajectory-välilehdelle kuin lentokoneen musta laatikko. Sieltä näkee kaiken: minkä viestin sinä lähetit, mitä lisätietoja ohjelma toimitti mallille, mitä työkalukutsuja tehtiin ja paljonko jokainen askel maksoi tokeneissa.</p>
+
+<p>Avaa jokin valmis istunto, klikkaa Trajectory ja pelatkaa kolmea peliä.</p>
+
+<p>Etsikää hetki jossa robotti teki illan ensimmäisen virheen. Laskekaa montako kertaa se ajoi testit. Ja lukukaa token-lukemia: vain yksi sana vastaukseksi kului melkein kymmenentuhatta tokenia, koska malli sai käyttöönsä ison ohje-paketin ennen ensimmäistäkään vastausta.</p>
+
+<p><img src="/assets/dsh-trajectory.png" alt="Trajectory-välilehti: system, user, context ja assistant-rivit sekä token-palkit" /></p>
+
+<p>Tässä pienellä videolla koko reitti: istunnon avaus, lentotallennin ja hiekkalaatikon valitsin.</p>
+
+<video controls="" preload="metadata" style="width:100%;max-width:960px;border-radius:8px" src="/assets/dsh-walkthrough.mp4"></video>
+
+<h2 id="temppu-3-hiekkalaatikkokoe">Temppu 3: hiekkalaatikkokoe</h2>
+
+<p>Kirjoituslaatikon vasemmasta reunasta löytyy kolme turvatasoa. Kokeilkaa niitä järjestyksessä.</p>
+
+<p><strong>Read Only</strong> on lukutila. Pyytäkää robottia luomaan tiedosto. Se yrittää rehellisesti ja saa kiellon. Tämä on good failure: ohjelma osaa sanoa ei.</p>
+
+<p><strong>Workspace Write</strong> on meidän perustila. Sama pyyntö onnistuu, mutta vain sinä aikana valitussa työkansiossa. Muualle koneelle robotti ei yllä.</p>
+
+<p><strong>Full access</strong> antaa kaiken. Sitä ei käytetä koskaan koodauskerhossa, koska se on sama kuin antaisit roboteille kodin avaimet ja sanoisit “tee mitä haluat”.</p>
+
+<p><img src="/assets/dsh-sandbox.png" alt="Hiekkalaatikon kolme tilaa: Read Only, Workspace Write, Full access" /></p>
+
+<h2 id="temppu-4-sama-aivo-eri-kädet">Temppu 4: sama aivo, eri kädet</h2>
+
+<p>Vasemmasta valikosta löytyy Plugins-sivu. Siellä näkyy mitä kaikkea harness osaa: Subagent antaa roboteille apulaisia, Web search and fetch hakee tietoa verkosta, Shell päättää kuinka kauan yksi komento saa ajaa, ja Automation tasks ajaa tehtäviä ajastimella.</p>
+
+<p>Kokeilkaa kahta. Pyytäkää robottia jakamaan tehtävä kahdelle apulaiselle, esimerkiksi “yksi laskee rivit ja toinen laskee sanat, kertokaa lopuksi kumpi oli nopeampi”. Ja tehkää chores-robotti: “joka ilta kello viisi kirjoita huomisen ruotsin sanat tiedostoon”. Viimeinen temppu saa lapset huutamaan, koska robotti tekee hommia vaikka kone olisi kiinni.</p>
+
+<p><img src="/assets/dsh-plugins.png" alt="Plugins-sivu: Subagent, Web search, Agent loop, Shell ja experimental-pluginit" /></p>
+
+<h2 id="turvallisuuskierros-lopuksi-aina">Turvallisuuskierros, lopuksi aina</h2>
+
+<p>Tämä ohjelma on esikatseluversiota, joten käytetään vain kertakäyttökansioita.</p>
+
+<p>API-avain on aikuisten raha, joten se on opettajan valvoma avain ei koskaan omaa tiliä.</p>
+
+<p>Robotti ei saa koskaan nähdä salasanoja eikä kavereiden henkilötietoja.</p>
+
+<p>Ja muista: oracle valehtelee itsevarmana. Joka kerta kun robotti väittää tehneensä jotain, käykää katsomassa itse. Se on koko tämän oppitunnin tärkein taito.</p>
+
+<p>Hyvää koodausiltaa!</p>]]></content><author><name></name></author><category term="koodauskerho" /><category term="ai" /><category term="deepseek" /><category term="opas" /><summary type="html"><![CDATA[Asennus, itseään korjaava robotti, trajectory-detiivi, hiekkalaatikkokoe ja liitännäiset, screenshots and a walkthrough video for the kids who just installed the harness.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/dsh-landing.png" /><media:content medium="image" url="/assets/dsh-landing.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">We Tried to Build Our Own OpenCode Five Times. We Lost Every Time. Here Is the Ledger.</title><link href="/ai/architecture/python/local%20llm/post-mortem/2026/11/19/we-tried-to-build-our-own-opencode-five-times.html" rel="alternate" type="text/html" title="We Tried to Build Our Own OpenCode Five Times. We Lost Every Time. Here Is the Ledger." /><published>2026-11-19T00:00:00+02:00</published><updated>2026-11-19T00:00:00+02:00</updated><id>/ai/architecture/python/local%20llm/post-mortem/2026/11/19/we-tried-to-build-our-own-opencode-five-times</id><content type="html" xml:base="/ai/architecture/python/local%20llm/post-mortem/2026/11/19/we-tried-to-build-our-own-opencode-five-times.html"><![CDATA[<p>I have a homelab AI stack that runs a voice assistant, a build console, and a fleet of background agents across four machines. For most of 2026 its brain was something I wrote myself. Or rather, five somethings I wrote myself, one after another, each convinced it would be the last one.</p>
+
+<p>It was not the last one. In September 2026 I gave up and made OpenCode itself the engine. This post is the ledger of those five attempts, ranked by how well they survived, because “we tried to build our own OpenCode five times” is a better engineering story than any of the five successes I could write about.</p>
+
+<p>Every date below is verified against <code class="language-plaintext highlighter-rouge">git log --diff-filter=A</code>, because memory is a liar and I checked.</p>
+
+<h2 id="attempt-1-agentloop-the-hand-rolled-engine-february-2026">Attempt 1: AgentLoop, the hand-rolled engine (February 2026)</h2>
+
+<p>The first one was the simplest: a pure hand-written OpenAI-format iteration loop around chat-completions with my own tool dispatcher. First commit 2026-02-02. No framework, no dependency, just a <code class="language-plaintext highlighter-rouge">while</code> loop that appends tool results and calls the model again until it stops asking for tools.</p>
+
+<p>What it grew, instead of architecture, was doctrine. The model hallucinates a tool name? Fuzzy-match it against the registry and suggest the real one. The model gets stubborn and re-calls a blocked tool? A stubbornness guard intercepts it. Parameters arrive under the wrong aliases? A resolver normalizes them before dispatch. Every failure mode I observed in production became a mechanical guard in the dispatcher, not a prompt tweak. Guards over prompts, that was the lesson, and it is still the rule today.</p>
+
+<p><strong>Fate: the survivor.</strong> It never became the coding agent I dreamed of, but it shrank into something honest: the lightweight in-process engine behind the mindmap answerer, the WhatsApp responder, proactive insights. It is the only one of the five still running in production, and it outlived every successor.</p>
+
+<h2 id="attempt-2-the-langgraph-executor-that-literally-called-itself-our-own-opencode-august-2026">Attempt 2: the LangGraph executor that literally called itself “our own OpenCode” (August 2026)</h2>
+
+<p>By summer I wanted the real features: resumable sessions, checkpointed history, human-in-the-loop interrupts. So I built the serious one, on LangGraph, and its docstring says it out loud: <em>“LangGraph-based agent executor (our own OpenCode).”</em> First commit 2026-08-15.</p>
+
+<p>It had everything I thought made OpenCode good. Native tool calling against a local Qwen. PostgresSaver checkpointing, so a session is a resumable thread. <code class="language-plaintext highlighter-rouge">interrupt()</code> for human-in-the-loop, so the agent can pause mid-task and ask me something instead of guessing.</p>
+
+<p>Architecturally it was the most complete of the five. And it is still in use today, as an executor behind plan-node runs and content extractors. But notice the noun: executor. It never became the main coding agent. It knew how to resume a thread, but it did not know how to write code I would trust.</p>
+
+<p><strong>Fate: survived by shrinking.</strong> The most ambitious attempt survived only in a role two sizes below the one it was built for.</p>
+
+<h2 id="attempt-3-the-pydantic-ai-agent-that-served-production-for-six-weeks-august-2026">Attempt 3: the pydantic-ai agent that served production for six weeks (August 2026)</h2>
+
+<p>The third attempt was not a framework choice, it was a job. The deep-reasoning loop of my voice assistant, the one that thinks before it speaks, ran as an in-process pydantic-ai agent with registered tools from 2026-08-03.</p>
+
+<p>This one genuinely worked. Real users (one user, my own voice, but still) got real deep answers for about six weeks. And then, on 2026-09-16, I replaced it. Not with a better version of itself. With a persistent OpenCode session. The commit that flipped the switch is in the repo, and the service itself was finally purged in November.</p>
+
+<p>There is no cleaner epitaph than that: we replaced our imitation with the very thing we were imitating.</p>
+
+<p><strong>Fate: shipped, then displaced by the original.</strong> It worked. That was not the point I was missing.</p>
+
+<h2 id="attempt-4-the-imported-harness-that-passed-every-test-and-shipped-nothing-august-2026">Attempt 4: the imported harness that passed every test and shipped nothing (August 2026)</h2>
+
+<p>The fourth attempt was honest about not being ours: DeepSeek’s open-source agent harness, piloted in August 2026. The executor merged 2026-08-23.</p>
+
+<p>On paper the pilot was a triumph. Twelve of twelve tests green. The local 27B model picked the correct MCP tools on the first turn with zero hallucinated names, which was better than my own dispatcher managed at the time.</p>
+
+<p>And then nothing. The integration into the voice loop got queued, then deferred, then forgotten. The runtime footprint did not survive the next venv rebuild. What remains is a dormant executor file and some profiles on a server, a pilot that passed every test it was given and answered the only question that mattered with silence.</p>
+
+<p><strong>Fate: never left the garage.</strong> Green tests are not a product. And it was never our code anyway, which should have told me something about attempt number five.</p>
+
+<h2 id="attempt-5-the-terminal-ui-a-costume-and-not-an-engine-april-2026">Attempt 5: the terminal UI, a costume and not an engine (April 2026)</h2>
+
+<p>The fifth “attempt” is on the list for honesty, not fairness. In April 2026 I built a Textual terminal app with a chat panel, a tool-call sidebar and a status bar. Visually, it was the most OpenCode-lookalike thing I ever made.</p>
+
+<p>But it had no engine of its own. It was a face bolted onto attempt number one. It got replaced in August by a simpler text body feeding the voice pipeline, which is not even an agent anymore.</p>
+
+<p><strong>Fate: it never tried to be the brain, only the face.</strong> I include it because it is the easiest trap in agent development: a familiar UI feels like progress. It is not progress. It is a costume.</p>
+
+<h2 id="the-pattern-always-one-feature-behind">The pattern: always one feature behind</h2>
+
+<p>Here is what kills me when I read the ledger back. Every attempt died the same death. Each one converged on OpenCode’s feature set, persistent sessions, resumable history, a tool registry, human-in-the-loop, one feature at a time, and always one feature behind the original, because the original was shipping while I was catching up.</p>
+
+<p>The pragmatic turn came in September 2026. Instead of imitating OpenCode, I made an OpenCode server on my deploy machine the engine for everything deep: the voice assistant’s thinking loop, the background build runner, the code-review agent. The day I wired it in, the feature gap stopped being one feature wide, because there was no gap anymore.</p>
+
+<p>And look at which attempts survived: the two that survived did so by shrinking their ambition. The hand-rolled loop became a lightweight engine for narrow responders. The LangGraph executor became a checkpointed executor. Neither pretends to be a coding agent anymore. The three that insisted on being The Engine are gone.</p>
+
+<h2 id="what-i-would-tell-you-before-you-write-attempt-number-one">What I would tell you before you write attempt number one</h2>
+
+<p>If you are about to build your own agent framework because the existing one is not quite yours yet, three questions, in this order:</p>
+
+<ol>
+  <li><strong>Can the existing engine not do this at all?</strong> That is the only bar worth clearing. “We could do it our way” is not a reason, it is a hobby with a roadmap.</li>
+  <li><strong>Are you building the brain or the face?</strong> If the answer is the face, build the face and be honest that the engine question is still open.</li>
+  <li><strong>What will your engine do when the original ships that feature next month?</strong> If your answer involves a sprint, you have already lost the race. You are one feature behind, permanently.</li>
+</ol>
+
+<p>I do not regret any of the five. The hand-rolled loop taught me guards beat prompts. The LangGraph attempt taught me what resumability is actually for. The pydantic-ai agent carried real traffic while I figured the rest out. The failed pilot taught me that green tests certify a demo, not a product. The costume taught me to name what I am building before I build it.</p>
+
+<p>But the sixth attempt should only happen if the existing engine cannot do the job at all. That bar is now written into a knowledge module in the repo, dated and sourced, so the next version of me who gets a clever idea has to argue with it first.</p>
+
+<p>Five attempts, four machines, one honest conclusion: sometimes the most productive line of code you write is the one where you import someone else’s.</p>]]></content><author><name></name></author><category term="AI" /><category term="Architecture" /><category term="Python" /><category term="Local LLM" /><category term="Post-mortem" /><summary type="html"><![CDATA[Between February and September 2026 I built, bought or dressed up five different agent engines trying to replicate OpenCode in my homelab AI stack. A hand-rolled loop, a LangGraph executor, a pydantic-ai voice agent, an imported DeepSeek harness, and a terminal UI that only looked the part. All five converged on the same feature set, one feature behind the original, until I stopped imitating and wired the real thing in. This is the honest post-mortem, with commit hashes.]]></summary></entry><entry><title type="html">How I Created My Own Frankenstein’s Monster to Become an AI Supervillain</title><link href="/ai/infrastructure/homelab/python/2026/08/15/homelab-ai-infrastructure.html" rel="alternate" type="text/html" title="How I Created My Own Frankenstein’s Monster to Become an AI Supervillain" /><published>2026-08-15T00:00:00+03:00</published><updated>2026-08-15T00:00:00+03:00</updated><id>/ai/infrastructure/homelab/python/2026/08/15/homelab-ai-infrastructure</id><content type="html" xml:base="/ai/infrastructure/homelab/python/2026/08/15/homelab-ai-infrastructure.html"><![CDATA[<p>Every respectable supervillain needs a secret lair. Mine started as a tiny Blackstorm gaming PC I bought years ago from Verkkokauppa.</p>
+
+<p>I replaced its tired RTX 3060 Ti with a massive RTX 3090. The original power supply choked on the new GPU. After hours of hacking, I was forced to wire an 850W ATX power supply entirely outside the casing. It looked like a madman’s experiment — blinking mysteriously in a chaotic rainbow of RGB lights, cables spilling across my desk like veins.</p>
+
+<p>I booted it up and typed: <em>“Are you a human-like entity?”</em></p>
+
+<p>The model inside the GPU, Qwen 3.6 27B, went full pace into denial:</p>
+
+<p><em>“No, no noooooo and once again NO! I am just a machine, not human-like at all…”</em></p>
+
+<p>I sat there staring at the screen, then at that exposed, pulsing hardware on my desk, feeling a strange sense of cognitive dissonance. A hacked-together pile of blinking metal was arguing philosophy with me, entirely offline, completely private.</p>
+
+<div class="clip" id="homelab-ai-infrastructure/frankenstein-psu-glow"></div>
+
+<p>That Frankenstein PC was the prototype. It was the moment I realized: if I scaled this, I could build something no SaaS subscription could touch.</p>
+
+<p>Here’s how that blinking pile of parts evolved into a 72GB distributed VRAM agentic swarm — and why it’s an absolute business advantage.</p>
+
+<h2 id="the-lair">The Lair</h2>
+
+<p>When people talk about AI infrastructure today, they mean Kubernetes clusters, Azure regions, or AWS Availability Zones.</p>
+
+<p>I mean four computers in my house.</p>
+
+<p>My Agent Orchestrator doesn’t live on a laptop. It doesn’t live in the cloud. It lives across <strong>four machines</strong>, each doing exactly what it’s good at — coordinated like a single brain.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Machine</th>
+      <th>CPU</th>
+      <th>GPU</th>
+      <th>RAM</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Laptop</strong></td>
+      <td>Intel (laptop)</td>
+      <td>Integrated</td>
+      <td>16GB</td>
+      <td>OpenCode UI, Git, Agent Orchestrator</td>
+    </tr>
+    <tr>
+      <td><strong>Desktop</strong></td>
+      <td>Ryzen 5 5600X</td>
+      <td>RTX 3090 24GB</td>
+      <td>16GB</td>
+      <td>Gitea, systemd services, Proton Bridge, STT/TTS</td>
+    </tr>
+    <tr>
+      <td><strong>Bonobo</strong></td>
+      <td>Ryzen 9 3900</td>
+      <td><strong>2x RTX 3090 24GB</strong> (1 internal + 1 external chassis)</td>
+      <td>64GB</td>
+      <td>Qwen 3.6 27B via llama.cpp (LLM inference)</td>
+    </tr>
+    <tr>
+      <td><strong>Dell</strong></td>
+      <td>2x Xeon Silver 4210R</td>
+      <td>None (Matrox G2000eW3)</td>
+      <td>62GB</td>
+      <td>Autonomous OpenCode server, vector search, persistent sessions</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Four machines. One network. Zero cloud dependency for the core loop.</p>
+
+<h3 id="the-bonobo-problem">The Bonobo Problem</h3>
+
+<p>Bonobo is the muscle — the inference beast. But here’s where the story gets interesting.</p>
+
+<p>I wanted maximum VRAM for running large models. Two RTX 3090s give me 48GB of VRAM — blistering fast for a 27B model, with headroom to run 70B+ quantized models or multiple agents concurrently.</p>
+
+<p>But the second 3090 simply didn’t fit inside Bonobo’s case.</p>
+
+<p>The internal space was maxed out with one card already occupying two slots. So I did what any reasonable supervillain would do: I wired up an external GPU chassis, connected it via long PCIe cables, and plugged in the second card. One 3090 lives inside the case. The other sits beside it like a mechanical heart transplant, pulsing with its own power supply and RGB lights — very much like that original Frankenstein PC on my desk.</p>
+
+<p>Dr. Frankenstein sourced body parts from graveyards. I sourced GPUs from sales. Same energy.</p>
+
+<div class="clip" id="homelab-ai-infrastructure/external-gpu-chassis"></div>
+
+<h2 id="why-four-machines">Why Four Machines?</h2>
+
+<p>A single powerful machine sounds simpler. But splitting workloads gives me <strong>isolation</strong>, <strong>reliability</strong>, and <strong>cost efficiency</strong>.</p>
+
+<p><strong>Laptop:</strong> The brain’s cortex. This is where I interact with the system via OpenCode. It runs the orchestrator logic, manages sessions, and pushes code to Gitea. Lightweight, mobile, always on.</p>
+
+<p><strong>Desktop:</strong> The nervous system. All background services live here — systemd units for email sync, browser automation, WhatsApp bridges, speech synthesis. An RTX 3090 sits idle enough that it could handle embedding models or a dedicated vision assistant. If the desktop reboots, the laptop keeps working. If the laptop sleeps, the desktop keeps running cron jobs.</p>
+
+<p><strong>Bonobo:</strong> The muscle. Two RTX 3090s with 48GB of combined VRAM can run Qwen 3.6 27B locally at blazing speed. When I’m not chatting, it idles cheaply. No per-token API bill. No rate limits.</p>
+
+<p><strong>Dell:</strong> The independent mind. With dual Xeon Silver 4210R CPUs (40 threads) and 62GB of RAM, Dell is its own autonomous OpenCode server — complete with local Qdrant for vector search, systemd-managed services, and persistent sessions that survive laptop shutdowns. While I sleep, Dell keeps thinking.</p>
+
+<p><img class="mermaid-diagram" src="/assets/mermaid/homelab-ai-infrastructure/architecture-overview.png" alt="Mermaid Diagram" /></p>
+
+<div class="clip" id="homelab-ai-infrastructure/laptop-command-center"></div>
+
+<h2 id="the-code-flow-one-way-street">The Code Flow: One-Way Street</h2>
+
+<p>Security matters even in a homelab. I enforce a strict direction for code changes:</p>
+
+<p>Laptop → Gitea (on Desktop) → Desktop pulls + restarts services</p>
+
+<p>Python code never commits from the desktop. The laptop is the only write path. This prevents accidental corruption and keeps deployment predictable.</p>
+
+<h2 id="network-architecture">Network Architecture</h2>
+
+<p>Everything talks over SSH. No exposed ports, no firewalls to configure. Just keys and trust.</p>
+
+<p>Each remote host has a dedicated Python module with SSH tools — <code class="language-plaintext highlighter-rouge">ssh_exec</code>, <code class="language-plaintext highlighter-rouge">ssh_status</code>, <code class="language-plaintext highlighter-rouge">ssh_upload</code> — wrapped in decorators so the LLM can call them like any other tool. The orchestrator doesn’t care if a function runs locally or on Bonobo 2 meters away. It just calls it.</p>
+
+<div class="clip code" id="homelab-ai-infrastructure/code-block-0"></div>
+
+<p>This abstraction is key: <strong>the LLM sees tools, not hosts</strong>. It doesn’t know that <code class="language-plaintext highlighter-rouge">deploy_to_remote</code> involves Git pushes and systemd restarts across two machines. It just knows it can do the thing.</p>
+
+<h2 id="why-not-just-use-a-cloud-vm">Why Not Just Use a Cloud VM?</h2>
+
+<p>I’ve tried. Azure, AWS, Render — all fine for demos. But here’s what happens at scale:</p>
+
+<ol>
+  <li><strong>Data leaves your network:</strong> Every tool call, every email search, every WhatsApp message crosses public internet</li>
+  <li><strong>Latency compounds:</strong> 1800+ tools × round-trip latency = noticeable delay per turn</li>
+  <li><strong>Cost accumulates:</strong> A $5 VPS sounds cheap until you add egress fees, managed databases, and API tokens</li>
+</ol>
+
+<p>Local hardware has one cost: electricity. After that, it’s free forever.</p>
+
+<h2 id="the-numbers-that-matter">The Numbers That Matter</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Cloud Setup</th>
+      <th>My Homelab</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Inference latency</td>
+      <td>~800ms (API)</td>
+      <td>~200ms (local llama.cpp)</td>
+    </tr>
+    <tr>
+      <td>Tool call round-trip</td>
+      <td>~150ms (cloud VM)</td>
+      <td>~20ms (LAN SSH)</td>
+    </tr>
+    <tr>
+      <td>Monthly cost</td>
+      <td>$47-$120</td>
+      <td>~€3.50 (electricity)</td>
+    </tr>
+    <tr>
+      <td>Data privacy</td>
+      <td>Depends on provider</td>
+      <td>100% local</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="what-would-break-if-one-machine-dies">What Would Break If One Machine Dies?</h2>
+
+<p>Good question. The system is designed to degrade gracefully:</p>
+
+<ul>
+  <li><strong>Laptop dies:</strong> Desktop keeps running cron jobs, email sync, browser automation. No inference happens, but nothing breaks.</li>
+  <li><strong>Desktop dies:</strong> Laptop can still chat with the LLM on Bonobo. Background services pause. WhatsApp/email go silent.</li>
+  <li><strong>Bonobo dies:</strong> Orchestrator works locally with cached tools. Inference fails, so no new AI responses. You can switch to a cloud model as fallback.</li>
+  <li><strong>Dell dies:</strong> Vector search pauses, but inference and background services keep running.</li>
+</ul>
+
+<p>No single point of failure kills everything. That’s the point of distribution.</p>
+
+<div class="clip" id="homelab-ai-infrastructure/bonobo-exterior"></div>
+
+<h2 id="the-ultimate-nda-what-happens-in-the-lair-stays-in-the-lair">The Ultimate NDA: What Happens in the Lair, Stays in the Lair</h2>
+
+<p>Every respectable mastermind knows one fundamental truth: you don’t outsource your master plan to a mega-corporation. Right now, the tech industry is in a state of quiet panic. CTOs and founders want the unprecedented speed of AI coding assistants, but they are terrified of pasting their proprietary, million-dollar codebases into Claude or ChatGPT.</p>
+
+<p>They worry about their code being used as training data for future models. They fear corporate espionage or data breaches at third-party vendors. Many are bound by strict NDAs, GDPR, or HIPAA regulations that legally forbid them from sending data outside their own servers.</p>
+
+<p>That is the true superpower of this Frankenstein infrastructure. It isn’t just about raw speed — it’s an impenetrable fortress.</p>
+
+<p>When my agentic swarm goes to work on a client’s project, it operates completely off the grid. The Dell server maps the entire architecture in its vector database, and Bonobo’s dual RTX 3090s churn through complex logic, all without a single byte of telemetry leaving my local network. There are no API calls beamed to servers in California. No cloud vendor scraping your IP.</p>
+
+<p>When you hire me, you get the output of a state-of-the-art AI development team with an absolute, ironclad zero-data-leakage guarantee. I don’t just sign your NDAs — I enforce them at the hardware level.</p>
+
+<h2 id="from-monster-to-mastermind">From Monster to Mastermind</h2>
+
+<p>That Frankenstein PC with its external power supply taught me something important: raw compute is nothing without orchestration. A monster is just brute force until you give it direction.</p>
+
+<p>What I built isn’t a messy pile of hardware. It’s a 100% private, zero-latency autonomous coding agency. When my orchestrator spins up Qwen to write, test, and debug code overnight, there are no rate limits throttling my agents and no cloud telemetry scraping my clients’ intellectual property.</p>
+
+<p>Every enterprise faces three problems right now: exorbitant API costs, vendor lock-in, and the terrifying reality of data leaks. My “villain lair” solves all three.</p>
+
+<p>It turns out, building a supervillain-tier AI home lab isn’t just an eccentric hobby. It’s an uncompromising business advantage.</p>
+
+<p><strong>Do you run your AI tools locally or in the cloud? Let me know what your setup looks like.</strong></p>
+
+<p>Best Regards,
+<a href="https://www.linkedin.com/in/heikki-kupiainen/">Heikki Kupiainen / Metamatic Systems</a></p>]]></content><author><name></name></author><category term="AI" /><category term="Infrastructure" /><category term="Homelab" /><category term="Python" /><summary type="html"><![CDATA[From a hacked-together gaming PC with an external power supply to 72GB of distributed VRAM — how I built a private, zero-API-cost coding agency in my home.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/cover/w740/homelab-ai-infrastructure.jpg" /><media:content medium="image" url="/assets/cover/w740/homelab-ai-infrastructure.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Orchestrating 1800+ Tools for a Local LLM: Solving the Function Calling Explosion</title><link href="/ai/architecture/python/local%20llm/2026/08/09/orchestrating-1800-tools-for-a-local-llm.html" rel="alternate" type="text/html" title="Orchestrating 1800+ Tools for a Local LLM: Solving the Function Calling Explosion" /><published>2026-08-09T00:00:00+03:00</published><updated>2026-08-09T00:00:00+03:00</updated><id>/ai/architecture/python/local%20llm/2026/08/09/orchestrating-1800-tools-for-a-local-llm</id><content type="html" xml:base="/ai/architecture/python/local%20llm/2026/08/09/orchestrating-1800-tools-for-a-local-llm.html"><![CDATA[<p>When OpenAI introduced function calling, everyone celebrated. You could finally connect an LLM to real APIs, databases, and scripts. But there was a hidden limit nobody talked about: <strong>context window cost</strong>. Every tool definition you pass consumes tokens. Pass ten tools? Fine. Pass fifty? The model starts hallucinating arguments. Pass five hundred? Your local 27B model simply refuses to respond because its entire context is eaten by JSON schemas.</p>
+
+<p>I needed nearly <strong>two thousand tools</strong> for my Agent Orchestrator — SSH hosts, database handlers, email modules, browser automation, WhatsApp contacts, and custom business logic. Most agent frameworks break at fifty. Loading them all was impossible. So I built a system that injects only the relevant tools <em>just in time</em> for each query.</p>
+
+<p>Here is how it works.</p>
+
+<h2 id="the-tool-explosion-problem">The Tool Explosion Problem</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Naive approach: Load ALL tool definitions into context
+</span><span class="n">tools</span> <span class="o">=</span> <span class="nf">load_all_tools</span><span class="p">()</span>  <span class="c1"># ~1800 schemas, ~450k tokens total
+</span><span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="p">.</span><span class="nf">chat</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">)</span>  <span class="c1"># 💥 Context overflow on 27B model
+</span></code></pre></div></div>
+
+<p>A typical function-calling schema includes the tool name, description, and parameter types. For a system with 1800 specialized tools (one for each database operation, remote host command, email action, etc.), that’s easily <strong>450,000 tokens</strong> of pure schema definitions — more than most local models can hold in their entire context window.</p>
+
+<p>The industry answer has been “use a bigger model” or “reduce your tool count”. Neither was acceptable for me: I wanted to stay on my local Qwen 3.6 27B, and I didn’t want to lose granularity.</p>
+
+<h2 id="the-solution-semantic-just-in-time-tool-injection">The Solution: Semantic Just-in-Time Tool Injection</h2>
+
+<p>Instead of loading everything, I index every tool into <strong>Qdrant</strong> with its name, description, and argument schema as an embedding. When a user query arrives, the system first asks: <em>“Which tools are relevant?”</em> — retrieves only the top 5 matches — and injects those schemas into the LLM’s context.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Semantic tool search returns only what's needed
+</span><span class="n">relevant</span> <span class="o">=</span> <span class="n">qdrant</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="n">user_query</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># ~10k tokens max
+</span><span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="p">.</span><span class="nf">chat</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="n">relevant</span><span class="p">)</span>  <span class="c1"># ✅ Fits comfortably in 27B context
+</span></code></pre></div></div>
+
+<p><img class="mermaid-diagram" src="/assets/mermaid/orchestrating-1800-tools-for-a-local-llm/tool-routing-sequence.png" alt="Mermaid Diagram" /></p>
+
+<p>The result is a system that feels like it has infinite tools, but actually only ever loads what’s necessary for the current task.</p>
+
+<h2 id="how-tool-registration-works">How Tool Registration Works</h2>
+
+<p>Every tool in my system is a Python function decorated with <code class="language-plaintext highlighter-rouge">@scriptable</code>. This decorator does three things:</p>
+
+<ol>
+  <li><strong>Extracts</strong> the function signature and docstring automatically</li>
+  <li><strong>Generates</strong> a JSON schema compatible with OpenAI-style function calling</li>
+  <li><strong>Registers</strong> it into <code class="language-plaintext highlighter-rouge">tool_index.json</code> for fast lookup</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">src.scriptable.decorators</span> <span class="kn">import</span> <span class="n">scriptable</span><span class="p">,</span> <span class="n">dynamic_tool</span>
+
+<span class="nd">@dynamic_tool</span>
+<span class="nd">@scriptable</span><span class="p">(</span><span class="n">mcp</span><span class="o">=</span><span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">email_search_db</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">from_email</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sh">""</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">Search emails in the hideide database. Returns matching results list.</span><span class="sh">"""</span>
+    <span class="bp">...</span>
+</code></pre></div></div>
+
+<p><img class="mermaid-diagram" src="/assets/mermaid/orchestrating-1800-tools-for-a-local-llm/tool-registration-flow.png" alt="Mermaid Diagram" /></p>
+
+<p>Running <code class="language-plaintext highlighter-rouge">python scripts/generate_tool_index.py</code> rebuilds the index and pushes embeddings to Qdrant. New tools are discoverable within seconds.</p>
+
+<h2 id="the-execution-pipeline">The Execution Pipeline</h2>
+
+<p>When a user sends a message, here is what happens under the hood:</p>
+
+<p><code class="language-plaintext highlighter-rouge"></code>`clip:tool-search-in-action</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+1.  **Semantic Search:** The query vector is matched against all 1800 tool embeddings in Qdrant. Score threshold filters out irrelevant matches (default &gt; 0.2).
+2.  **Schema Injection:** Top-5 tools are loaded with their full JSON schemas into the LLM's system prompt.
+3.  **Function Calling:** The local model decides which tool to call and generates arguments.
+4.  **Execution:** The Python function runs via `context_tools_execute()` or direct invocation.
+5.  **Result Return:** Output flows back to the user, optionally triggering follow-up tool calls in a loop.
+
+`` ```clip:local-model-thinking
+</code></pre></div></div>
+
+<h2 id="handling-failures-and-retries">Handling Failures and Retries</h2>
+
+<p>With nearly two thousand possible failure points, robustness is critical. The system wraps every tool call in a retry mechanism with exponential backoff. If a remote SSH tool times out on the <code class="language-plaintext highlighter-rouge">bonobo</code> host, it retries twice before falling back to a cached result or notifying the user.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">src.scriptable.decorators</span> <span class="kn">import</span> <span class="n">scriptable</span>
+
+<span class="nd">@scriptable</span><span class="p">(</span><span class="n">mcp</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">deploy_to_remote</span><span class="p">(</span><span class="n">repo</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">feature</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">Commit, push to Gitea, pull on remote, and restart services.</span><span class="sh">"""</span>
+    <span class="bp">...</span>
+</code></pre></div></div>
+
+<h2 id="why-local-matters">Why Local Matters</h2>
+
+<p>Running this entirely on local hardware (Qwen 3.6 27B on Bonobo’s RTX 3090) means zero latency to the model, zero data leaving my network, and zero API costs per query. The only external calls are to specific services when a tool actually needs them — email APIs, remote hosts, or browser automation servers.</p>
+
+<p><code class="language-plaintext highlighter-rouge"></code><code class="language-plaintext highlighter-rouge">clip:local-inference-server
+</code>``</p>
+
+<h2 id="the-numbers">The Numbers</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Naive Loading</th>
+      <th>Semantic Injection</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Context tokens per call</td>
+      <td>~450,000</td>
+      <td>~12,000</td>
+    </tr>
+    <tr>
+      <td>Tools available</td>
+      <td>1800 (if model supports it)</td>
+      <td>1800 (dynamically filtered)</td>
+    </tr>
+    <tr>
+      <td>Latency overhead</td>
+      <td>N/A (fails before starting)</td>
+      <td>~200ms for Qdrant search</td>
+    </tr>
+    <tr>
+      <td>Model size required</td>
+      <td>70B+ minimum</td>
+      <td>27B works fine</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="why-build-this">Why Build This?</h2>
+
+<p>Most AI agent frameworks treat tool calling as a “small scale” problem. They assume you’ll have ten or twenty tools. But real-world automation needs hundreds: one per host, one per database table, one per contact, one per recurring task. Scaling past that requires architecture, not just bigger models.</p>
+
+<p>By decoupling <em>discovery</em> from <em>execution</em>, I achieved what I call <strong>Tool Mastery</strong>. The model doesn’t need to know about all two thousand tools — it only needs to ask the right question, and the system hands it exactly what it needs.</p>
+
+<p>This proves that local LLMs aren’t limited by their parameter count when you give them the right infrastructure around them. A 27B model with smart tool routing outperforms a 70B model drowning in schema definitions.</p>
+
+<h2 id="how-this-compares-to-industry-leaders-eg-hermes-agent">How This Compares to Industry Leaders (e.g., Hermes Agent)</h2>
+
+<p>Popular frameworks like <strong>Hermes Agent</strong> tackle this same “tool explosion” problem using <em>progressive disclosure</em>. They rely on BM25 keyword search and a three-step bridge: <code class="language-plaintext highlighter-rouge">tool_search</code> → <code class="language-plaintext highlighter-rouge">tool_describe</code> → <code class="language-plaintext highlighter-rouge">tool_call</code>.</p>
+
+<p>My approach is different, and faster for local LLMs:</p>
+<ol>
+  <li><strong>Semantic Search over Keywords:</strong> Qdrant embeddings find tools based on intent (“find emails from Lalie”) even if the tool name doesn’t contain the word “email”.</li>
+  <li><strong>Zero Round-Trip Overhead:</strong> Hermes requires extra model calls to load a schema before using it. My system injects the full schema <em>during</em> the initial search, allowing immediate execution in two steps: <code class="language-plaintext highlighter-rouge">search</code> → <code class="language-plaintext highlighter-rouge">execute</code>.</li>
+  <li><strong>Context Efficiency:</strong> By keeping 1800+ tools completely out of the prompt until needed, we save tens of thousands of tokens per turn compared to Hermes’ “tiered listing” approach.</li>
+</ol>
+
+<p>This isn’t just about scale; it’s about preserving the limited context window of a local model for actual reasoning, not tool definitions.</p>
+
+<p><strong>Do you think local LLMs with smart routing are the future of private AI agents? Let me know in the comments or on LinkedIn.</strong></p>
+
+<p>Best Regards,<br />
+<a href="https://www.linkedin.com/in/heikki-kupiainen/">Heikki Kupiainen / Metamatic Systems</a></p>]]></content><author><name></name></author><category term="AI" /><category term="Architecture" /><category term="Python" /><category term="Local LLM" /><summary type="html"><![CDATA[How I solved the function-calling context-window explosion by combining semantic vector search with dynamic tool injection, allowing a local 27B model to access nearly two thousand Python tools without breaking a sweat.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/cover/w740/orchestrating-1800-tools-for-a-local-llm.jpg" /><media:content medium="image" url="/assets/cover/w740/orchestrating-1800-tools-for-a-local-llm.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Building an AI-Orchestrated Headless CMS Pipeline</title><link href="/architecture/ai/python/headless%20cms/2026/05/11/building-an-ai-orchestrated-headless-cms-pipeline.html" rel="alternate" type="text/html" title="Building an AI-Orchestrated Headless CMS Pipeline" /><published>2026-05-11T00:00:00+03:00</published><updated>2026-05-11T00:00:00+03:00</updated><id>/architecture/ai/python/headless%20cms/2026/05/11/building-an-ai-orchestrated-headless-cms-pipeline</id><content type="html" xml:base="/architecture/ai/python/headless%20cms/2026/05/11/building-an-ai-orchestrated-headless-cms-pipeline.html"><![CDATA[<p>If Gutenberg saw how we publish multi-modal content today, he wouldn’t be impressed; he’d be exhausted. We’ve traded the printing press for a fragmented nightmare of platforms. We write text in one system, record audio in another, generate images in a third, and then spend hours manually stitching them together in a “Headless CMS” that is essentially just a very expensive database.</p>
+
+<p>We are treating multimedia publishing like an artisanal craft when it should be an automated assembly line.</p>
+
+<p>To solve this, I designed and built a proprietary <strong>AI-Orchestrated Headless CMS pipeline</strong> for Metamatic.net. This system completely decouples content creation from presentation. I simply write raw markdown. A fleet of Python-based AI agents takes over—automatically orchestrating, generating, and mixing the multimedia content—before deploying the final, multi-modal payload to a Jekyll-based frontend.</p>
+
+<p>Here is a technical breakdown of how this pipeline operates.</p>
+
+<h2 id="the-architecture-overview">The Architecture Overview</h2>
+
+<p>The core philosophy of the system is treating the markdown text as the absolute source of truth. Everything else—cover images, background music, AI voice narration, and dynamic code animations—is derived from this text via an automated pipeline.</p>
+
+<ul>
+  <li><strong>Content Repository:</strong> Local Markdown files supplemented by state management in <strong>MongoDB</strong>.</li>
+  <li><strong>Orchestrator:</strong> A custom Python backend (running via MCP) that coordinates API calls to OpenAI, Grok, and Runway for media generation.</li>
+  <li><strong>Presentation Layer:</strong> <strong>Jekyll</strong> static site generator, hydrated with generated assets and enhanced with dynamic JavaScript (<code class="language-plaintext highlighter-rouge">mprod.js</code>) on the client side.</li>
+</ul>
+
+<h2 id="the-publishing-sequence">The Publishing Sequence</h2>
+
+<p>When an article is drafted, it moves through several automated gates before reaching production.</p>
+
+<p><img class="mermaid-diagram" src="/assets/mermaid/building-an-ai-orchestrated-headless-cms-pipeline/mermaid-1.png" alt="Mermaid Diagram" /></p>
+
+<h2 id="automating-multi-modal-assets">Automating Multi-Modal Assets</h2>
+
+<p>The true power of this headless approach is not just distributing text, but autonomously building the surrounding media.</p>
+
+<h3 id="1-the-clip-video-system">1. The Clip Video System</h3>
+<p>Instead of manually creating and embedding videos, I built a syntax extension into my markdown. By writing ` ```clip:scene-name `, the pipeline intercepts the block and triggers a multi-step generation process:</p>
+
+<ol>
+  <li><strong>Image Generation:</strong> Generates a base frame using AI.</li>
+  <li><strong>Video Generation:</strong> Sends the frame to a video generation model to animate the scene.</li>
+  <li><strong>Deployment:</strong> The video is downloaded, watermarked, resized, and moved to the Jekyll asset folder. The markdown block is replaced with a masked <code class="language-plaintext highlighter-rouge">div</code> that the frontend JavaScript mounts as a video player.</li>
+</ol>
+
+<p><img class="mermaid-diagram" src="/assets/mermaid/building-an-ai-orchestrated-headless-cms-pipeline/mermaid-3.png" alt="Mermaid Diagram" /></p>
+
+<h3 id="2-narration-and-audio-mixing">2. Narration and Audio Mixing</h3>
+<p>Accessibility and convenience are critical. The pipeline reads the final article text, generates a pronunciation map, and queries a TTS engine.</p>
+
+<p>It doesn’t stop at raw voice. The system utilizes another agent to generate contextual background music, mixes the voiceover with the track using <code class="language-plaintext highlighter-rouge">ffmpeg</code>, and outputs a polished podcast-like <code class="language-plaintext highlighter-rouge">.mp3</code> file that is embedded at the top of the article.</p>
+
+<h3 id="3-code-typing-animations-codecasts">3. Code Typing Animations (Codecasts)</h3>
+<p>Technical blogs need code snippets, but static blocks can be dry. The pipeline parses the markdown for code blocks and automatically generates “codecast” videos—animations that simulate a developer typing the code in real-time, complete with configurable typo rates to make it look human.</p>
+
+<h2 id="why-build-this">Why Build This?</h2>
+
+<p>While commercial Headless CMS platforms like Contentful or Sanity are excellent for enterprise data distribution, they still require a human to source, edit, and upload media.</p>
+
+<p>By building a custom orchestration layer, I achieved <strong>Operational Mastery</strong>. The system operates as a tireless editorial team. I focus purely on the text and the technical architecture, while the Python agents handle the heavy lifting of multimedia production and deployment.</p>
+
+<p>This decoupled architecture proves that the future of frontend development isn’t just about fetching JSON from an API—it’s about automating the very creation of that payload before it ever hits the wire.</p>
+
+<p>Best Regards,<br />
+<a href="https://www.linkedin.com/in/heikki-kupiainen/">Heikki Kupiainen / Metamatic Systems</a></p>]]></content><author><name></name></author><category term="Architecture" /><category term="AI" /><category term="Python" /><category term="Headless CMS" /><summary type="html"><![CDATA[A deep dive into how I built a custom multi-modal publishing pipeline using Python, AI agents, and Jekyll to automate the production of articles, videos, and narrations.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/cover/w740/building-an-ai-orchestrated-headless-cms-pipeline.jpg" /><media:content medium="image" url="/assets/cover/w740/building-an-ai-orchestrated-headless-cms-pipeline.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">AI is Not Software, It’s Industrial Fuel: Architecting for the New Economy</title><link href="/ai/architecture/business/2026/05/08/ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy.html" rel="alternate" type="text/html" title="AI is Not Software, It’s Industrial Fuel: Architecting for the New Economy" /><published>2026-05-08T00:00:00+03:00</published><updated>2026-05-08T00:00:00+03:00</updated><id>/ai/architecture/business/2026/05/08/ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy</id><content type="html" xml:base="/ai/architecture/business/2026/05/08/ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy.html"><![CDATA[<p>The industry is currently operating under a massive, expensive delusion. We are treating Artificial Intelligence like traditional SaaS software. You buy a license, you make an API call, and it just works, right?</p>
+
+<p>Wrong.</p>
+
+<p>If you treat autonomous AI agents like software, you will go bankrupt. True, autonomous AI is not software. <strong>It is Industrial Fuel.</strong></p>
+
+<p>When you run a heavy industrial process, you don’t just “buy a factory license.” You pay for the fuel that powers the combustion engine. Every token generated, every context window expanded, and every complex reasoning step taken is a gallon of fuel burned. If your engine is inefficient, or if you use high-octane rocket fuel to run a simple conveyor belt, your operational costs will rapidly outpace your revenue.</p>
+
+<p>Welcome to the new economy. If you want to survive, you need to stop acting like a software consumer and start acting like a Chief Engineer of a High-Tech Refinery.</p>
+
+<h2 id="the-illusion-of-ai-as-software">The Illusion of AI as Software</h2>
+
+<p>In the traditional software paradigm, a poorly optimized SQL query might slow down a page load by a few milliseconds. In the AI paradigm, a poorly optimized autonomous agent loop might recursively call a premium reasoning model (like GPT-4 or Grok 4) thousands of times, generating a massive infrastructure liability overnight.</p>
+
+<p>I recently evaluated my own operational costs and realized I was burning roughly €2,000 a month on AI API costs. Why? Because I was building complex, autonomous systems that did real, heavy lifting.</p>
+
+<p>This isn’t a “personal expense.” This is the raw material cost of the new economy. It is an <strong>Infrastructure Liability</strong>. If you are building AI solutions for clients, you cannot absorb these costs. You must bill them as “Fuel,” and more importantly, you must architect systems that use that fuel as efficiently as possible.</p>
+
+<h2 id="architecting-the-data-refinery">Architecting the Data Refinery</h2>
+
+<p>How do we build engines that don’t burn the bank account? By constructing a robust refinery that routes tasks based on computational cost and complexity.</p>
+
+<p><img class="mermaid-diagram" src="/assets/mermaid/ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy/mermaid-1.png" alt="Mermaid Diagram" /></p>
+
+<p>In a traditional setup, developers send every single request to the most expensive, capable model they can find. This is equivalent to fueling a forklift with jet fuel.</p>
+
+<p>In a high-tech refinery, we use a tiered approach. We utilize fast, inexpensive models (like Gemini Flash or Grok Mini) for triage, routing, and formatting. We only ignite the premium reasoning models when deep, complex logic is absolutely required.</p>
+
+<h2 id="the-engine-block-durable-agent-loops">The Engine Block: Durable Agent Loops</h2>
+
+<p>To safely contain this combustion, you need a heavy-duty engine block. You cannot rely on fragile, ephemeral scripts. If your script crashes halfway through a multi-step reasoning task, you lose the progress, but you still pay for the fuel burned.</p>
+
+<p>This is where durable execution frameworks (like Restate) and strict data validation (like Pydantic) become non-negotiable.</p>
+
+<p>Here is a high-level abstraction of how a durable, fuel-efficient agent loop operates:</p>
+
+<div class="clip code" id="ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy/code-block-0"></div>
+
+<p>By enforcing strict schemas and routing dynamically, we ensure that every unit of computational fuel is spent precisely where it yields the highest return on investment.</p>
+
+<h2 id="the-business-bottom-line">The Business Bottom Line</h2>
+
+<p>Moving from an ad-hoc “garbage pile” of API calls to a clean, highly structured “Data Stream” is the only path forward.</p>
+
+<p>We must adopt an API-first accounting mentality not just for our finances, but for our compute architecture. When you build durable engines with intelligent routing and robust state management, you aren’t just writing code. You are establishing <strong>Systemic Integrity</strong>.</p>
+
+<p>You are building a safe harbor in a volatile digital economy. Stop selling software. Start refining fuel.</p>]]></content><author><name></name></author><category term="AI" /><category term="Architecture" /><category term="Business" /><summary type="html"><![CDATA[Treating AI like a traditional SaaS subscription leads to bankruptcy. Discover why AI must be managed as an industrial fuel, and how to architect durable engines that don't burn your bank account.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/cover/w740/ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy.jpg" /><media:content medium="image" url="/assets/cover/w740/ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Making AI Agents Crash-Proof: Durable Loops with Restate and Pydantic AI</title><link href="/ai/python/architecture/2026/04/25/durable-agent-loops-with-restate-and-pydantic-ai.html" rel="alternate" type="text/html" title="Making AI Agents Crash-Proof: Durable Loops with Restate and Pydantic AI" /><published>2026-04-25T00:00:00+03:00</published><updated>2026-04-25T00:00:00+03:00</updated><id>/ai/python/architecture/2026/04/25/durable-agent-loops-with-restate-and-pydantic-ai</id><content type="html" xml:base="/ai/python/architecture/2026/04/25/durable-agent-loops-with-restate-and-pydantic-ai.html"><![CDATA[<p>If you’ve ever built an AI agent that executes multiple steps, you’ve probably encountered the dreaded “mid-loop crash.”</p>
+
+<p>You give the AI a complex task. It thinks. It runs a tool to read a file. It thinks again. It runs a tool to query a database. It thinks again. And then—right before the final step—a network timeout occurs. Or the API limit is hit. Or the system restarts.</p>
+
+<p>And just like that, the entire context, all the expensive LLM tokens, and all the progress are lost. The agent has amnesia. You have to start over.</p>
+
+<p>In the <code class="language-plaintext highlighter-rouge">agent-orchestrator</code> project, our primary voice assistant orchestrator (<code class="language-plaintext highlighter-rouge">agent_loop.py</code>) suffered from exactly this problem. It was a monolithic <code class="language-plaintext highlighter-rouge">while</code> loop holding the entire conversational state in memory.</p>
+
+<p>Here is what the traditional, fragile architecture looks like:</p>
+
+<pre><code class="language-mermaid">sequenceDiagram
+    participant P as Speech Processor
+    participant A as AgentLoop (Memory)
+    participant L as LLM
+    participant T as Tools
+    
+    P-&gt;&gt;A: User input
+    loop until complete
+        A-&gt;&gt;L: Predict next step
+        L--&gt;&gt;A: Call Tool (e.g. bash_execute)
+        A-&gt;&gt;T: Execute Tool
+        T--&gt;&gt;A: Tool result
+        note over A: Crash happens here!
+        note over A,P: 💥 Fatal Error: Process Restarted
+        note over A,P: All previous LLM context &amp; tool results are lost
+    end
+</code></pre>
+
+<h2 id="the-durable-solution-restate--pydantic-ai">The Durable Solution: Restate + Pydantic AI</h2>
+
+<p>To solve this, we looked at <strong>Durable Execution</strong>. A durable execution engine intercepts every non-deterministic action (like an API call or a tool execution) and records it in a persistent journal. If the process crashes, the engine simply restarts the function and replays the journal. It fast-forwards through the parts that already succeeded and resumes exactly where it left off.</p>
+
+<p>We decided to build an experimental alternative loop (<code class="language-plaintext highlighter-rouge">pydantic_loop.py</code>) using two powerful tools:</p>
+<ol>
+  <li><strong><a href="https://pydantic.dev/docs/ai/">Pydantic AI</a>:</strong> A modern framework for building type-safe agents with simple <code class="language-plaintext highlighter-rouge">@agent.tool()</code> decorators.</li>
+  <li><strong><a href="https://restate.dev/">Restate</a>:</strong> A lightweight durable execution runtime.</li>
+</ol>
+
+<p>Here is the durable architecture we implemented:</p>
+
+<pre><code class="language-mermaid">sequenceDiagram
+    participant P as Speech Processor
+    participant R as Restate Server (Journal)
+    participant A as PydanticLoop (Stateless)
+    participant L as LLM
+    participant T as Tools
+    
+    P-&gt;&gt;R: User input (POST /PydanticLoop/run)
+    R-&gt;&gt;A: Invoke run handler
+    loop until complete
+        A-&gt;&gt;L: Predict next step
+        L--&gt;&gt;A: Call Tool
+        A-&gt;&gt;R: run_typed(tool_call)
+        R-&gt;&gt;A: Execute Tool (if not journaled)
+        A-&gt;&gt;T: Execute Tool
+        T--&gt;&gt;A: Tool result
+        A-&gt;&gt;R: Save result to Journal
+        R--&gt;&gt;A: Continue
+        note over A: Crash happens here! 💥
+    end
+    note over R,A: Restate detects crash, replays journal
+    R-&gt;&gt;A: Re-invoke run handler
+    note over A,R: Agent skips executed tools, uses journaled results!
+</code></pre>
+
+<h3 id="the-implementation-details">The Implementation Details</h3>
+
+<p>Using Pydantic AI’s integration with Restate, wrapping an agent in a durable context is incredibly elegant.</p>
+
+<p>First, we define our standard agent:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">pydantic_ai</span> <span class="kn">import</span> <span class="n">Agent</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="nc">Agent</span><span class="p">(</span>
+    <span class="sh">'</span><span class="s">openai:gpt-4o-mini</span><span class="sh">'</span><span class="p">,</span>
+    <span class="n">system_prompt</span><span class="o">=</span><span class="sh">"</span><span class="s">You are a focused voice assistant...</span><span class="sh">"</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Then, we define our tools. The magic happens inside the tool execution. Instead of just running the bash command, we wrap it in <code class="language-plaintext highlighter-rouge">restate_context().run_typed()</code>. This ensures that the execution of this specific bash command is journaled. If the agent crashes <em>after</em> this tool runs, Restate will supply the journaled output on the next retry instead of running the tool twice!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">restate.ext.pydantic</span> <span class="kn">import</span> <span class="n">restate_context</span>
+
+<span class="nd">@agent.tool</span><span class="p">()</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">bash_execute</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">RunContext</span><span class="p">[</span><span class="bp">None</span><span class="p">],</span> <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">workdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sh">""</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">Execute a bash command on the system.</span><span class="sh">"""</span>
+    
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_run_bash</span><span class="p">(</span><span class="n">cmd</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">wd</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">expanduser</span><span class="p">(</span><span class="n">wd</span><span class="p">)</span> <span class="k">if</span> <span class="n">wd</span> <span class="k">else</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">expanduser</span><span class="p">(</span><span class="sh">"</span><span class="s">~/workspaces/agent-orchestrator</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="nf">run</span><span class="p">(</span>
+                <span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
+                <span class="n">capture_output</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="bp">True</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="sh">"</span><span class="s">STDOUT:</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="p">.</span><span class="n">stdout</span><span class="si">}</span><span class="se">\n</span><span class="s">STDERR:</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="p">.</span><span class="n">stderr</span><span class="si">}</span><span class="sh">"</span>
+        <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Error executing bash: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span>
+
+    <span class="k">return</span> <span class="k">await</span> <span class="nf">restate_context</span><span class="p">().</span><span class="nf">run_typed</span><span class="p">(</span>
+        <span class="sa">f</span><span class="sh">"</span><span class="s">bash_execute: </span><span class="si">{</span><span class="n">command</span><span class="p">[</span><span class="si">:</span><span class="mi">30</span><span class="p">]</span><span class="si">}</span><span class="sh">"</span><span class="p">,</span>
+        <span class="n">_run_bash</span><span class="p">,</span>
+        <span class="n">cmd</span><span class="o">=</span><span class="n">command</span><span class="p">,</span>
+        <span class="n">wd</span><span class="o">=</span><span class="n">workdir</span>
+    <span class="p">)</span>
+</code></pre></div></div>
+
+<p>Finally, we expose the agent as a Restate Service:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">restate</span>
+<span class="kn">from</span> <span class="n">restate.ext.pydantic</span> <span class="kn">import</span> <span class="n">RestateAgent</span>
+<span class="kn">from</span> <span class="n">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+
+<span class="n">restate_agent</span> <span class="o">=</span> <span class="nc">RestateAgent</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
+<span class="n">agent_service</span> <span class="o">=</span> <span class="n">restate</span><span class="p">.</span><span class="nc">Service</span><span class="p">(</span><span class="sh">"</span><span class="s">PydanticLoop</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">RunRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="nd">@agent_service.handler</span><span class="p">()</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">restate</span><span class="p">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">RunRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">Restate handler that runs the durable agent loop.</span><span class="sh">"""</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">restate_agent</span><span class="p">.</span><span class="nf">run</span><span class="p">(</span><span class="n">req</span><span class="p">.</span><span class="n">prompt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nf">str</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">restate</span><span class="p">.</span><span class="nf">app</span><span class="p">(</span><span class="n">services</span><span class="o">=</span><span class="p">[</span><span class="n">agent_service</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h3 id="the-trade-offs">The Trade-offs</h3>
+
+<p>This new architecture brings massive benefits for long-running, multi-step agent tasks, but it isn’t without its challenges:</p>
+
+<ol>
+  <li><strong>Stateless Operations Required:</strong> Our original <code class="language-plaintext highlighter-rouge">agent_loop</code> used a <code class="language-plaintext highlighter-rouge">pexpect</code> background process to maintain a stateful bash shell (so <code class="language-plaintext highlighter-rouge">cd /dir</code> and <code class="language-plaintext highlighter-rouge">export VAR=1</code> would persist across tool calls). Restate replays expect deterministic, stateless closures. A dead <code class="language-plaintext highlighter-rouge">pexpect</code> process cannot be rehydrated from a journal, so our new tools had to be rewritten to be completely stateless.</li>
+  <li><strong>Infrastructure Complexity:</strong> It requires running the Restate Server alongside our application. However, deploying the Restate Docker container (<code class="language-plaintext highlighter-rouge">ghcr.io/restatedev/restate</code>) and linking it to our Hypercorn ASGI app via the Restate admin API (<code class="language-plaintext highlighter-rouge">/deployments</code>) was a relatively smooth process.</li>
+</ol>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>In-memory loops are fine for simple, one-shot chatbot interactions. But when your AI assistant is operating as an autonomous agent—navigating file systems, modifying code, and orchestrating multiple tools over several minutes—fragility is unacceptable.</p>
+
+<p>By combining the schema-enforced power of <strong>Pydantic AI</strong> with the crash-proof journaling of <strong>Restate</strong>, we can finally build AI agents that are as resilient as the distributed systems they help us manage.</p>
+
+<p>If you’re interested in discussing AI architecture or want to see more experiments like this, let’s connect!</p>
+
+<p>Best Regards,<br />
+<a href="https://www.linkedin.com/in/heikki-kupiainen/">Heikki Kupiainen / Metamatic Systems</a></p>
+
+<pre><code class="language-clip:hidden:durable-agent-loops-with-restate-and-pydantic-ai">Generate an image of a futuristic, glowing, indestructible journal or ledger floating in a high-tech server room, representing "durable execution" and memory resilience.
+</code></pre>]]></content><author><name></name></author><category term="ai" /><category term="python" /><category term="architecture" /><summary type="html"><![CDATA[Why in-memory AI agent loops are fragile, and how durable execution engines like Restate can make them bulletproof.]]></summary></entry><entry><title type="html">Metamatic Labs: Pilottiryhmä vauhdissa - Omien pelien deployaus Agent Orchestratorin avulla</title><link href="/metamatic-labs/alpha-testing/agent-orchestrator/github/2026/04/18/koodauskerhon-kuulumisia-lis-pelej-ja-github-tilit-kuntoon.html" rel="alternate" type="text/html" title="Metamatic Labs: Pilottiryhmä vauhdissa - Omien pelien deployaus Agent Orchestratorin avulla" /><published>2026-04-18T00:00:00+03:00</published><updated>2026-04-18T00:00:00+03:00</updated><id>/metamatic-labs/alpha-testing/agent-orchestrator/github/2026/04/18/koodauskerhon-kuulumisia-lis-pelej-ja-github-tilit-kuntoon</id><content type="html" xml:base="/metamatic-labs/alpha-testing/agent-orchestrator/github/2026/04/18/koodauskerhon-kuulumisia-lis-pelej-ja-github-tilit-kuntoon.html"><![CDATA[<p>Metamatic Systemsin tutkimus- ja kehitysyksikkö, <strong>Metamatic Labs</strong>, on testannut kuluneen kevään ajan uutta tekoälyavusteista <em>Agent Orchestrator</em> -teknologiaa. Parhaan mahdollisen rasitustestin järjestelmälle tarjoaa nuorista ja erittäin luovista pilottitestaajistamme (Eliel, Arttu, Angad, Onni ja Alexandrei) koostuva ryhmä.</p>
+
+<p>Ensimmäiset pelit on jo saatu onnistuneesti ladattua nettiin asti, eli ne ovat nyt kenen tahansa pelattavissa. (Palataan näiden pelien esittelyyn tarkemmin tulevissa artikkeleissa!) Mutta jotta pelien julkaiseminen maailmalle ylipäätään mahdollistui, piti hoitaa pois alta hieman byrokratiaa ja “tylsää” infra-asiaa.</p>
+
+<h2 id="sähköpostit-github-ja-salasanojen-sietämätön-keveys">Sähköpostit, GitHub ja salasanojen sietämätön keveys</h2>
+
+<p>Jokaiselle koodaajalle piti saada luotua henkilökohtainen sähköpostitili ja tietenkin oma <strong>GitHub</strong>-tili koodien tallennusta varten. Konfigurointi tehtiin <a href="/metamatic-labs/opas/github/pelit/2026/04/18/pelien-julkaisu-github-pages-alustalle-metamatic-labs-ohjeistus.html">Metamatic Labsin ohjeiden</a> mukaisesti.</p>
+
+<p>Vaikka elämme jo vuotta 2026, salasanojen keksiminen, vahvistusviestien odottelu ja ne loputtomat “Valitse kaikki kuvat, joissa on liikennevalo” -Captcha-robottitestit saavat kokeneemmankin ohjelmoijan pään pyörälle. Nuorten elämän ensimmäiset, omat ja huippusalaiset salasanat päätettiinkin lopulta tallentaa täysin hakkeroimattomalla 1.0-teknologialla: kynällä ruutupaperille. Se on varmaa ja toimii aina (kunhan paperilappu ei joudu hukkaan)!</p>
+
+<p>Nyt kun tilit ovat pystyssä, jokainen pystyy hallinnoimaan omia peliprojektejaan ja puskemaan päivitykset suoraan GitHub Pagesin kautta livenä nettiin.</p>
+
+<h2 id="peliprojektit-shakkia-ja-massiivisia-räjähdysefektejä">Peliprojektit: Shakkia ja massiivisia räjähdysefektejä</h2>
+
+<p>Sivutuotteena kaiken tämän tilihässäkän lomassa on ehditty koodata yhtä sun toista. Pöydällä on ollut monenlaisia kunnianhimoisia projekteja:</p>
+
+<ul>
+  <li><strong>Shakkipeli:</strong> Eliel on koodannut upean <a href="https://iamb0111.github.io/pelit/">shakkipelin</a>, jonka säännöt on helppo oppia mutta vaikea koodata täydellisesti. Olemme tehneet shakkipelin toteutuksia oppiaksemme logiikkaa ja sääntöjen ohjelmointia.</li>
+</ul>
+
+<p><a href="https://iamb0111.github.io/pelit/" target="_blank">
+  <img src="/assets/shakkipeli.png" alt="Shakkipeli" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; margin-bottom: 2rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'" />
+</a></p>
+
+<ul>
+  <li><strong>Geometry Dash -klooni:</strong> Vauhtia, vaarallisia esteitä ja täydellistä ajoitusta vaativa peli on ollut yksi suosikeista koodattavaksi.</li>
+  <li><strong>Minecraft-tasohyppely:</strong> Ja tietenkin kruununjalokivenä: Arttu koodasi <a href="http://artt24664.github.io/pelit/minecraft-tnt-tester/">Minecraft TNT testerin</a>, joka on Minecraft-teemalla sävytetty tasohyppelypeli. Peliin on lisätty svengaava taustamusa ja – mikä tärkeintä – aivan massiiviset räjähdysefektit, koska mikään ei kruunaa onnistunutta koodaussessiota paremmin kuin kunnon digitaalinen pamahdus ruudulla!</li>
+</ul>
+
+<p><a href="http://artt24664.github.io/pelit/minecraft-tnt-tester/" target="_blank">
+  <img src="/assets/minecraft-tnt.png" alt="Minecraft TNT tester" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; margin-bottom: 2rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'" />
+</a></p>
+
+<p>Vauhti on siis kova ja motivaatio huipussaan. Pian saadaan nettiin vielä enemmän upeita pelejä. Pysykää kuulolla, sillä kerromme näistä luomuksista varmasti lisää tulevissa päivityksissä!</p>]]></content><author><name></name></author><category term="metamatic-labs" /><category term="alpha-testing" /><category term="agent-orchestrator" /><category term="github" /><summary type="html"><![CDATA[Metamatic Labsin nuorista koodareista koostuva pilottitestiryhmä on vauhdissa! Ensimmäiset Agent Orchestratorilla tuotetut pelit on nyt julkaistu onnistuneesti GitHubissa.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/koodauskerhon-kuulumisia-lis-pelej-ja-github-tilit-kuntoon.png" /><media:content medium="image" url="/assets/koodauskerhon-kuulumisia-lis-pelej-ja-github-tilit-kuntoon.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Pelien julkaisu GitHub Pages -alustalle: Metamatic Labs -ohjeistus</title><link href="/metamatic-labs/opas/github/pelit/2026/04/18/omien-pelien-julkaisu-nettiin-koodauskerhon-ohjeet.html" rel="alternate" type="text/html" title="Pelien julkaisu GitHub Pages -alustalle: Metamatic Labs -ohjeistus" /><published>2026-04-18T00:00:00+03:00</published><updated>2026-04-18T00:00:00+03:00</updated><id>/metamatic-labs/opas/github/pelit/2026/04/18/omien-pelien-julkaisu-nettiin-koodauskerhon-ohjeet</id><content type="html" xml:base="/metamatic-labs/opas/github/pelit/2026/04/18/omien-pelien-julkaisu-nettiin-koodauskerhon-ohjeet.html"><![CDATA[<p>Metamatic Systemsin kehitysyksikkö, <strong>Metamatic Labs</strong>, on testannut uutta Agent Orchestrator -teknologiaa pilottiryhmän kanssa. Tässä oppaassa käymme läpi, miten Labs-testaajat julkaisevat projektinsa GitHub Pages -alustalle.</p>
+
+<p>Tätä varten tarvitsemme kaksi asiaa: sähköpostiosoitteen ja GitHub-tilin.</p>
+
+<h2 id="vaihe-1-oman-sähköpostin-luominen-protonme">Vaihe 1: Oman sähköpostin luominen (Proton.me)</h2>
+
+<p><em>(Jos sinulla on jo oma sähköposti, jota voit käyttää, voit hypätä tämän vaiheen yli!)</em></p>
+
+<ol>
+  <li>
+    <p>Mene osoitteeseen <strong><a href="https://proton.me">proton.me</a></strong> ja paina “Create a free account” (Luo ilmainen tili).
+<img src="/assets/proton-etusivu.png" alt="Proton.me etusivu" /></p>
+  </li>
+  <li>Valitse sähköpostiosoite (esim. <code class="language-plaintext highlighter-rouge">etunimi.sukunimi.koodi@proton.me</code>).</li>
+  <li>Keksi <strong>hyvä salasana</strong> ja – <em>tärkeää!</em> – kirjoita se ylös paperille ja säilytä sitä turvallisessa paikassa.</li>
+  <li>Suorita ihmistesti (robottitesti) ja kirjaudu sisään.</li>
+</ol>
+
+<h2 id="vaihe-2-github-tilin-luominen">Vaihe 2: GitHub-tilin luominen</h2>
+
+<p>GitHub on ohjelmoijien oma paikka netissä, jonne koodit tallennetaan.</p>
+
+<ol>
+  <li>
+    <p>Mene osoitteeseen <strong><a href="https://github.com">github.com</a></strong> ja paina oikealta ylhäältä <strong>Sign up</strong> (Rekisteröidy).
+<img src="/assets/github-etusivu.png" alt="GitHub.com etusivu" /></p>
+  </li>
+  <li>Syötä juuri luomasi sähköpostiosoite.</li>
+  <li>Keksi salasana (kirjoita tämäkin ylös!) ja valitse itsellesi siisti käyttäjänimi.</li>
+  <li>Mene takaisin Proton-sähköpostiisi: sinne on tullut viesti GitHubilta. Kopioi siinä oleva koodi ja liitä se GitHubiin vahvistaaksesi tilisi.</li>
+</ol>
+
+<h2 id="vaihe-3-kansion-eli-repon-luominen-githubiin">Vaihe 3: Kansion eli “repon” luominen GitHubiin</h2>
+
+<ol>
+  <li>
+    <p>Paina GitHubissa vihreää <strong>Create repository</strong> (tai <strong>New</strong>) -nappia. Repository eli “repo” on kansion nimi sinun pelillesi.
+<img src="/assets/github-new-repo-etusivu.png" alt="GitHub kirjautumisen jälkeen" /></p>
+  </li>
+  <li>Anna repolle nimi, esim. <code class="language-plaintext highlighter-rouge">minun-peli</code>.</li>
+  <li>Rullaa alas ja paina <strong>Create repository</strong>.
+<img src="/assets/github-create-repo.png" alt="Uuden repon luontisivu" /></li>
+</ol>
+
+<h2 id="vaihe-4-gitin-käyttöönotto-ja-pelin-lataaminen-koodari-tila">Vaihe 4: Gitin käyttöönotto ja pelin lataaminen (Koodari-tila!)</h2>
+
+<p>Nyt opitaan käyttämään Gitiä, ammattilaisten työkalua! Gitin avulla lähetämme omalla koneellamme olevat koodit nettiin GitHubiin.</p>
+
+<ol>
+  <li>Avaa terminaali tai komentorivi koneellasi.</li>
+  <li>Ensin meidän pitää kertoa Gitille, kuka olet. Kirjoita nämä komennot ja paina Enter jokaisen jälkeen (vaihda oma nimesi ja sähköpostisi):
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config <span class="nt">--global</span> user.name <span class="s2">"Oma Nimesi"</span>
+git config <span class="nt">--global</span> user.email <span class="s2">"oma.sahkoposti@proton.me"</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Kopioi juuri luomasi GitHub-repon osoite selaimesta (se näyttää esimerkiksi tältä: <code class="language-plaintext highlighter-rouge">https://github.com/sinun-nimi/minun-peli.git</code>).</li>
+  <li>Lataa kansio omalle koneellesi komennolla:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/sinun-nimi/minun-peli.git
+</code></pre></div>    </div>
+  </li>
+  <li>Siirry uuteen kansioon:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>minun-peli
+</code></pre></div>    </div>
+  </li>
+  <li>Siirrä tai kopioi tekemäsi <code class="language-plaintext highlighter-rouge">index.html</code> ja muut pelin tiedostot tähän uuteen kansioon.</li>
+  <li>Nyt kerrotaan Gitille, että haluamme tallentaa nämä tiedostot. Kirjoita komento (huomaa piste lopussa!):
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="nb">.</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Tehdään “commit” eli tallennuspiste. Kirjoitetaan samalla viesti siitä, mitä tehtiin:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit <span class="nt">-m</span> <span class="s2">"Ensimmäinen versio minun pelistäni"</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Lopuksi työnnetään tiedostot nettiin GitHubiin (push):
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push origin main
+</code></pre></div>    </div>
+    <p><em>(Saatat joutua antamaan GitHub-käyttäjätunnuksesi ja salasanasi tässä vaiheessa!)</em></p>
+  </li>
+</ol>
+
+<h2 id="vaihe-5-pelin-julkaisu-github-pages--palvelulla-taikatemppu">Vaihe 5: Pelin julkaisu GitHub Pages -palvelulla (Taikatemppu!)</h2>
+
+<p>Nyt kun koodit ovat GitHubissa, tehdään niistä oikea nettisivu!</p>
+
+<ol>
+  <li>Mene selaimessa GitHub-repon yläreunassa olevaan <strong>Settings</strong> (Asetukset) -välilehteen (rattaan kuva).</li>
+  <li>Valitse vasemmalta valikosta <strong>Pages</strong>.</li>
+  <li>Kohdassa “Branch” (Haara), muuta “None” tilalle <strong>main</strong> ja paina <strong>Save</strong>.</li>
+  <li>Odota minuutti tai pari! Sivun yläreunaan ilmestyy linkki: <code class="language-plaintext highlighter-rouge">https://[sinun-käyttäjänimi].github.io/minun-peli/</code>.</li>
+  <li>Jaa tämä linkki kavereillesi, niin he voivat pelata peliäsi!</li>
+</ol>]]></content><author><name></name></author><category term="metamatic-labs" /><category term="opas" /><category term="github" /><category term="pelit" /><summary type="html"><![CDATA[Metamatic Labs -ohjeistus omien HTML-pelien julkaisuun netissä GitHub Pagesin avulla.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/omien-pelien-julkaisu-nettiin-koodauskerhon-ohjeet.png" /><media:content medium="image" url="/assets/omien-pelien-julkaisu-nettiin-koodauskerhon-ohjeet.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Deploying React Apps to Azure: Vite vs NextJS — The Fruit Store Showdown</title><link href="/tech/2026/03/23/deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown.html" rel="alternate" type="text/html" title="Deploying React Apps to Azure: Vite vs NextJS — The Fruit Store Showdown" /><published>2026-03-23T00:00:00+02:00</published><updated>2026-03-23T00:00:00+02:00</updated><id>/tech/2026/03/23/deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown</id><content type="html" xml:base="/tech/2026/03/23/deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown.html"><![CDATA[<h1 id="deploying-react-apps-to-azure-vite-vs-nextjs--the-fruit-store-showdown">Deploying React Apps to Azure: Vite vs NextJS — The Fruit Store Showdown</h1>
+
+<p>In my previous articles, I explored <a href="/tech/2026/03/09/nextjs-is-just-react-on-the-server-side-and-that-is-a-good-thing.html">how NextJS is fundamentally React on the server side</a> and <a href="/tech/2026/03/23/the-two-worlds-of-nextjs-server-components-vs-client-components.html">the mental model behind Server Components vs Client Components</a>. That was all theory. Now it’s time to get practical.</p>
+
+<p>I built the same app twice. A simple Fruit Store — browse fruits, add them to a cart, see your total. Same features, same data, same visual result. But one version uses <strong>React + TypeScript + Vite</strong> and the other uses <strong>NextJS + TypeScript + Tailwind CSS</strong>. Then I deployed both to <strong>Azure Static Web Apps</strong>.</p>
+
+<p>The source code is public:</p>
+<ul>
+  <li>Vite version: <a href="https://github.com/develprr/fruit-store-vite">github.com/develprr/fruit-store-vite</a></li>
+  <li>NextJS version: <a href="https://github.com/develprr/fruit-store-nextjs">github.com/develprr/fruit-store-nextjs</a></li>
+</ul>
+
+<p>Let me walk you through what’s different, what surprised me, and how to get both of them running on Azure.</p>
+
+<h2 id="the-vite-version-classic-react-spa">The Vite Version: Classic React SPA</h2>
+
+<p>Vite gives you pure client-side React. There’s no server component concept, no routing conventions, no opinions about architecture. You get a fast bundler and hot module replacement. The rest is up to you.</p>
+
+<p>Here’s the core of my Vite Fruit Store — the <code class="language-plaintext highlighter-rouge">App.tsx</code>:</p>
+
+<div class="clip code" id="deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown/code-block-0"></div>
+
+<p>Everything is a client component. Every piece of state, every click handler, every render — it all happens in the browser. This is the React you know if you’ve been building SPAs for the past decade.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">FruitCard</code> component receives an <code class="language-plaintext highlighter-rouge">onAddToCart</code> callback as a prop:</p>
+
+<div class="clip code" id="deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown/code-block-1"></div>
+
+<p>Simple. Props in, events out. The classic React pattern.</p>
+
+<h2 id="the-nextjs-version-server-meets-client">The NextJS Version: Server Meets Client</h2>
+
+<p>Now here’s where it gets interesting. In the NextJS version, the page component is a <strong>Server Component</strong> by default:</p>
+
+<div class="clip code" id="deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown/code-block-2"></div>
+
+<p>Notice what’s missing? No <code class="language-plaintext highlighter-rouge">useState</code>. No <code class="language-plaintext highlighter-rouge">useEffect</code>. No event handlers. This component renders on the server, produces HTML, and sends it to the browser. Zero JavaScript for this component reaches the client.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">FruitCard</code> is also a Server Component:</p>
+
+<div class="clip code" id="deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown/code-block-3"></div>
+
+<p>The card renders on the server. But the <strong>Add to Cart button</strong> — that’s the only part that needs interactivity, so it’s extracted into its own Client Component:</p>
+
+<div class="clip code" id="deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown/code-block-4"></div>
+
+<p>This is the pattern I talked about in my previous article: push the <code class="language-plaintext highlighter-rouge">"use client"</code> directive as deep as you can. The card layout and data display don’t need the browser at all. Only the button with its <code class="language-plaintext highlighter-rouge">onClick</code> handler does.</p>
+
+<h2 id="state-management-props-vs-context">State Management: Props vs Context</h2>
+
+<p>In the Vite version, state lives in <code class="language-plaintext highlighter-rouge">App.tsx</code> and flows down through props. <code class="language-plaintext highlighter-rouge">App</code> owns the cart state, passes <code class="language-plaintext highlighter-rouge">onAddToCart</code> to <code class="language-plaintext highlighter-rouge">FruitCard</code>, passes items to <code class="language-plaintext highlighter-rouge">Cart</code>. Standard prop drilling.</p>
+
+<p>In the NextJS version, you can’t do that. The page component is a Server Component — it can’t hold <code class="language-plaintext highlighter-rouge">useState</code>. So the cart state moves into a React Context:</p>
+
+<div class="clip code" id="deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown/code-block-5"></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">CartProvider</code> wraps the entire app in <code class="language-plaintext highlighter-rouge">layout.tsx</code>, and any Client Component can call <code class="language-plaintext highlighter-rouge">useCart()</code> to access the cart. This is actually cleaner than prop drilling — the <code class="language-plaintext highlighter-rouge">AddToCartButton</code> doesn’t need its parent to pass a callback through every intermediate component.</p>
+
+<p>But there’s a trade-off: Context forces every consumer to be a Client Component. In a simple app this is fine. In a complex app with many independent interactive elements, you need to think carefully about which components consume the context and where the client boundary lands.</p>
+
+<h2 id="deploying-to-azure-static-web-apps">Deploying to Azure Static Web Apps</h2>
+
+<p>Here’s where things get practical. Both apps are deployed to <strong>Azure Static Web Apps</strong> (SWA), which is Microsoft’s hosting service for static frontends. It’s free tier, globally distributed, and has built-in CI/CD support.</p>
+
+<h3 id="deploying-the-vite-app">Deploying the Vite App</h3>
+
+<p>The Vite deployment is straightforward. Build the app, upload the output:</p>
+
+<div class="clip code" id="deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown/code-block-6"></div>
+
+<p>That’s it. Vite produces a <code class="language-plaintext highlighter-rouge">dist/</code> folder with <code class="language-plaintext highlighter-rouge">index.html</code>, a CSS file, and a JS bundle. Static Web Apps serves them with a CDN. Zero configuration needed.</p>
+
+<h3 id="deploying-the-nextjs-app">Deploying the NextJS App</h3>
+
+<p>NextJS requires one extra step. By default, NextJS produces a Node.js server application — it expects to run server-side. But Azure Static Web Apps is for <strong>static</strong> files. So you need to tell NextJS to produce a static export.</p>
+
+<p>Add this to <code class="language-plaintext highlighter-rouge">next.config.ts</code>:</p>
+
+<div class="clip code" id="deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown/code-block-7"></div>
+
+<p>Then build and deploy:</p>
+
+<div class="clip code" id="deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown/code-block-8"></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">output: "export"</code> flag makes NextJS pre-render all pages to static HTML at build time and skip the server runtime. The result is a folder of HTML files — just like Vite. But there’s a catch.</p>
+
+<h3 id="the-export-trade-off">The Export Trade-Off</h3>
+
+<p>When you set <code class="language-plaintext highlighter-rouge">output: "export"</code> in NextJS, you lose all the server-side features that make NextJS unique:</p>
+<ul>
+  <li>No API routes</li>
+  <li>No server-side rendering on each request</li>
+  <li>No incremental static regeneration</li>
+  <li>No middleware</li>
+  <li>No dynamic server functions</li>
+</ul>
+
+<p>You’re essentially turning NextJS into a static site generator. The Server Components still benefit you at build time — they render to HTML during the build. But they don’t render on each request.</p>
+
+<p>If you need actual server-side rendering, you’d need to deploy NextJS to a service that runs Node.js — like <strong>Azure Container Apps</strong> or <strong>Azure App Service</strong>. Static Web Apps won’t cut it.</p>
+
+<p>For this simple Fruit Store demo, static export is perfect. All the data is hardcoded. There’s nothing dynamic on the server. But for a real production app with a database, authentication, or API calls — you’d want the full NextJS server.</p>
+
+<h2 id="see-them-live">See Them Live</h2>
+
+<p>Both apps are deployed and running on Azure. You can try them right here — or open them in a new tab.</p>
+
+<h3 id="vite-fruit-store">Vite Fruit Store</h3>
+
+<p><a href="https://calm-pond-0117eab03.6.azurestaticapps.net" target="_blank">Open Vite Fruit Store in new tab ↗</a></p>
+
+<iframe src="https://calm-pond-0117eab03.6.azurestaticapps.net" width="100%" height="600" style="border: 1px solid #ddd; border-radius: 8px;" loading="lazy" title="Fruit Store — Vite version"></iframe>
+
+<h3 id="nextjs-fruit-store">NextJS Fruit Store</h3>
+
+<p><a href="https://wonderful-bush-034400f03.1.azurestaticapps.net" target="_blank">Open NextJS Fruit Store in new tab ↗</a></p>
+
+<iframe src="https://wonderful-bush-034400f03.1.azurestaticapps.net" width="100%" height="600" style="border: 1px solid #ddd; border-radius: 8px;" loading="lazy" title="Fruit Store — NextJS version"></iframe>
+
+<p>Same features, same data, same result — built with completely different architectures. Try adding items to the cart in both. The experience is identical. The code behind it is not.</p>
+
+<h2 id="whats-actually-different">What’s Actually Different?</h2>
+
+<p>Let me be honest about what’s different and what isn’t in these two versions of the same app.</p>
+
+<h3 id="bundle-size">Bundle Size</h3>
+
+<p>Vite produces a single JS bundle: <strong>194 KB</strong> (61 KB gzipped). Everything — React, the app code, all components — goes to the browser.</p>
+
+<p>NextJS with static export produces pre-rendered HTML pages with smaller JS chunks. The initial HTML renders immediately without waiting for JavaScript. The hydration bundle is smaller because Server Components don’t ship any JS at all.</p>
+
+<p>For a tiny demo app, this difference is negligible. For a large app with dozens of pages and heavy components, the NextJS approach would start to show real wins.</p>
+
+<h3 id="developer-experience">Developer Experience</h3>
+
+<p>Vite is simpler. One component model. No boundaries to think about. Write React, run React. The build is fast (121ms for this project). Hot reload is instant.</p>
+
+<p>NextJS gives you conventions: file-based routing, layout components, the <code class="language-plaintext highlighter-rouge">app/</code> directory structure. It’s more opinionated but you get more out of the box. The build is slower (1.5 seconds — still fast, but 12x slower than Vite for the same app).</p>
+
+<h3 id="architecture-clarity">Architecture Clarity</h3>
+
+<p>The Vite version uses prop drilling for state management. For a small app, this is fine. For a large app, you’d eventually reach for Redux, Zustand, or Context anyway.</p>
+
+<p>The NextJS version forces the Context pattern from the start because Server Components can’t hold state. This is actually a healthier architecture — it separates data display (server) from interactivity (client) at the component level. You think about what needs the browser and what doesn’t.</p>
+
+<h2 id="steps-forward-what-id-build-next">Steps Forward: What I’d Build Next</h2>
+
+<p>This demo is deliberately simple. Here’s what I’d add to make it a real application, and how the approach would differ between Vite and NextJS:</p>
+
+<h3 id="1-product-api-with-a-database">1. Product API with a Database</h3>
+
+<p>Replace the hardcoded fruit array with API calls to a real database. In the <strong>Vite version</strong>, you’d build a separate backend (Express, Fastify, or Azure Functions) and fetch from it with <code class="language-plaintext highlighter-rouge">useEffect</code>. In the <strong>NextJS version</strong>, you’d query the database directly from Server Components — no separate backend needed.</p>
+
+<h3 id="2-authentication">2. Authentication</h3>
+
+<p>Add user login with Azure Entra ID or a simple auth provider. In <strong>Vite</strong>, you’d integrate an auth library and manage tokens in the client. In <strong>NextJS</strong>, you could use middleware and server-side session validation. Azure Static Web Apps also has built-in auth with Azure AD, GitHub, and Twitter — works for both.</p>
+
+<h3 id="3-shopping-cart-persistence">3. Shopping Cart Persistence</h3>
+
+<p>Right now the cart resets on page refresh. You’d want to persist it to <code class="language-plaintext highlighter-rouge">localStorage</code> (client-side) or a database (server-side). The Vite version would use <code class="language-plaintext highlighter-rouge">localStorage</code> directly. The NextJS version could use a combination — <code class="language-plaintext highlighter-rouge">localStorage</code> for anonymous users, server-side storage for authenticated users.</p>
+
+<h3 id="4-server-side-rendering-for-seo">4. Server-Side Rendering for SEO</h3>
+
+<p>If this were a real product catalog, you’d want search engines to index the product pages. The <strong>Vite version</strong> would need a pre-rendering solution or SSR middleware. The <strong>NextJS version</strong> already does this out of the box — Server Components produce SEO-friendly HTML by default.</p>
+
+<h3 id="5-cicd-pipeline">5. CI/CD Pipeline</h3>
+
+<p>Both apps could use <strong>GitHub Actions</strong> to automatically build and deploy to Azure Static Web Apps on every push. Azure SWA has a built-in GitHub integration that generates the workflow file for you.</p>
+
+<h2 id="my-verdict">My Verdict</h2>
+
+<p>For a simple SPA with no server-side requirements — <strong>Vite wins on simplicity</strong>. It’s faster to set up, faster to build, and there’s no mental overhead from server/client boundaries.</p>
+
+<p>For anything that will grow into a real product — <strong>NextJS wins on architecture</strong>. The server/client split forces you to think about what needs to go to the browser and what doesn’t. The file-based routing saves boilerplate. And when you eventually need a database, API routes, or SSR, it’s already there.</p>
+
+<p>Both deploy to Azure Static Web Apps with minimal effort. The process is nearly identical: build, get a deployment token, upload. The only difference is NextJS needs <code class="language-plaintext highlighter-rouge">output: "export"</code> for static hosting.</p>
+
+<p>Pick the tool that matches where your project is heading, not where it is today.</p>
+
+<p>Okay, enough for now. I’ll be back!</p>]]></content><author><name></name></author><category term="tech" /><summary type="html"><![CDATA[I built the same Fruit Store app twice — once with Vite and once with NextJS — and deployed both to Azure Static Web Apps. Here's what I learned about the real differences and how to get your React apps live on Azure.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/cover/w740/deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown.jpg" /><media:content medium="image" url="/assets/cover/w740/deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+  <title>Metamatic Systems | Metamatic Systems Ltd.</title>
+  <meta name="generator" content="Jekyll v3.9.3" />
+  <meta property="og:title" content="Metamatic Systems" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="description" content="Metamatic Systems Ltd." />
+  <meta property="og:description" content="Metamatic Systems Ltd." />
+  <link rel="canonical" href="/" />
+  <meta property="og:url" content="/" />
+  <meta property="og:site_name" content="Metamatic Systems" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="twitter:title" content="Metamatic Systems" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "description": "Metamatic Systems Ltd.",
+      "headline": "Metamatic Systems",
+      "name": "Metamatic Systems",
+      "url": "/"
+    }
+  </script>
+  <!-- End Jekyll SEO tag -->
+  <link rel="stylesheet" href="/assets/main.css" />
+  <link
+    type="application/atom+xml"
+    rel="alternate"
+    href="/feed.xml"
+    title="Metamatic Systems"
+  />
+  <link rel="stylesheet" href="/assets/css/style-overrides.css" />
+
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YBG1M07DST"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-YBG1M07DST');
+  </script>
+</head>
+<body class="yt-layout-body"><header class="site-header" role="banner">
+  <div class="wrapper">
+    <div class="header-main-inner"><a class="site-title" rel="author" href="/" style="display: flex; align-items: center; height: 54px;"><img src="/assets/metamatic-watermark.png" alt="Metamatic Logo" style="height: 26px;"></a><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewBox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+              </svg>
+            </span>
+          </label>
+          <div class="trigger"><a class="page-link yt-articles-link" href="/articles/">Articles</a><a class="page-link " href="/metamatic-labs/">Metamatic Labs</a><a class="page-link " href="/tutorials/"><svg class="flag-icon" viewBox="0 0 640 480" aria-hidden="true"><path fill="#fff" d="M0 0h640v480H0z"/><path fill="#002f6c" d="M0 174.5h640v131H0z"/><path fill="#002f6c" d="M175.5 0h130.9v480h-131z"/></svg>Tutorials</a><a class="page-link " href="/contact/">Contact</a><a class="page-link " href="/references/">References</a><button class="yt-header-toggle" onclick="YTApp.toggleSidebar()">☰</button></div>
+        </nav></div>
+  </div>
+</header><div class="yt-app">
+
+      <!-- Main content area -->
+      <main class="yt-main" id="yt-main"><!-- Sticky header bar: title + listen button -->
+        <div class="yt-header-bar" id="yt-header-bar" style="display:flex">
+          <h1 class="yt-title" id="yt-title-text">Oil Your Data Flow With Kafka and Web Sockets</h1>
+          <div class="yt-header-right" id="yt-header-right"><a class="yt-listen-btn" href="javascript:void(0)" onclick="YTApp.toggleAudio('/assets/narrations/how-to-create-event-driven-data-flow-with-websockets-and-kafka-with-music.mp3')">
+              <img id="yt-speaker-icon" src="/assets/speaker.png" width="24" height="24">
+              <span>Listen</span>
+            </a></div>
+        </div>
+        <!-- Scrollable article body -->
+        <div class="yt-article-scroll" id="yt-article-scroll" style="display:block">
+          <div class="yt-article" id="yt-article">
+            <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="yt-date">
+    <time class="dt-published" datetime="2023-05-19T00:00:00+03:00" itemprop="datePublished">May 19, 2023
+    </time>
+  </div><div class="yt-hero-video">
+      <video id="hero-video" autoplay muted loop playsinline poster="/assets/cover/w560/how-to-create-event-driven-data-flow-with-websockets-and-kafka.jpg">
+        <source src="/assets/mp4/w740/how-to-create-event-driven-data-flow-with-websockets-and-kafka.mp4" type="video/mp4">
+      </video>
+    </div><div class="post-content e-content" itemprop="articleBody">
+    <p>Hey you right there on the other side of the display! I congratulate you for being
+chosen by the Algorithm to view this particular blog post, because
+today I am going to rumble like thunder about how you can make your data
+flow through your systems as smoothly as silk and and as fast as lightning!</p>
+
+<p>Refering to my previous blog posts that discussed different database solutions
+to store and access huge amounts of data in databases without choking them,
+let’s touch the other side of the coin now.</p>
+
+<h2 id="who-needs-a-lubricated-engine">Who needs a lubricated engine?</h2>
+
+<p>It is not helpful to access your data easily
+if you can’t make it smoothly flow to every place where it is needed.
+Just as any combustion engine needs to be lubricated with the best synthetic
+oils to work properly and smoothly, the same way every business system needs to be
+lubricated in order to serve as a reliable cash cow.</p>
+
+<p>When something is changed in a database, we want that change to timely propagate from the database into all systems
+that depend on that data. Tuning organization’s systems to communicate with each
+other with minimal delays is good for almost any business, regardless of
+which business we talk - banking, finance, insurance, just name it!</p>
+
+<h2 id="the-problem">The problem</h2>
+
+<p>In our imaginary use case, let me talk about a laundry service corporation that
+operates a cluster of laundry machines. To be able to serve their customers
+well, the laundry machines need to be monitored. Let’s say that each laundry
+machine generates a continuous flow of log data, reporting their current cloth load,
+laundry program, heat and power consumption. We want to store all the data into
+a huge database. Every time when a log entry is written to the database,
+we want it to immediately propagate to the browser based user interface that
+the the staff then monitors. We want the data flow to be event-driven.
+Each client - or consumer - node of the data flow in the system should not be doing expensive continuous short-polling to
+its provider counterpart. Rather, the provider part should be pushing the changes to the consumer part.</p>
+
+<p>So what to do?</p>
+
+<h2 id="the-solution">The solution</h2>
+
+<p>Clearly, there are at least two interface sections where data needs to jump
+from one system to another system. Closest to the human user is the browser based UI
+that retrieves data from the server endpoint. And then the server endpoint needs to retrieve
+the data from the database upon a change. So there are two intersections that need an
+event driven data transfer solution. Let’s have a look at it!</p>
+
+<h3 id="web-sockets-for-user-interfaces">Web sockets for user interfaces</h3>
+
+<p>To implement an even driven architecture for the UI, we need to be writing
+a browser-based user interface application that <em>listens</em> for data changes provided
+by its web server endpoint. Therefore the API to serve the UI cannot be a classic REST API,
+since a REST API supports only query-response based scenarios. When you are implementing an API that
+serves your UI, we are talking about a <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends">backend for frontend</a>, or <strong>BFF</strong>.</p>
+
+<p>This API can’t be a universal or generic API, it must not be designed to potentially serve many
+different kinds of clients. It’s a dedicated single purpose API to serve the one and only UI -
+its endpoints are optimized for that particular UI. When you want it to behave in an event-driven
+fashion and immediately push each laundry log entry to the UI once it enters to the endpoint
+from the database, <a href="https://en.wikipedia.org/wiki/WebSocket">web sockets</a> are the best way implement it!</p>
+
+<h3 id="use-kafka-and-web-sockets-to-write-two-way-event-driven-server-endpoint">Use Kafka and web sockets to write two-way event driven server endpoint</h3>
+
+<p>Now let’s write an event driven backend endpoint that is event driven in both ways -
+it gets the data event in an event driven way from the database and further on pushes
+that data to the UI as an event as well. So two-fold event-driven! Let’s write this
+magic endpoint with TypeScript and NodeJS right now. Let us make it subscribe to <a href="https://kafka.apache.org/">Kafka</a> to listen for data events.
+When an event enters the endpoint, the endpoint just calmly pushes it further over
+a web socket to the UI:</p>
+
+<div class="clip code" id="how-to-create-event-driven-data-flow-with-websockets-and-kafka/typescript-import-express-expr-b368af8a2e0f8be903b1d631356f47ef"></div>
+
+<p>Quite mind-blowing how little code we needed for this, isn’t it?
+Alright folks, stay tuned, next, let’s have a look at my secretive
+<em>LaundryEventKafkaConsumer</em> that listens to Kafka service which in turn delivers
+laundry machine log entries from the deep databases of our mighty
+Laundry service corporation:</p>
+
+<div class="clip code" id="how-to-create-event-driven-data-flow-with-websockets-and-kafka/typescript-import-consumer-kaf-237169e753354ac718337337a853826f"></div>
+
+<p>That would it be this time folks, thanks for reading!</p>
+
+  </div>
+
+  <a class="u-url" href="/metamatic/systems/2023/05/19/how-to-create-event-driven-data-flow-with-websockets-and-kafka.html" hidden></a>
+</article>
+
+          </div>
+        </div>
+        <audio id="yt-audio" preload="none"></audio>
+      </main>
+
+      <!-- Sidebar - article list -->
+      <aside class="yt-sidebar" id="yt-sidebar">
+        <div class="yt-sidebar-header">
+          <h3>Articles</h3>
+        </div>
+        <ul class="yt-list" id="yt-list"><li class="yt-item "
+                data-url="/koodauskerho/ai/deepseek/opas/2026/11/20/deepseek-harness-koodauskerhon-temppuopas.html"
+                data-slug="deepseek-harness-koodauskerhon-temppuopas"
+                data-title="DeepSeek Harness: koodauskerhon temppuopas"
+                data-date="November 20, 2026"data-image="/assets/dsh-landing.png"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><img src="/assets/cover/w200/deepseek-harness-koodauskerhon-temppuopas.jpg"
+                       alt="DeepSeek Harness: koodauskerhon temppuopas"
+                       loading="lazy"
+                       onerror="this.parentElement.innerHTML='<div class=yt-item-placeholder></div>'"></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">DeepSeek Harness: koodauskerhon temppuopas</p>
+                <span class="yt-item-date">Nov 20, 2026</span><span class="yt-item-cats">koodauskerho · ai · deepseek · opas</span></div>
+            </li><li class="yt-item "
+                data-url="/architecture/ai/python/headless%20cms/2026/05/11/building-an-ai-orchestrated-headless-cms-pipeline.html"
+                data-slug="building-an-ai-orchestrated-headless-cms-pipeline"
+                data-title="Building an AI-Orchestrated Headless CMS Pipeline"
+                data-date="May 11, 2026"data-video="/assets/mp4/w740/building-an-ai-orchestrated-headless-cms-pipeline.mp4"data-audio="/assets/narrations/building-an-ai-orchestrated-headless-cms-pipeline-with-music.mp3"data-image="/assets/cover/w740/building-an-ai-orchestrated-headless-cms-pipeline.jpg"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/building-an-ai-orchestrated-headless-cms-pipeline.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="building-an-ai-orchestrated-headless-cms-pipeline" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Building an AI-Orchestrated Headless CMS Pipeline</p>
+                <span class="yt-item-date">May 11, 2026</span><span class="yt-item-cats">Architecture · AI · Python · Headless CMS</span></div>
+            </li><li class="yt-item "
+                data-url="/ai/architecture/business/2026/05/08/ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy.html"
+                data-slug="ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy"
+                data-title="AI is Not Software, It&#39;s Industrial Fuel: Architecting for the New Economy"
+                data-date="May 8, 2026"data-video="/assets/mp4/ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy.mp4"data-audio="/assets/narrations/ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy-with-music.mp3"data-image="/assets/cover/w740/ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy.jpg"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="ai-is-not-software-its-industrial-fuel-architecting-for-the-new-economy" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">AI is Not Software, It's Industrial Fuel: Architecting for the New Economy</p>
+                <span class="yt-item-date">May 8, 2026</span><span class="yt-item-cats">AI · Architecture · Business</span></div>
+            </li><li class="yt-item "
+                data-url="/ai/python/architecture/2026/04/25/durable-agent-loops-with-restate-and-pydantic-ai.html"
+                data-slug="durable-agent-loops-with-restate-and-pydantic-ai"
+                data-title="Making AI Agents Crash-Proof: Durable Loops with Restate and Pydantic AI"
+                data-date="April 25, 2026"data-video="/assets/mp4/w740/2026-04-25-durable-agent-loops-with-restate-and-pydantic-ai.mp4"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/durable-agent-loops-with-restate-and-pydantic-ai.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="durable-agent-loops-with-restate-and-pydantic-ai" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Making AI Agents Crash-Proof: Durable Loops with Restate and Pydantic AI</p>
+                <span class="yt-item-date">Apr 25, 2026</span><span class="yt-item-cats">ai · python · architecture</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic-labs/alpha-testing/agent-orchestrator/github/2026/04/18/koodauskerhon-kuulumisia-lis-pelej-ja-github-tilit-kuntoon.html"
+                data-slug="koodauskerhon-kuulumisia-lis-pelej-ja-github-tilit-kuntoon"
+                data-title="Metamatic Labs: Pilottiryhmä vauhdissa - Omien pelien deployaus Agent Orchestratorin avulla"
+                data-date="April 18, 2026"data-video="/assets/mp4/w740/koodauskerhon-kuulumisia-lis-pelej-ja-github-tilit-kuntoon.mp4"data-audio="/assets/narrations/koodauskerhon-kuulumisia-lis-pelej-ja-github-tilit-kuntoon-with-music.mp3"data-image="/assets/koodauskerhon-kuulumisia-lis-pelej-ja-github-tilit-kuntoon.png"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/koodauskerhon-kuulumisia-lis-pelej-ja-github-tilit-kuntoon.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="koodauskerhon-kuulumisia-lis-pelej-ja-github-tilit-kuntoon" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Metamatic Labs: Pilottiryhmä vauhdissa - Omien pelien deployaus Agent Orchestratorin avulla</p>
+                <span class="yt-item-date">Apr 18, 2026</span><span class="yt-item-cats">metamatic-labs · alpha-testing · agent-orchestrator · github</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic-labs/opas/github/pelit/2026/04/18/omien-pelien-julkaisu-nettiin-koodauskerhon-ohjeet.html"
+                data-slug="omien-pelien-julkaisu-nettiin-koodauskerhon-ohjeet"
+                data-title="Pelien julkaisu GitHub Pages -alustalle: Metamatic Labs -ohjeistus"
+                data-date="April 18, 2026"data-image="/assets/omien-pelien-julkaisu-nettiin-koodauskerhon-ohjeet.png"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><img src="/assets/cover/w200/omien-pelien-julkaisu-nettiin-koodauskerhon-ohjeet.jpg"
+                       alt="Pelien julkaisu GitHub Pages -alustalle: Metamatic Labs -ohjeistus"
+                       loading="lazy"
+                       onerror="this.parentElement.innerHTML='<div class=yt-item-placeholder></div>'"></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Pelien julkaisu GitHub Pages -alustalle: Metamatic Labs -ohjeistus</p>
+                <span class="yt-item-date">Apr 18, 2026</span><span class="yt-item-cats">metamatic-labs · opas · github · pelit</span></div>
+            </li><li class="yt-item "
+                data-url="/tech/2026/03/23/deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown.html"
+                data-slug="deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown"
+                data-title="Deploying React Apps to Azure: Vite vs NextJS — The Fruit Store Showdown"
+                data-date="March 23, 2026"data-video="/assets/mp4/w740/deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown.mp4"data-audio="/assets/deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown-with-music.mp3"data-image="/assets/cover/w740/deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown.jpg"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="deploying-react-apps-to-azure-vite-vs-nextjs-the-fruit-store-showdown" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Deploying React Apps to Azure: Vite vs NextJS — The Fruit Store Showdown</p>
+                <span class="yt-item-date">Mar 23, 2026</span><span class="yt-item-cats">tech</span></div>
+            </li><li class="yt-item "
+                data-url="/tech/2026/03/23/the-two-worlds-of-nextjs-server-components-vs-client-components.html"
+                data-slug="the-two-worlds-of-nextjs-server-components-vs-client-components"
+                data-title="The Two Worlds of NextJS: Server Components vs Client Components"
+                data-date="March 23, 2026"data-video="/assets/mp4/w740/the-two-worlds-of-nextjs-server-components-vs-client-components.mp4"data-audio="/assets/narrations/the-two-worlds-of-nextjs-server-components-vs-client-components-with-music.mp3"data-image="/assets/cover/w740/the-two-worlds-of-nextjs-server-components-vs-client-components.jpg"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/the-two-worlds-of-nextjs-server-components-vs-client-components.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="the-two-worlds-of-nextjs-server-components-vs-client-components" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">The Two Worlds of NextJS: Server Components vs Client Components</p>
+                <span class="yt-item-date">Mar 23, 2026</span><span class="yt-item-cats">tech</span></div>
+            </li><li class="yt-item "
+                data-url="/ai/koulutus/python/lapset/koodauskerho/2026/03/20/koodauskerho-ensimmaiset-pelit-nettiin.html"
+                data-slug="koodauskerho-ensimmaiset-pelit-nettiin"
+                data-title="Koodauskerho: Ensimmäiset Pelit Nettiin"
+                data-date="March 20, 2026"data-video="/assets/mp4/w740/koodauskerho-ensimmaiset-pelit-nettiin.mp4"data-audio="/assets/koodauskerho-ensimmaiset-pelit-nettiin.mp3"data-image="/assets/cover/w740/koodauskerho-ensimmaiset-pelit-nettiin.jpg"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/koodauskerho-ensimmaiset-pelit-nettiin.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="koodauskerho-ensimmaiset-pelit-nettiin" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Koodauskerho: Ensimmäiset Pelit Nettiin</p>
+                <span class="yt-item-date">Mar 20, 2026</span><span class="yt-item-cats">ai · koulutus · python · lapset · koodauskerho</span></div>
+            </li><li class="yt-item "
+                data-url="/ai/koulutus/python/lapset/koodauskerho/2026/03/18/koodauskerho-kehittyy-elementeist-ymmrrykseen-ja-tekolypromptaukseen.html"
+                data-slug="koodauskerho-kehittyy-elementeist-ymmrrykseen-ja-tekolypromptaukseen"
+                data-title="Koodauskerho Kehittyy - Elementeistä Ymmärrykseen ja Tekoälypromptaukseen"
+                data-date="March 18, 2026"data-video="/assets/mp4/w740/koodauskerho-kehittyy-elementeist-ymmrrykseen-ja-tekolypromptaukseen.mp4"data-audio="/assets/narrations/koodauskerho-kehittyy-elementeist-ymmrrykseen-ja-tekolypromptaukseen-with-music.mp3"data-image="/assets/cover/w740/koodauskerho-kehittyy-elementeist-ymmrrykseen-ja-tekolypromptaukseen.jpg"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/koodauskerho-kehittyy-elementeist-ymmrrykseen-ja-tekolypromptaukseen.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="koodauskerho-kehittyy-elementeist-ymmrrykseen-ja-tekolypromptaukseen" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Koodauskerho Kehittyy - Elementeistä Ymmärrykseen ja Tekoälypromptaukseen</p>
+                <span class="yt-item-date">Mar 18, 2026</span><span class="yt-item-cats">ai · koulutus · python · lapset · koodauskerho</span></div>
+            </li><li class="yt-item "
+                data-url="/tech/2026/03/09/nextjs-is-just-react-on-the-server-side-and-that-is-a-good-thing.html"
+                data-slug="nextjs-is-just-react-on-the-server-side-and-that-is-a-good-thing"
+                data-title="NextJS Is Just React on the Server Side and That Is a Good Thing"
+                data-date="March 9, 2026"data-image="/assets/nextjs-is-just-react-on-the-server-side-and-that-is-a-good-thing.png"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><img src="/assets/cover/w200/nextjs-is-just-react-on-the-server-side-and-that-is-a-good-thing.jpg"
+                       alt="NextJS Is Just React on the Server Side and That Is a Good Thing"
+                       loading="lazy"
+                       onerror="this.parentElement.innerHTML='<div class=yt-item-placeholder></div>'"></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">NextJS Is Just React on the Server Side and That Is a Good Thing</p>
+                <span class="yt-item-date">Mar 9, 2026</span><span class="yt-item-cats">tech</span></div>
+            </li><li class="yt-item "
+                data-url="/ai/koulutus/python/lapset/koodauskerho/2026/03/05/metamatic-koodauskerho-tekoly-opettaa-lapsia-koodaamaan.html"
+                data-slug="metamatic-koodauskerho-tekoly-opettaa-lapsia-koodaamaan"
+                data-title="Metamatic Koodauskerho — Tekoäly Opettaa Lapsia Koodaamaan"
+                data-date="March 5, 2026"data-video="/assets/mp4/w740/metamatic-koodauskerho-tekoly-opettaa-lapsia-koodaamaan.mp4"data-image="/assets/cover/w740/metamatic-koodauskerho-tekoly-opettaa-lapsia-koodaamaan.jpg"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/metamatic-koodauskerho-tekoly-opettaa-lapsia-koodaamaan.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="metamatic-koodauskerho-tekoly-opettaa-lapsia-koodaamaan" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Metamatic Koodauskerho — Tekoäly Opettaa Lapsia Koodaamaan</p>
+                <span class="yt-item-date">Mar 5, 2026</span><span class="yt-item-cats">ai · koulutus · python · lapset · koodauskerho</span></div>
+            </li><li class="yt-item "
+                data-url="/ai/education/python/kids/2026/03/02/teach-your-kids-to-code-with-ai-like-da-vinci.html"
+                data-slug="teach-your-kids-to-code-with-ai-like-da-vinci"
+                data-title="Teach Your Kids to Code with AI Like Da Vinci"
+                data-date="March 2, 2026"data-video="/assets/mp4/w740/teach-your-kids-to-code-with-ai-like-da-vinci.mp4"data-audio="/assets/teach-your-kids-to-code-with-ai-like-da-vinci.mp3"data-image="/assets/cover/w740/teach-your-kids-to-code-with-ai-like-da-vinci.jpg"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/teach-your-kids-to-code-with-ai-like-da-vinci.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="teach-your-kids-to-code-with-ai-like-da-vinci" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Teach Your Kids to Code with AI Like Da Vinci</p>
+                <span class="yt-item-date">Mar 2, 2026</span><span class="yt-item-cats">ai · education · python · kids</span></div>
+            </li><li class="yt-item "
+                data-url="/ai/python/architecture/2026/02/16/how-to-build-your-own-ai-operating-system.html"
+                data-slug="how-to-build-your-own-ai-operating-system"
+                data-title="How to Build Your Own AI Operating System Like Alexander the Great"
+                data-date="February 16, 2026"data-video="/assets/mp4/w740/how-to-build-your-own-ai-operating-system.mp4"data-audio="/assets/narrations/how-to-build-your-own-ai-operating-system-with-music.mp3"data-image="/assets/cover/w740/how-to-build-your-own-ai-operating-system.jpg"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/how-to-build-your-own-ai-operating-system.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="how-to-build-your-own-ai-operating-system" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">How to Build Your Own AI Operating System Like Alexander the Great</p>
+                <span class="yt-item-date">Feb 16, 2026</span><span class="yt-item-cats">ai · python · architecture</span></div>
+            </li><li class="yt-item "
+                data-url="/ai/azure/python/speech/2025/11/15/teach-your-computer-to-listen-like-a-viking.html"
+                data-slug="teach-your-computer-to-listen-like-a-viking"
+                data-title="Teach Your Computer to Listen Like a Viking"
+                data-date="November 15, 2025"data-video="/assets/mp4/w740/teach-your-computer-to-listen-like-a-viking.mp4"data-audio="/assets/narrations/teach-your-computer-to-listen-like-a-viking-with-music.mp3"data-image="/assets/cover/w740/teach-your-computer-to-listen-like-a-viking.jpg"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/teach-your-computer-to-listen-like-a-viking.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="teach-your-computer-to-listen-like-a-viking" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Teach Your Computer to Listen Like a Viking</p>
+                <span class="yt-item-date">Nov 15, 2025</span><span class="yt-item-cats">ai · azure · python · speech</span></div>
+            </li><li class="yt-item "
+                data-url="/azure/ai/2025/06/23/write-your-success-story-with-azure-ai-foundry-like-ogedei-khan.html"
+                data-slug="write-your-success-story-with-azure-ai-foundry-like-ogedei-khan"
+                data-title="Write Your Own Success Story With Azure AI Foundry Like Ögedei Khan"
+                data-date="June 23, 2025"data-video="/assets/mp4/write-your-success-story-with-azure-ai-foundry-like-ogedei-khan.mp4"data-audio="/assets/narrations/write-your-success-story-with-azure-ai-foundry-like-ogedei-khan-with-music.mp3"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/write-your-success-story-with-azure-ai-foundry-like-ogedei-khan.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="write-your-success-story-with-azure-ai-foundry-like-ogedei-khan" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Write Your Own Success Story With Azure AI Foundry Like Ögedei Khan</p>
+                <span class="yt-item-date">Jun 23, 2025</span><span class="yt-item-cats">azure · ai</span></div>
+            </li><li class="yt-item "
+                data-url="/azure/bicep/2025/05/27/conquer-the-world-with-azure-bicep-like-genghis-khan.html"
+                data-slug="conquer-the-world-with-azure-bicep-like-genghis-khan"
+                data-title="Conquer the World With Azure Bicep Like Genghis Khan"
+                data-date="May 27, 2025"data-video="/assets/mp4/conquer-the-world-with-azure-bicep-like-genghis-khan.mp4"data-audio="/assets/narrations/conquer-the-world-with-azure-bicep-like-genghis-khan-with-music.mp3"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/conquer-the-world-with-azure-bicep-like-genghis-khan.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="conquer-the-world-with-azure-bicep-like-genghis-khan" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Conquer the World With Azure Bicep Like Genghis Khan</p>
+                <span class="yt-item-date">May 27, 2025</span><span class="yt-item-cats">azure · bicep</span></div>
+            </li><li class="yt-item "
+                data-url="/jquery/javascript/2025/05/12/jquery-is-not-dead.html"
+                data-slug="jquery-is-not-dead"
+                data-title="jQuery Is Not Dead"
+                data-date="May 12, 2025"data-video="/assets/mp4/jquery-is-not-dead.mp4"data-audio="/assets/narrations/jquery-is-not-dead-with-music.mp3"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/jquery-is-not-dead.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="jquery-is-not-dead" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">jQuery Is Not Dead</p>
+                <span class="yt-item-date">May 12, 2025</span><span class="yt-item-cats">jquery · javascript</span></div>
+            </li><li class="yt-item "
+                data-url="/snowflake/snowplow/etl/2025/05/09/how-to-translate-full-stack-skills-to-snowflake-and-snowplow-development.html"
+                data-slug="how-to-translate-full-stack-skills-to-snowflake-and-snowplow-development"
+                data-title="How to Translate Full-Stack Skills to Snowflake &amp; Snowplow Development"
+                data-date="May 9, 2025"data-video="/assets/mp4/how-to-translate-full-stack-skills-to-snowflake-and-snowplow-development.mp4"data-audio="/assets/narrations/how-to-translate-full-stack-skills-to-snowflake-and-snowplow-development-with-music.mp3"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/how-to-translate-full-stack-skills-to-snowflake-and-snowplow-development.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="how-to-translate-full-stack-skills-to-snowflake-and-snowplow-development" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">How to Translate Full-Stack Skills to Snowflake & Snowplow Development</p>
+                <span class="yt-item-date">May 9, 2025</span><span class="yt-item-cats">snowflake · snowplow · etl</span></div>
+            </li><li class="yt-item "
+                data-url="/2025/05/02/playing-with-beanie-and-bunnet.html"
+                data-slug="playing-with-beanie-and-bunnet"
+                data-title="Playing With Beanie and Bunnet"
+                data-date="May 2, 2025"data-video="/assets/mp4/playing-with-beanie-and-bunnet.mp4"data-audio="/assets/narrations/playing-with-beanie-and-bunnet-with-music.mp3"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/playing-with-beanie-and-bunnet.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="playing-with-beanie-and-bunnet" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Playing With Beanie and Bunnet</p>
+                <span class="yt-item-date">May 2, 2025</span></div>
+            </li><li class="yt-item "
+                data-url="/python/beanie/bunnet/2025/04/02/meet-the-rabbits-beanie-and-bunnet.html"
+                data-slug="meet-the-rabbits-beanie-and-bunnet"
+                data-title="Meet the Twins - Beanie and Bunnet!"
+                data-date="April 2, 2025"data-video="/assets/mp4/meet-the-rabbits-beanie-and-bunnet.mp4"data-audio="/assets/narrations/meet-the-rabbits-beanie-and-bunnet-with-music.mp3"data-image="/assets/gifs/meet-the-rabbits-beanie-and-bunnet.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/meet-the-rabbits-beanie-and-bunnet.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="meet-the-rabbits-beanie-and-bunnet" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Meet the Twins - Beanie and Bunnet!</p>
+                <span class="yt-item-date">Apr 2, 2025</span><span class="yt-item-cats">python · beanie · bunnet</span></div>
+            </li><li class="yt-item "
+                data-url="/python/pydantic/azure/2025/03/07/conjure-your-azure-infrastructure-with-pydantic-like-a-real-houdini.html"
+                data-slug="conjure-your-azure-infrastructure-with-pydantic-like-a-real-houdini"
+                data-title="Conjure Your Azure Infrastructure With Pydantic Like a Real Houdini"
+                data-date="March 7, 2025"data-video="/assets/mp4/conjure-your-azure-infrastructure-with-pydantic-like-a-real-houdini.mp4"data-audio="/assets/narrations/conjure-your-azure-infrastructure-with-pydantic-like-a-real-houdini-with-music.mp3"data-image="/assets/gifs/conjure-your-azure-infrastructure-with-pydantic-like-a-real-houdini.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/conjure-your-azure-infrastructure-with-pydantic-like-a-real-houdini.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="conjure-your-azure-infrastructure-with-pydantic-like-a-real-houdini" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Conjure Your Azure Infrastructure With Pydantic Like a Real Houdini</p>
+                <span class="yt-item-date">Mar 7, 2025</span><span class="yt-item-cats">python · pydantic · azure</span></div>
+            </li><li class="yt-item "
+                data-url="/neovim/2025/02/25/turn-your-neovim-editor-into-ai-powerhouse.html"
+                data-slug="turn-your-neovim-editor-into-ai-powerhouse"
+                data-title="Turn Your Neovim Editor Into an AI Powerhouse"
+                data-date="February 25, 2025"data-video="/assets/mp4/turn-your-neovim-editor-into-ai-powerhouse.mp4"data-audio="/assets/narrations/turn-your-neovim-editor-into-ai-powerhouse-with-music.mp3"data-image="/assets/gifs/turn-your-neovim-editor-into-ai-powerhouse.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/turn-your-neovim-editor-into-ai-powerhouse.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="turn-your-neovim-editor-into-ai-powerhouse" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Turn Your Neovim Editor Into an AI Powerhouse</p>
+                <span class="yt-item-date">Feb 25, 2025</span><span class="yt-item-cats">neovim</span></div>
+            </li><li class="yt-item "
+                data-url="/python/pydantic/2025/02/05/capitalizing-on-pydantic-data-validation-with-embedded-unit-tests.html"
+                data-slug="capitalizing-on-pydantic-data-validation-with-embedded-unit-tests"
+                data-title="Capitalizing on Pydantic Data Validation With Embedded Unit Tests"
+                data-date="February 5, 2025"data-video="/assets/mp4/capitalizing-on-pydantic-data-validation-with-embedded-unit-tests.mp4"data-audio="/assets/narrations/capitalizing-on-pydantic-data-validation-with-embedded-unit-tests-with-music.mp3"data-image="/assets/gifs/capitalizing-on-pydantic-data-validation-with-embedded-unit-tests.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/capitalizing-on-pydantic-data-validation-with-embedded-unit-tests.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="capitalizing-on-pydantic-data-validation-with-embedded-unit-tests" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Capitalizing on Pydantic Data Validation With Embedded Unit Tests</p>
+                <span class="yt-item-date">Feb 5, 2025</span><span class="yt-item-cats">python · pydantic</span></div>
+            </li><li class="yt-item "
+                data-url="/pydantic/2025/01/21/turning-python-into-your-typescript-replacement.html"
+                data-slug="turning-python-into-your-typescript-replacement"
+                data-title="Turning Python Into Your C# Replacement"
+                data-date="January 21, 2025"data-video="/assets/mp4/turning-python-into-your-typescript-replacement.mp4"data-audio="/assets/narrations/turning-python-into-your-typescript-replacement-with-music.mp3"data-image="/assets/gifs/coding-panda.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/turning-python-into-your-typescript-replacement.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="turning-python-into-your-typescript-replacement" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Turning Python Into Your C# Replacement</p>
+                <span class="yt-item-date">Jan 21, 2025</span><span class="yt-item-cats">pydantic</span></div>
+            </li><li class="yt-item "
+                data-url="/dotnet/2024/12/27/merry-christmas-from-inside-postgre-sql-server.html"
+                data-slug="merry-christmas-from-inside-postgre-sql-server"
+                data-title="Merry Christmas From Inside the PostgreSQL Server"
+                data-date="December 27, 2024"data-video="/assets/mp4/merry-christmas-from-inside-postgre-sql-server.mp4"data-audio="/assets/narrations/merry-christmas-from-inside-postgre-sql-server-with-music.mp3"data-image="/assets/gifs/merry-christmas-from-inside-postgre-sql-server.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/merry-christmas-from-inside-postgre-sql-server.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="merry-christmas-from-inside-postgre-sql-server" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Merry Christmas From Inside the PostgreSQL Server</p>
+                <span class="yt-item-date">Dec 27, 2024</span><span class="yt-item-cats">dotnet</span></div>
+            </li><li class="yt-item "
+                data-url="/dotnet/2024/10/15/some-more-reasons-to-love-and-hate-dotnet.html"
+                data-slug="some-more-reasons-to-love-and-hate-dotnet"
+                data-title="Some More Reasons to Love and Hate .NET"
+                data-date="October 15, 2024"data-video="/assets/mp4/some-more-reasons-to-love-and-hate-dotnet.mp4"data-audio="/assets/narrations/some-more-reasons-to-love-and-hate-dotnet-with-music.mp3"data-image="/assets/gifs/thrown-by-whirlwind.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/some-more-reasons-to-love-and-hate-dotnet.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="some-more-reasons-to-love-and-hate-dotnet" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Some More Reasons to Love and Hate .NET</p>
+                <span class="yt-item-date">Oct 15, 2024</span><span class="yt-item-cats">dotnet</span></div>
+            </li><li class="yt-item "
+                data-url="/react/css/2024/09/25/react-development-and-css.html"
+                data-slug="react-development-and-css"
+                data-title="React Development With Styled Components"
+                data-date="September 25, 2024"data-audio="/assets/narrations/react-development-and-css-with-music.mp3"data-image="/assets/styled-components.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><img src="/assets/cover/w200/react-development-and-css.jpg"
+                       alt="React Development With Styled Components"
+                       loading="lazy"
+                       onerror="this.parentElement.innerHTML='<div class=yt-item-placeholder></div>'"></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">React Development With Styled Components</p>
+                <span class="yt-item-date">Sep 25, 2024</span><span class="yt-item-cats">React · CSS</span></div>
+            </li><li class="yt-item "
+                data-url="/blazor/azure/2024/04/06/deep-dive-with-blazor-whale.html"
+                data-slug="deep-dive-with-blazor-whale"
+                data-title="A Deep Dive With Blazor Whale"
+                data-date="April 6, 2024"data-video="/assets/mp4/deep-dive-with-blazor-whale.mp4"data-audio="/assets/narrations/deep-dive-with-blazor-whale-with-music.mp3"data-image="/assets/gifs/deep-dive-with-blazor-whale.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/deep-dive-with-blazor-whale.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="deep-dive-with-blazor-whale" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">A Deep Dive With Blazor Whale</p>
+                <span class="yt-item-date">Apr 6, 2024</span><span class="yt-item-cats">Blazor · Azure</span></div>
+            </li><li class="yt-item "
+                data-url="/blazor/container/apps/2024/04/03/deploy-next-generation-blazor-front-ends-as-container-apps.html"
+                data-slug="deploy-next-generation-blazor-front-ends-as-container-apps"
+                data-title="Deploy Next Generation Blazor Front Ends as Container Apps"
+                data-date="April 3, 2024"data-audio="/assets/narrations/deploy-next-generation-blazor-front-ends-as-container-apps-with-music.mp3"data-image="/assets/kalabaw-foods-webapp.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><img src="/assets/cover/w200/deploy-next-generation-blazor-front-ends-as-container-apps.jpg"
+                       alt="Deploy Next Generation Blazor Front Ends as Container Apps"
+                       loading="lazy"
+                       onerror="this.parentElement.innerHTML='<div class=yt-item-placeholder></div>'"></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Deploy Next Generation Blazor Front Ends as Container Apps</p>
+                <span class="yt-item-date">Apr 3, 2024</span><span class="yt-item-cats">Blazor · Container · Apps</span></div>
+            </li><li class="yt-item "
+                data-url="/serveless/functions/2024/04/02/from-serverless-functions-to-container-apps.html"
+                data-slug="from-serverless-functions-to-container-apps"
+                data-title="From Serverless Functions to Container Apps"
+                data-date="April 2, 2024"data-audio="/assets/narrations/from-serverless-functions-to-container-apps-with-music.mp3"data-image="/assets/docker-compose-up-d.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><img src="/assets/cover/w200/from-serverless-functions-to-container-apps.jpg"
+                       alt="From Serverless Functions to Container Apps"
+                       loading="lazy"
+                       onerror="this.parentElement.innerHTML='<div class=yt-item-placeholder></div>'"></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">From Serverless Functions to Container Apps</p>
+                <span class="yt-item-date">Apr 2, 2024</span><span class="yt-item-cats">Serveless · Functions</span></div>
+            </li><li class="yt-item "
+                data-url="/azure/functions/2024/03/30/your-roadmap-to-azure-functions-development.html"
+                data-slug="your-roadmap-to-azure-functions-development"
+                data-title="Your Roadmap to Azure Functions Development"
+                data-date="March 30, 2024"data-audio="/assets/narrations/2024-03-30-your-roadmap-to-azure-functions-development-with-music.mp3"data-image="/assets/w200/install-azure-tools-to-vscode.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><img src="/assets/cover/w200/your-roadmap-to-azure-functions-development.jpg"
+                       alt="Your Roadmap to Azure Functions Development"
+                       loading="lazy"
+                       onerror="this.parentElement.innerHTML='<div class=yt-item-placeholder></div>'"></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Your Roadmap to Azure Functions Development</p>
+                <span class="yt-item-date">Mar 30, 2024</span><span class="yt-item-cats">Azure · Functions</span></div>
+            </li><li class="yt-item "
+                data-url="/mongodb/cosmosdb/azure/2024/03/15/take-your-database-to-cosmic-levels.html"
+                data-slug="take-your-database-to-cosmic-levels"
+                data-title="Launch Your Database to Cosmos"
+                data-date="March 15, 2024"data-video="/assets/mp4/take-your-database-to-cosmic-levels.mp4"data-audio="/assets/narrations/take-your-database-to-cosmic-levels-with-music.mp3"data-image="/assets/gifs/take-your-database-to-cosmic-levels.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/take-your-database-to-cosmic-levels.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="take-your-database-to-cosmic-levels" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Launch Your Database to Cosmos</p>
+                <span class="yt-item-date">Mar 15, 2024</span><span class="yt-item-cats">MongoDB · CosmosDB · Azure</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/systems/mongodb/2024/03/09/let-us-turn-your-millions-to-billions.html"
+                data-slug="let-us-turn-your-millions-to-billions"
+                data-title="Let&#39;s Turn Your Millions Into Billions"
+                data-date="March 9, 2024"data-video="/assets/mp4/let-us-turn-your-millions-to-billions.mp4"data-audio="/assets/narrations/let-us-turn-your-millions-to-billions-with-music.mp3"data-image="/assets/gifs/let-us-turn-your-millions-to-billions.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/let-us-turn-your-millions-to-billions.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="let-us-turn-your-millions-to-billions" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Let's Turn Your Millions Into Billions</p>
+                <span class="yt-item-date">Mar 9, 2024</span><span class="yt-item-cats">Metamatic · Systems · MongoDB</span></div>
+            </li><li class="yt-item "
+                data-url="/python/pydantic/mongodb/2023/10/22/automate-your-mongodb-queries-to-deserialize-complex-pydantic-models.html"
+                data-slug="automate-your-mongodb-queries-to-deserialize-complex-pydantic-models"
+                data-title="Automate Your MongoDB Queries to Deserialize Complex Pydantic Models"
+                data-date="October 22, 2023"data-video="/assets/mp4/automate-your-mongodb-queries-to-deserialize-complex-pydantic-models.mp4"data-audio="/assets/narrations/automate-your-mongodb-queries-to-deserialize-complex-pydantic-models-with-music.mp3"data-image="/assets/gifs/automate-your-mongodb-queries-to-deserialize-complex-pydantic-models.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/automate-your-mongodb-queries-to-deserialize-complex-pydantic-models.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="automate-your-mongodb-queries-to-deserialize-complex-pydantic-models" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Automate Your MongoDB Queries to Deserialize Complex Pydantic Models</p>
+                <span class="yt-item-date">Oct 22, 2023</span><span class="yt-item-cats">Python · Pydantic · MongoDB</span></div>
+            </li><li class="yt-item "
+                data-url="/python/pydantic/mongodb/2023/09/09/how-to-store-pydantic-soccer-players-in-the-mongo-database.html"
+                data-slug="how-to-store-pydantic-soccer-players-in-the-mongo-database"
+                data-title="How to Deserialize Objects From Mongo Database With Pydantic"
+                data-date="September 9, 2023"data-video="/assets/mp4/how-to-store-pydantic-soccer-players-in-the-mongo-database.mp4"data-audio="/assets/narrations/how-to-store-pydantic-soccer-players-in-the-mongo-database-with-music.mp3"data-image="/assets/gifs/how-to-store-pydantic-soccer-players-in-the-mongo-database.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/how-to-store-pydantic-soccer-players-in-the-mongo-database.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="how-to-store-pydantic-soccer-players-in-the-mongo-database" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">How to Deserialize Objects From Mongo Database With Pydantic</p>
+                <span class="yt-item-date">Sep 9, 2023</span><span class="yt-item-cats">Python · Pydantic · MongoDB</span></div>
+            </li><li class="yt-item "
+                data-url="/python/pydantic/pandas/2023/08/15/tame-pandas-with-pydantic-to-be-king-of-the-jungle.html"
+                data-slug="tame-pandas-with-pydantic-to-be-king-of-the-jungle"
+                data-title="Tame Pandas With Pydantic to Be King of the Jungle"
+                data-date="August 15, 2023"data-video="/assets/mp4/tame-pandas-with-pydantic-to-be-king-of-the-jungle.mp4"data-audio="/assets/narrations/tame-pandas-with-pydantic-to-be-king-of-the-jungle-with-music.mp3"data-image="/assets/thumbnails/pydantic-panda.webp"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/tame-pandas-with-pydantic-to-be-king-of-the-jungle.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="tame-pandas-with-pydantic-to-be-king-of-the-jungle" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Tame Pandas With Pydantic to Be King of the Jungle</p>
+                <span class="yt-item-date">Aug 15, 2023</span><span class="yt-item-cats">Python · Pydantic · Pandas</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/systems/2023/07/31/validating-method-parameters-with-pydantic-in-python.html"
+                data-slug="validating-method-parameters-with-pydantic-in-python"
+                data-title="Validating Method Parameters in Python"
+                data-date="July 31, 2023"data-video="/assets/mp4/validating-method-parameters-with-pydantic-in-python.mp4"data-audio="/assets/narrations/2023-07-31-validating-method-parameters-with-pydantic-in-python-with-music.mp3"data-image="/assets/thumbnails/method-with-input-parameters.webp"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/validating-method-parameters-with-pydantic-in-python.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="validating-method-parameters-with-pydantic-in-python" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Validating Method Parameters in Python</p>
+                <span class="yt-item-date">Jul 31, 2023</span><span class="yt-item-cats">Metamatic · Systems</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/systems/2023/06/05/high-quality-type-safe-code-with-python.html"
+                data-slug="high-quality-type-safe-code-with-python"
+                data-title="High Quality Type-Safe Code With Python"
+                data-date="June 5, 2023"data-video="/assets/mp4/high-quality-type-safe-code-with-python.mp4"data-audio="/assets/narrations/2023-06-05-high-quality-type-safe-code-with-python-with-music.mp3"data-image="/assets/thumbnails/type-checking.webp"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/high-quality-type-safe-code-with-python.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="high-quality-type-safe-code-with-python" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">High Quality Type-Safe Code With Python</p>
+                <span class="yt-item-date">Jun 5, 2023</span><span class="yt-item-cats">Metamatic · Systems</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/systems/2023/05/20/write-event-driven-user-interface-with-react-and-websockets.html"
+                data-slug="write-event-driven-user-interface-with-react-and-websockets"
+                data-title="Event Driven User Interfaces With React and Web Sockets"
+                data-date="May 20, 2023"data-video="/assets/mp4/write-event-driven-user-interface-with-react-and-websockets.mp4"data-audio="/assets/narrations/write-event-driven-user-interface-with-react-and-websockets-with-music.mp3"data-image="/assets/thumbnails/web-socket.webp"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/write-event-driven-user-interface-with-react-and-websockets.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="write-event-driven-user-interface-with-react-and-websockets" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Event Driven User Interfaces With React and Web Sockets</p>
+                <span class="yt-item-date">May 20, 2023</span><span class="yt-item-cats">Metamatic · Systems</span></div>
+            </li><li class="yt-item yt-item-active"
+                data-url="/metamatic/systems/2023/05/19/how-to-create-event-driven-data-flow-with-websockets-and-kafka.html"
+                data-slug="how-to-create-event-driven-data-flow-with-websockets-and-kafka"
+                data-title="Oil Your Data Flow With Kafka and Web Sockets"
+                data-date="May 19, 2023"data-video="/assets/mp4/how-to-create-event-driven-data-flow-with-websockets-and-kafka.mp4"data-audio="/assets/narrations/how-to-create-event-driven-data-flow-with-websockets-and-kafka-with-music.mp3"data-image="/assets/gifs/cash-cow.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/how-to-create-event-driven-data-flow-with-websockets-and-kafka.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="how-to-create-event-driven-data-flow-with-websockets-and-kafka" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Oil Your Data Flow With Kafka and Web Sockets</p>
+                <span class="yt-item-date">May 19, 2023</span><span class="yt-item-cats">Metamatic · Systems</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/systems/2023/05/17/practical-and-event-driven.html"
+                data-slug="practical-and-event-driven"
+                data-title="Practical and Event Driven"
+                data-date="May 17, 2023"data-video="/assets/mp4/practical-and-event-driven.mp4"data-audio="/assets/narrations/2023-05-17-practical-and-event-driven-with-music.mp3"data-image="/assets/gifs/practical-and-event-driven.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/practical-and-event-driven.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="practical-and-event-driven" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Practical and Event Driven</p>
+                <span class="yt-item-date">May 17, 2023</span><span class="yt-item-cats">Metamatic · Systems</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/systems/2023/04/09/many-to-many-relationships-with-mongodb.html"
+                data-slug="many-to-many-relationships-with-mongodb"
+                data-title="Agile Data Management With MongoDB"
+                data-date="April 9, 2023"data-video="/assets/mp4/many-to-many-relationships-with-mongodb.mp4"data-audio="/assets/narrations/many-to-many-relationships-with-mongodb-with-music.mp3"data-image="/assets/gifs/many-to-many-relationships-with-mongodb.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/many-to-many-relationships-with-mongodb.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="many-to-many-relationships-with-mongodb" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Agile Data Management With MongoDB</p>
+                <span class="yt-item-date">Apr 9, 2023</span><span class="yt-item-cats">Metamatic · Systems</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/systems/2023/03/31/managing-many-to-many-relationships-with-dynamodb.html"
+                data-slug="managing-many-to-many-relationships-with-dynamodb"
+                data-title="Landing on Planet DynamoDB"
+                data-date="March 31, 2023"data-video="/assets/mp4/managing-many-to-many-relationships-with-dynamodb.mp4"data-audio="/assets/narrations/managing-many-to-many-relationships-with-dynamodb-with-music.mp3"data-image="/assets/gifs/managing-many-to-many-relationships-with-dynamodb.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/managing-many-to-many-relationships-with-dynamodb.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="managing-many-to-many-relationships-with-dynamodb" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Landing on Planet DynamoDB</p>
+                <span class="yt-item-date">Mar 31, 2023</span><span class="yt-item-cats">Metamatic · Systems</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/systems/2023/03/30/why-mongodb-still-kicks-ass.html"
+                data-slug="why-mongodb-still-kicks-ass"
+                data-title="Why MongoDB Still Thrives"
+                data-date="March 30, 2023"data-video="/assets/mp4/why-mongodb-still-kicks-ass.mp4"data-audio="/assets/narrations/2023-03-30-why-mongodb-still-kicks-ass-with-music.mp3"data-image="/assets/gifs/why-mongodb-still-kicks-ass.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/why-mongodb-still-kicks-ass.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="why-mongodb-still-kicks-ass" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Why MongoDB Still Thrives</p>
+                <span class="yt-item-date">Mar 30, 2023</span><span class="yt-item-cats">Metamatic · Systems</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/systems/2023/03/28/time-to-talk-about-values.html"
+                data-slug="time-to-talk-about-values"
+                data-title="Time to Talk About Values"
+                data-date="March 28, 2023"data-video="/assets/mp4/time-to-talk-about-values.mp4"data-audio="/assets/narrations/time-to-talk-about-values-with-music.mp3"data-image="/assets/gifs/time-to-talk-about-values.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/time-to-talk-about-values.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="time-to-talk-about-values" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Time to Talk About Values</p>
+                <span class="yt-item-date">Mar 28, 2023</span><span class="yt-item-cats">Metamatic · Systems</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/systems/2023/03/18/whole-lotta-zippin-goin-on.html"
+                data-slug="whole-lotta-zippin-goin-on"
+                data-title="There&#39;s a Whole Lotta Zippin&#39; Goin&#39; On"
+                data-date="March 18, 2023"data-video="/assets/mp4/whole-lotta-zippin-goin-on.mp4"data-audio="/assets/narrations/whole-lotta-zippin-goin-on-with-music.mp3"data-image="/assets/thumbnails/pine-forest.webp"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/whole-lotta-zippin-goin-on.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="whole-lotta-zippin-goin-on" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">There's a Whole Lotta Zippin' Goin' On</p>
+                <span class="yt-item-date">Mar 18, 2023</span><span class="yt-item-cats">Metamatic · Systems</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/systems/2023/01/05/about-state-management-in-react-based-user-interfaces.html"
+                data-slug="about-state-management-in-react-based-user-interfaces"
+                data-title="About State Management Libraries in React-Based User Interfaces"
+                data-date="January 5, 2023"data-video="/assets/mp4/about-state-management-in-react-based-user-interfaces.mp4"data-audio="/assets/narrations/about-state-management-in-react-based-user-interfaces-with-music.mp3"data-image="/assets/gifs/about-state-management-in-react-based-user-interfaces.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/about-state-management-in-react-based-user-interfaces.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="about-state-management-in-react-based-user-interfaces" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">About State Management Libraries in React-Based User Interfaces</p>
+                <span class="yt-item-date">Jan 5, 2023</span><span class="yt-item-cats">Metamatic · Systems</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/2022/10/17/redefining-the-full-stack-developer.html"
+                data-slug="redefining-the-full-stack-developer"
+                data-title="Redefining the Full Stack Developer"
+                data-date="October 17, 2022"data-video="/assets/mp4/redefining-the-full-stack-developer.mp4"data-audio="/assets/narrations/redefining-the-full-stack-developer-with-music.mp3"data-image="/assets/gifs/redefining-the-full-stack-developer.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/redefining-the-full-stack-developer.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="redefining-the-full-stack-developer" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Redefining the Full Stack Developer</p>
+                <span class="yt-item-date">Oct 17, 2022</span><span class="yt-item-cats">metamatic</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/2022/10/13/new-winds.html"
+                data-slug="new-winds"
+                data-title="New Winds"
+                data-date="October 13, 2022"data-video="/assets/mp4/new-winds.mp4"data-audio="/assets/narrations/2022-10-13-new-winds-with-music.mp3"data-image="/assets/gifs/new-winds.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/new-winds.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="new-winds" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">New Winds</p>
+                <span class="yt-item-date">Oct 13, 2022</span><span class="yt-item-cats">metamatic</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/2022/04/11/wrap-easter-eggs-faster-to-give-perfect-gifts.html"
+                data-slug="wrap-easter-eggs-faster-to-give-perfect-gifts"
+                data-title="Wrap Easter Eggs Faster to Give Perfect Gifts"
+                data-date="April 11, 2022"data-video="/assets/mp4/wrap-easter-eggs-faster-to-give-perfect-gifts.mp4"data-audio="/assets/narrations/wrap-easter-eggs-faster-to-give-perfect-gifts-with-music.mp3"data-image="/assets/gifs/wrap-easter-eggs-faster-to-give-perfect-gifts.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/wrap-easter-eggs-faster-to-give-perfect-gifts.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="wrap-easter-eggs-faster-to-give-perfect-gifts" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Wrap Easter Eggs Faster to Give Perfect Gifts</p>
+                <span class="yt-item-date">Apr 11, 2022</span><span class="yt-item-cats">metamatic</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/2022/03/29/performance-gain-using-hash-objects.html"
+                data-slug="performance-gain-using-hash-objects"
+                data-title="Optimizing Performance With Hash Objects"
+                data-date="March 29, 2022"data-video="/assets/mp4/performance-gain-using-hash-objects.mp4"data-audio="/assets/narrations/performance-gain-using-hash-objects-with-music.mp3"data-image="/assets/gifs/performance-gain-using-hash-objects.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/performance-gain-using-hash-objects.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="performance-gain-using-hash-objects" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Optimizing Performance With Hash Objects</p>
+                <span class="yt-item-date">Mar 29, 2022</span><span class="yt-item-cats">metamatic</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/2021/02/07/create-artificial-intelligence-with-loaded-dice.html"
+                data-slug="create-artificial-intelligence-with-loaded-dice"
+                data-title="Create Artificial Intelligence With Loaded Dice"
+                data-date="February 7, 2021"data-video="/assets/mp4/create-artificial-intelligence-with-loaded-dice.mp4"data-audio="/assets/narrations/create-artificial-intelligence-with-loaded-dice-with-music.mp3"data-image="/assets/gifs/create-artificial-intelligence-with-loaded-dice.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/create-artificial-intelligence-with-loaded-dice.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="create-artificial-intelligence-with-loaded-dice" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Create Artificial Intelligence With Loaded Dice</p>
+                <span class="yt-item-date">Feb 7, 2021</span><span class="yt-item-cats">metamatic</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/2021/01/12/immutability-drag-race.html"
+                data-slug="immutability-drag-race"
+                data-title="The Immutability Drag Race"
+                data-date="January 12, 2021"data-video="/assets/mp4/immutability-drag-race.mp4"data-audio="/assets/narrations/immutability-drag-race-with-music.mp3"data-image="/assets/gifs/immutability-drag-race.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/immutability-drag-race.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="immutability-drag-race" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">The Immutability Drag Race</p>
+                <span class="yt-item-date">Jan 12, 2021</span><span class="yt-item-cats">metamatic</span></div>
+            </li><li class="yt-item "
+                data-url="/metamatic/2019/10/12/applying-immutability-to-object-oriented-programming.html"
+                data-slug="applying-immutability-to-object-oriented-programming"
+                data-title="Applying Immutability to Object Oriented Programming"
+                data-date="October 12, 2019"data-video="/assets/mp4/applying-immutability-to-object-oriented-programming.mp4"data-audio="/assets/narrations/applying-immutability-to-object-oriented-programming-with-music.mp3"data-image="/assets/gifs/applying-immutability-to-object-oriented-programming.gif"
+                onclick="YTApp.loadArticle(this)">
+              <div class="yt-item-thumb"><video
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    class="video thumbnail-video lazy-video"
+                    preload="none"
+                    poster="/assets/cover/w200/applying-immutability-to-object-oriented-programming.jpg"
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source data-src="applying-immutability-to-object-oriented-programming" type="video/mp4" />
+                  </video></div>
+              <div class="yt-item-info">
+                <p class="yt-item-title">Applying Immutability to Object Oriented Programming</p>
+                <span class="yt-item-date">Oct 12, 2019</span><span class="yt-item-cats">metamatic</span></div>
+            </li></ul>
+      </aside>
+
+    </div>
+
+    <script>
+    var YTApp = {
+      currentSlug: 'how-to-create-event-driven-data-flow-with-websockets-and-kafka',
+      audioPlaying: false,
+
+      loadArticle: function(el) {
+        var slug = el.getAttribute('data-slug');
+        var url = el.getAttribute('data-url');
+        var title = el.getAttribute('data-title');
+        var date = el.getAttribute('data-date');
+        var video = el.getAttribute('data-video');
+        var audio = el.getAttribute('data-audio');
+        var image = el.getAttribute('data-image');
+
+        if (this.currentSlug === slug) return; // Already loaded
+
+        // Mark active
+        var items = document.querySelectorAll('.yt-item');
+        for (var i = 0; i < items.length; i++) {
+          items[i].classList.remove('yt-item-active');
+        }
+        el.classList.add('yt-item-active');
+
+        // Stop any playing audio
+        var audioEl = document.getElementById('yt-audio');
+        audioEl.pause();
+        audioEl.src = '';
+        this.audioPlaying = false;
+        this.currentSlug = slug;
+
+        // Update browser URL without reload
+        history.pushState({slug: slug, url: url}, title, url);
+        document.title = title + ' - Metamatic Systems';
+
+        // Show loading
+        var articleScroll = document.getElementById('yt-article-scroll');
+        var articleDiv = document.getElementById('yt-article');
+        
+        articleDiv.innerHTML = '<div class="yt-loading">Loading article...</div>';
+
+        // Set title in sticky header
+        document.getElementById('yt-title-text').textContent = title;
+
+        // Set listen button in header (or clear it)
+        var headerRight = document.getElementById('yt-header-right');
+        if (audio) {
+          headerRight.innerHTML = '<a class="yt-listen-btn" href="javascript:void(0)" onclick="YTApp.toggleAudio(\'' + audio + '\')">' +
+            '<img id="yt-speaker-icon" src="/assets/speaker.png" width="24" height="24"> ' +
+            '<span>Listen</span></a>';
+          
+          // Auto-start narration
+          this.toggleAudio(audio);
+        } else {
+          headerRight.innerHTML = '';
+        }
+
+        // Scroll article body to top
+        articleScroll.scrollTop = 0;
+
+        // Close sidebar on mobile
+        document.getElementById('yt-sidebar').classList.remove('yt-sidebar-open');
+        document.querySelector('.yt-app').classList.remove('sidebar-is-open');
+
+        // Fetch article content
+        var self = this;
+        $.ajax({
+          url: url,
+          success: function(html) {
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(html, 'text/html');
+            var content = doc.querySelector('.post-content');
+            var bodyHtml = content ? content.innerHTML : '<p>Content could not be loaded.</p>';
+
+            var result = '';
+
+            // Date
+            result += '<div class="yt-date">' + date + '</div>';
+
+            // Hero video
+            if (video) {
+              var videoPath = '/assets/mp4/w740/' + slug + '.mp4';
+              result += '<div class="yt-hero-video">';
+              result += '<video id="hero-video" autoplay muted loop playsinline';
+              result += ' poster="/assets/cover/w560/' + slug + '.jpg">';
+              result += '<source src="' + videoPath + '" type="video/mp4">';
+              result += '</video></div>';
+            } else if (image) {
+              result += '<div class="yt-hero-video">';
+              result += '<img src="' + image + '" alt="' + title + '">';
+              result += '</div>';
+            }
+
+            // Article content
+            result += '<div class="yt-article-body">' + bodyHtml + '</div>';
+
+            articleDiv.innerHTML = result;
+
+            // Initialize content
+            if (window.initPageContent) {
+              window.initPageContent();
+            }
+
+            // Force hero video to play
+            var heroVideo = document.getElementById('hero-video');
+            if (heroVideo) {
+              heroVideo.play().catch(function(e) { console.warn("Autoplay prevented:", e); });
+            }
+          },
+          error: function() {
+            articleDiv.innerHTML = '<div class="yt-error">Failed to load article. <a href="' + url + '">Open in new tab</a></div>';
+          }
+        });
+      },
+
+      toggleAudio: function(audioSrc) {
+        var audioEl = document.getElementById('yt-audio');
+        var icon = document.getElementById('yt-speaker-icon');
+        if (this.audioPlaying) {
+          audioEl.pause();
+          this.audioPlaying = false;
+          if (icon) icon.classList.remove('rotating-img');
+        } else {
+          audioEl.src = audioSrc;
+          var self = this;
+          audioEl.play().then(function() {
+            self.audioPlaying = true;
+            if (icon) icon.classList.add('rotating-img');
+          }).catch(function(error) {
+            console.warn("Autoplay prevented:", error);
+            self.audioPlaying = false;
+            if (icon) icon.classList.remove('rotating-img');
+          });
+        }
+        audioEl.onended = function() {
+          YTApp.audioPlaying = false;
+          if (icon) icon.classList.remove('rotating-img');
+        };
+      },
+
+      toggleSidebar: function() {
+        document.getElementById('yt-sidebar').classList.toggle('yt-sidebar-open');
+        document.querySelector('.yt-app').classList.toggle('sidebar-is-open');
+      },
+
+      // Handle back/forward navigation
+      initPopState: function() {
+        var self = this;
+        window.addEventListener('popstate', function(e) {
+          if (e.state && e.state.slug) {
+            var item = document.querySelector('.yt-item[data-slug="' + e.state.slug + '"]');
+            if (item) {
+                // remove active class from all and set on current
+                var items = document.querySelectorAll('.yt-item');
+                for (var i = 0; i < items.length; i++) {
+                  items[i].classList.remove('yt-item-active');
+                }
+                item.classList.add('yt-item-active');
+                self.currentSlug = null; // force reload
+                self.loadArticle(item);
+            }
+          } else {
+            // Restore initial state
+            window.location.reload();
+          }
+        });
+      }
+    };
+    </script><footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-main-inner">
+      <span class="footer-item">Metamatic Systems</span>
+      <span class="footer-item">Kampinkuja 2, 00100 Helsinki, Finland</span>
+      <span class="footer-item">Business ID: 2469467-6</span>
+      <span class="footer-item"><a href="mailto:info@metamatic.net">info@metamatic.net</a></span>
+    </div>
+  </div>
+</footer>
+
+      <script src="/assets/js/mdev.js?v=1795184460"></script>
+    
+    
+    <script>
+    $(document).ready(function() {
+      YTApp.initPopState();
+      if (window.initPageContent) {
+        window.initPageContent();
+      }
+    });
+    </script>
+
+  </body>
+
+</html>
