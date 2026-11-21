@@ -72,100 +72,77 @@
       <!-- Main content area -->
       <main class="yt-main" id="yt-main"><!-- Sticky header bar: title + listen button -->
         <div class="yt-header-bar" id="yt-header-bar" style="display:flex">
-          <h1 class="yt-title" id="yt-title-text">DeepSeek Harness: koodauskerhon temppuopas</h1>
-          <div class="yt-header-right" id="yt-header-right"></div>
+          <h1 class="yt-title" id="yt-title-text">Building an AI-Orchestrated Headless CMS Pipeline</h1>
+          <div class="yt-header-right" id="yt-header-right"><a class="yt-listen-btn" href="javascript:void(0)" onclick="YTApp.toggleAudio('/assets/narrations/building-an-ai-orchestrated-headless-cms-pipeline-with-music.mp3')">
+              <img id="yt-speaker-icon" src="/assets/speaker.png" width="24" height="24">
+              <span>Listen</span>
+            </a></div>
         </div>
         <!-- Scrollable article body -->
         <div class="yt-article-scroll" id="yt-article-scroll" style="display:block">
           <div class="yt-article" id="yt-article">
-            <div class="home"><div class="yt-date">November 20, 2026</div><div class="yt-hero-video">
-        <img src="/assets/dsh-landing.png" alt="DeepSeek Harness: koodauskerhon temppuopas">
+            <div class="home"><div class="yt-date">May 11, 2026</div><div class="yt-hero-video">
+        <video id="hero-video" autoplay muted loop playsinline poster="/assets/cover/w560/building-an-ai-orchestrated-headless-cms-pipeline.jpg">
+          <source src="/assets/mp4/w740/building-an-ai-orchestrated-headless-cms-pipeline.mp4" type="video/mp4">
+        </video>
       </div><div class="yt-article-body">
-      <p>Koodauskerhossa on asennettu DeepSeek Harness, ja tämä opas kertoo mitä sillä voi tehdä. Mukana on kuvia ja pieni video, joten voit katsoa koko homman kotona myös yksin.</p>
+      <p>If Gutenberg saw how we publish multi-modal content today, he wouldn’t be impressed; he’d be exhausted. We’ve traded the printing press for a fragmented nightmare of platforms. We write text in one system, record audio in another, generate images in a third, and then spend hours manually stitching them together in a “Headless CMS” that is essentially just a very expensive database.</p>
 
-<p>Ensin yksi iso ajatus. Chat-ikkuna, johon olet tottunut, on aivo purkissa: se osaa puhua koodista mutta ei koskaan koske koneesi tiedostoihin. Harness on sama aivo, mutta purkissa on käsivarret: se voi kirjoittaa tiedostoja, ajaa komentoriviä ja lukea virheilmoitukset itse. Agentti = malli + valjaat.</p>
+<p>We are treating multimedia publishing like an artisanal craft when it should be an automated assembly line.</p>
 
-<p><img src="/assets/dsh-landing.png" alt="Uusi istunto: workspace, Standard mode, Workspace Write ja mallivalitsin" /></p>
+<p>To solve this, I designed and built a proprietary <strong>AI-Orchestrated Headless CMS pipeline</strong> for Metamatic.net. This system completely decouples content creation from presentation. I simply write raw markdown. A fleet of Python-based AI agents takes over—automatically orchestrating, generating, and mixing the multimedia content—before deploying the final, multi-modal payload to a Jekyll-based frontend.</p>
 
-<h2 id="ensin-kuntoon">Ensin kuntoon</h2>
+<p>Here is a technical breakdown of how this pipeline operates.</p>
 
-<p>Tarkista kolme asiaa ennen temppuja.</p>
+<h2 id="the-architecture-overview">The Architecture Overview</h2>
 
-<p><strong>Malli on valittuna.</strong> Avaa mallivalitsin oikeasta alalaidasta ja valitse listasta OpenRouter-reitin DeepSeek V4 Flash 0423. Ilman avainta lista on tyhjä, joten opettajan antama API-avain pitää olla paikoillaan.</p>
+<p>The core philosophy of the system is treating the markdown text as the absolute source of truth. Everything else—cover images, background music, AI voice narration, and dynamic code animations—is derived from this text via an automated pipeline.</p>
 
-<p><img src="/assets/dsh-model.png" alt="Mallivalitsin: OpenRouter-reitit ja DeepSeek V4 Flash 0423" /></p>
+<ul>
+  <li><strong>Content Repository:</strong> Local Markdown files supplemented by state management in <strong>MongoDB</strong>.</li>
+  <li><strong>Orchestrator:</strong> A custom Python backend (running via MCP) that coordinates API calls to OpenAI, Grok, and Runway for media generation.</li>
+  <li><strong>Presentation Layer:</strong> <strong>Jekyll</strong> static site generator, hydrated with generated assets and enhanced with dynamic JavaScript (<code class="language-plaintext highlighter-rouge">mprod.js</code>) on the client side.</li>
+</ul>
 
-<p><strong>Työhakemisto on kertakäyttökansio.</strong> Vasemman reunan Workspaces kohdasta valitse kansio, joka on tehty vain tätä varten, esimerkiksi <code class="language-plaintext highlighter-rouge">koodauskerho</code> työpöydälle. Älä koskaan valitse kotikansiota, sinne robotti voi kirjoittaa rikki oikeita tavaroita.</p>
+<h2 id="the-publishing-sequence">The Publishing Sequence</h2>
 
-<p><strong>Hiekkalaatikko on Workspace Write.</strong> Se näkyy kirjoituslaatikon vasemmassa reunassa. Pidetään se siinä.</p>
+<p>When an article is drafted, it moves through several automated gates before reaching production.</p>
 
-<p>Kun avaat sovelluksen ensimmäisen kerran, vastaan tulee Preview Notice eli esikatseluvaroitus. Ohita se Continue-painikkeella, mutta lue se silti: tämä ohjelma on vielä keskeneräinen, joten sen kanssa leikitään turvallisesti.</p>
+<p><img class="mermaid-diagram" src="/assets/mermaid/building-an-ai-orchestrated-headless-cms-pipeline/mermaid-1.png" alt="Mermaid Diagram" /></p>
 
-<p><img src="/assets/dsh-preview.png" alt="Preview Notice: Harness 0.2 on vielä esikatseluvaiheessa" /></p>
+<h2 id="automating-multi-modal-assets">Automating Multi-Modal Assets</h2>
 
-<h2 id="temppu-1-robotti-joka-korjaa-itsensä">Temppu 1: robotti joka korjaa itsensä</h2>
+<p>The true power of this headless approach is not just distributing text, but autonomously building the surrounding media.</p>
 
-<p>Tämä on koko illan show. Anna robotille tehtävä:</p>
+<h3 id="1-the-clip-video-system">1. The Clip Video System</h3>
+<p>Instead of manually creating and embedding videos, I built a syntax extension into my markdown. By writing ` ```clip:scene-name `, the pipeline intercepts the block and triggers a multi-step generation process:</p>
 
-<p>text
-Create a lightweight command-line tool with automated unit tests.
-The tool counts words in a text file and works with unicode text.</p>
+<ol>
+  <li><strong>Image Generation:</strong> Generates a base frame using AI.</li>
+  <li><strong>Video Generation:</strong> Sends the frame to a video generation model to animate the scene.</li>
+  <li><strong>Deployment:</strong> The video is downloaded, watermarked, resized, and moved to the Jekyll asset folder. The markdown block is replaced with a masked <code class="language-plaintext highlighter-rouge">div</code> that the frontend JavaScript mounts as a video player.</li>
+</ol>
 
-<p>Robotti tekee suunnitelman, kirjoittaa tiedostot, ajaa testit, saa virheen, lukee virheen ja korjaa itseään. Me kokeiltiin tätä tehtävää oikeasti ja tässä kävi juuri niin.</p>
+<p><img class="mermaid-diagram" src="/assets/mermaid/building-an-ai-orchestrated-headless-cms-pipeline/mermaid-3.png" alt="Mermaid Diagram" /></p>
 
-<p>Eka moka: robotti kirjoitti testin, joka ajoi työkalun väärin, ja testit kaatuivat exit code 1 virheeseen. Robotti ajoi komennon uudestaan toisella tavalla, tajusi että Pythonin suhteelliset importit vaativat toisenlaisen ajutavan, ja korjasi testin itse.</p>
+<h3 id="2-narration-and-audio-mixing">2. Narration and Audio Mixing</h3>
+<p>Accessibility and convenience are critical. The pipeline reads the final article text, generates a pronunciation map, and queries a TTS engine.</p>
 
-<p>Toka moka: robotti keksi testiin väärän väitteen, se luuli että espanjan kielen sanat häviävät tokenisoinnissa. Sitten se ajoi testin, näki että väite oli totuus, ja muutti väitteen sellaiseksi mitä koodi oikeasti tekee.</p>
+<p>It doesn’t stop at raw voice. The system utilizes another agent to generate contextual background music, mixes the voiceover with the track using <code class="language-plaintext highlighter-rouge">ffmpeg</code>, and outputs a polished podcast-like <code class="language-plaintext highlighter-rouge">.mp3</code> file that is embedded at the top of the article.</p>
 
-<p>Lopputulos: 22 testiä vihreänä ja toimiva komentorivityökalu. Katsokaa hetkiä joissa se epäonnistuu, ja sanokaa ääneen mitä robotti nyt lukee ja miksi. Se on parempi oppitunti kuin yksikään onnistuminen.</p>
+<h3 id="3-code-typing-animations-codecasts">3. Code Typing Animations (Codecasts)</h3>
+<p>Technical blogs need code snippets, but static blocks can be dry. The pipeline parses the markdown for code blocks and automatically generates “codecast” videos—animations that simulate a developer typing the code in real-time, complete with configurable typo rates to make it look human.</p>
 
-<p><img src="/assets/dsh-chat.png" alt="Kysymys ja vastaus: HARNESS-OK yhdessä sekunnissa, 9.7K tokenia" /></p>
+<h2 id="why-build-this">Why Build This?</h2>
 
-<h2 id="temppu-2-trajectory-detiivi">Temppu 2: trajectory-detiivi</h2>
+<p>While commercial Headless CMS platforms like Contentful or Sanity are excellent for enterprise data distribution, they still require a human to source, edit, and upload media.</p>
 
-<p>Jokainen istunto tallentuu Trajectory-välilehdelle kuin lentokoneen musta laatikko. Sieltä näkee kaiken: minkä viestin sinä lähetit, mitä lisätietoja ohjelma toimitti mallille, mitä työkalukutsuja tehtiin ja paljonko jokainen askel maksoi tokeneissa.</p>
+<p>By building a custom orchestration layer, I achieved <strong>Operational Mastery</strong>. The system operates as a tireless editorial team. I focus purely on the text and the technical architecture, while the Python agents handle the heavy lifting of multimedia production and deployment.</p>
 
-<p>Avaa jokin valmis istunto, klikkaa Trajectory ja pelatkaa kolmea peliä.</p>
+<p>This decoupled architecture proves that the future of frontend development isn’t just about fetching JSON from an API—it’s about automating the very creation of that payload before it ever hits the wire.</p>
 
-<p>Etsikää hetki jossa robotti teki illan ensimmäisen virheen. Laskekaa montako kertaa se ajoi testit. Ja lukukaa token-lukemia: vain yksi sana vastaukseksi kului melkein kymmenentuhatta tokenia, koska malli sai käyttöönsä ison ohje-paketin ennen ensimmäistäkään vastausta.</p>
-
-<p><img src="/assets/dsh-trajectory.png" alt="Trajectory-välilehti: system, user, context ja assistant-rivit sekä token-palkit" /></p>
-
-<p>Tässä pienellä videolla koko reitti: istunnon avaus, lentotallennin ja hiekkalaatikon valitsin.</p>
-
-<video controls="" preload="metadata" style="width:100%;max-width:960px;border-radius:8px" src="/assets/dsh-walkthrough.mp4"></video>
-
-<h2 id="temppu-3-hiekkalaatikkokoe">Temppu 3: hiekkalaatikkokoe</h2>
-
-<p>Kirjoituslaatikon vasemmasta reunasta löytyy kolme turvatasoa. Kokeilkaa niitä järjestyksessä.</p>
-
-<p><strong>Read Only</strong> on lukutila. Pyytäkää robottia luomaan tiedosto. Se yrittää rehellisesti ja saa kiellon. Tämä on good failure: ohjelma osaa sanoa ei.</p>
-
-<p><strong>Workspace Write</strong> on meidän perustila. Sama pyyntö onnistuu, mutta vain sinä aikana valitussa työkansiossa. Muualle koneelle robotti ei yllä.</p>
-
-<p><strong>Full access</strong> antaa kaiken. Sitä ei käytetä koskaan koodauskerhossa, koska se on sama kuin antaisit roboteille kodin avaimet ja sanoisit “tee mitä haluat”.</p>
-
-<p><img src="/assets/dsh-sandbox.png" alt="Hiekkalaatikon kolme tilaa: Read Only, Workspace Write, Full access" /></p>
-
-<h2 id="temppu-4-sama-aivo-eri-kädet">Temppu 4: sama aivo, eri kädet</h2>
-
-<p>Vasemmasta valikosta löytyy Plugins-sivu. Siellä näkyy mitä kaikkea harness osaa: Subagent antaa roboteille apulaisia, Web search and fetch hakee tietoa verkosta, Shell päättää kuinka kauan yksi komento saa ajaa, ja Automation tasks ajaa tehtäviä ajastimella.</p>
-
-<p>Kokeilkaa kahta. Pyytäkää robottia jakamaan tehtävä kahdelle apulaiselle, esimerkiksi “yksi laskee rivit ja toinen laskee sanat, kertokaa lopuksi kumpi oli nopeampi”. Ja tehkää chores-robotti: “joka ilta kello viisi kirjoita huomisen ruotsin sanat tiedostoon”. Viimeinen temppu saa lapset huutamaan, koska robotti tekee hommia vaikka kone olisi kiinni.</p>
-
-<p><img src="/assets/dsh-plugins.png" alt="Plugins-sivu: Subagent, Web search, Agent loop, Shell ja experimental-pluginit" /></p>
-
-<h2 id="turvallisuuskierros-lopuksi-aina">Turvallisuuskierros, lopuksi aina</h2>
-
-<p>Tämä ohjelma on esikatseluversiota, joten käytetään vain kertakäyttökansioita.</p>
-
-<p>API-avain on aikuisten raha, joten se on opettajan valvoma avain ei koskaan omaa tiliä.</p>
-
-<p>Robotti ei saa koskaan nähdä salasanoja eikä kavereiden henkilötietoja.</p>
-
-<p>Ja muista: oracle valehtelee itsevarmana. Joka kerta kun robotti väittää tehneensä jotain, käykää katsomassa itse. Se on koko tämän oppitunnin tärkein taito.</p>
-
-<p>Hyvää koodausiltaa!</p>
+<p>Best Regards,<br />
+<a href="https://www.linkedin.com/in/heikki-kupiainen/">Heikki Kupiainen / Metamatic Systems</a></p>
 
     </div></div>
 
@@ -179,20 +156,7 @@ The tool counts words in a text file and works with unicode text.</p>
         <div class="yt-sidebar-header">
           <h3>Articles</h3>
         </div>
-        <ul class="yt-list" id="yt-list"><li class="yt-item yt-item-active"
-                data-url="/koodauskerho/ai/deepseek/opas/2026/11/20/deepseek-harness-koodauskerhon-temppuopas.html"
-                data-slug="deepseek-harness-koodauskerhon-temppuopas"
-                data-title="DeepSeek Harness: koodauskerhon temppuopas"
-                data-date="November 20, 2026"data-image="/assets/dsh-landing.png"
-                onclick="YTApp.loadArticle(this)">
-              <div class="yt-item-thumb"><img src="/assets/cover/w200/deepseek-harness-koodauskerhon-temppuopas.jpg"
-                       alt="DeepSeek Harness: koodauskerhon temppuopas"
-                       loading="lazy"
-                       onerror="this.parentElement.innerHTML='<div class=yt-item-placeholder></div>'"></div>
-              <div class="yt-item-info">
-                <p class="yt-item-title">DeepSeek Harness: koodauskerhon temppuopas</p>
-                <span class="yt-item-date">Nov 20, 2026</span><span class="yt-item-cats">koodauskerho · ai · deepseek · opas</span></div>
-            </li><li class="yt-item "
+        <ul class="yt-list" id="yt-list"><li class="yt-item "
                 data-url="/architecture/ai/python/headless%20cms/2026/05/11/building-an-ai-orchestrated-headless-cms-pipeline.html"
                 data-slug="building-an-ai-orchestrated-headless-cms-pipeline"
                 data-title="Building an AI-Orchestrated Headless CMS Pipeline"
@@ -1413,7 +1377,7 @@ The tool counts words in a text file and works with unicode text.</p>
   </div>
 </footer>
 
-      <script src="/assets/js/mdev.js?v=1795184460"></script>
+      <script src="/assets/js/mprod.js?v=1795270842"></script>
     
     
     <script>
